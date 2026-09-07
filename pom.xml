@@ -29,15 +29,24 @@
         </dependency>
 
         <dependency>
-            <groupId>jakarta.servlet.jsp.jstl</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <version>3.0.1</version>
+            <groupId>jakarta.mail</groupId>
+            <artifactId>jakarta.mail-api</artifactId>
+            <version>2.2.0-M1</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- Source: https://mvnrepository.com/artifact/org.eclipse.angus/angus-mail -->
+        <dependency>
+            <groupId>org.eclipse.angus</groupId>
+            <artifactId>angus-mail</artifactId>
+            <version>2.0.5</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
-            <version>3.0.1</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.46</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

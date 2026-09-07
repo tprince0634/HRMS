@@ -1,0 +1,22 @@
+<----- login procedure   ----->
+
+DELIMITER $$
+CREATE PROCEDURE sp_login_user(
+    IN p_email VARCHAR(255),
+    IN p_password VARCHAR(255)
+)
+BEGIN
+    SELECT
+        u.UserId,
+        u.Email,
+        u.FirstName,
+        u.LastName,
+        u.RoleId,
+        r.RoleName
+    FROM `User` u
+    JOIN `Role` r
+        ON u.RoleId = r.RoleId
+    WHERE u.Email = p_email
+      AND u.PasswordHash = p_password;
+END $$
+DELIMITER ;
