@@ -5,6 +5,7 @@ target/
 .kotlin
 src/main/java/org/example/util/DBConnection.java
 
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
