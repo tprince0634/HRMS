@@ -1,7 +1,18 @@
 package org.example.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
+
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Department {
     private int departmentId;
     private String name;
@@ -12,84 +23,5 @@ public class Department {
     private String modifiedBy;
     private LocalDateTime modifiedAt;
 
-    public Department() {
-    }
-
-    public Department(int departmentId, String name, Integer noOfEmployee,
-                      String status, LocalDateTime createdAt, String createdBy,
-                      String modifiedBy, LocalDateTime modifiedAt) {
-        this.departmentId = departmentId;
-        this.name = name;
-        this.noOfEmployee = noOfEmployee;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
-        this.modifiedBy = modifiedBy;
-        this.modifiedAt = modifiedAt;
-    }
-
-    public int getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getNoOfEmployee() {
-        return noOfEmployee;
-    }
-
-    public void setNoOfEmployee(Integer noOfEmployee) {
-        this.noOfEmployee = noOfEmployee;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getModifiedBy() {
-        return modifiedBy;
-    }
-
-    public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
-
-    public LocalDateTime getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public void setModifiedAt(LocalDateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
 }
 
