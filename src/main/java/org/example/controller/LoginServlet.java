@@ -67,21 +67,21 @@ public class LoginServlet extends HttpServlet {
 
             response.sendRedirect(
                     request.getContextPath() +
-                            "/views/admin-dashboard.jsp"
+                            "/views/admin/admin-dashboard.jsp"
             );
 
         } else if ("Manager".equalsIgnoreCase(role)) {
 
             response.sendRedirect(
                     request.getContextPath() +
-                            "/views/manager-dashboard.jsp"
+                            "/views/manager/manager-dashboard.jsp"
             );
 
         } else if ("Employee".equalsIgnoreCase(role)) {
 
             response.sendRedirect(
                     request.getContextPath() +
-                            "/views/employee-dashboard.jsp"
+                            "/views/employee/employee-dashboard.jsp"
             );
 
         } else {
