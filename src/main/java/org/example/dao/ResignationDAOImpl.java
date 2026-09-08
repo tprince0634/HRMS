@@ -41,7 +41,6 @@ public class ResignationDAOImpl implements ResignationDAO {
             cs.setString(5, resignation.getReason());
 
             cs.execute();
-
             return true;
 
         } catch (SQLException e) {

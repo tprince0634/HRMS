@@ -1,7 +1,7 @@
 package org.example.dao;
 
-import org.example.interfaces.DesignationDAO;
-import org.example.model.Designation;
+import org.example.interfaces.DepartmentDAO;
+import org.example.model.Department;
 import org.example.util.DBConnection;
 
 import java.sql.CallableStatement;
@@ -12,22 +12,21 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DesignationDAOImpl implements DesignationDAO {
+public class DepartmentDAOImpl implements DepartmentDAO {
 
-    // =========================================================
-    // GET ALL DESIGNATIONS
-    // =========================================================
+    // =====================================================
+    // GET ALL DEPARTMENTS
+    // =====================================================
 
     @Override
-    public List<Designation> getAllDesignations() {
+    public List<Department> getAllDepartments() {
 
-        List<Designation> designations = new ArrayList<>();
+        List<Department> departments = new ArrayList<>();
 
-        String sql = "{CALL sp_get_all_designations()}";
+        String sql = "{CALL sp_get_all_departments()}";
 
         try (
                 Connection connection = DBConnection.getConnection();
-
                 CallableStatement statement =
                         connection.prepareCall(sql)
         ) {
@@ -40,57 +39,56 @@ public class DesignationDAOImpl implements DesignationDAO {
 
                     while (resultSet.next()) {
 
-                        Designation designation = new Designation();
+                        Department department = new Department();
 
-                        designation.setDesignationId(
-                                resultSet.getInt("DesignationId")
-                        );
-
-                        designation.setDepartmentId(
+                        department.setDepartmentId(
                                 resultSet.getInt("DepartmentId")
                         );
 
-                        designation.setName(
+                        department.setName(
                                 resultSet.getString("Name")
                         );
 
-                        designation.setNoOfEmployee(
+                        department.setNoOfEmployee(
                                 resultSet.getInt("NoOfEmployee")
                         );
 
-                        designation.setStatus(
+                        department.setStatus(
                                 resultSet.getString("status")
                         );
 
-                        designation.setCreatedBy(
+                        department.setCreatedBy(
                                 resultSet.getString("CreatedBy")
                         );
 
-                        designation.setModifiedBy(
+                        department.setModifiedBy(
                                 resultSet.getString("ModifiedBy")
                         );
+
 
                         Timestamp createdAt =
                                 resultSet.getTimestamp("CreatedAt");
 
                         if (createdAt != null) {
 
-                            designation.setCreatedAt(
+                            department.setCreatedAt(
                                     createdAt.toLocalDateTime()
                             );
                         }
+
 
                         Timestamp modifiedAt =
                                 resultSet.getTimestamp("ModifiedAt");
 
                         if (modifiedAt != null) {
 
-                            designation.setModifiedAt(
+                            department.setModifiedAt(
                                     modifiedAt.toLocalDateTime()
                             );
                         }
 
-                        designations.add(designation);
+
+                        departments.add(department);
                     }
                 }
             }
@@ -100,23 +98,66 @@ public class DesignationDAOImpl implements DesignationDAO {
             e.printStackTrace();
         }
 
-        return designations;
+        return departments;
     }
 
 
-    // =========================================================
-    // ADD DESIGNATION
-    // =========================================================
+    // =====================================================
+    // ADD DEPARTMENT
+    // =====================================================
 
     @Override
-    public boolean addDesignation(
-            int departmentId,
+    public boolean addDepartment(
             String name,
             String status,
             String createdBy
     ) {
 
-        String sql = "{CALL sp_add_designation(?, ?, ?, ?)}";
+        String sql =
+                "{CALL sp_add_department(?, ?, ?)}";
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                CallableStatement statement =
+                        connection.prepareCall(sql)
+        ) {
+
+            statement.setString(1, name);
+
+            statement.setString(2, status);
+
+            statement.setString(3, createdBy);
+
+
+            int result = statement.executeUpdate();
+
+            return result > 0;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+            return false;
+        }
+    }
+
+
+    // =====================================================
+    // UPDATE DEPARTMENT
+    // =====================================================
+
+    @Override
+    public boolean updateDepartment(
+            int departmentId,
+            String name,
+            String status,
+            String modifiedBy
+    ) {
+
+        String sql =
+                "{CALL sp_update_department(?, ?, ?, ?)}";
 
         try (
                 Connection connection =
@@ -132,57 +173,12 @@ public class DesignationDAOImpl implements DesignationDAO {
 
             statement.setString(3, status);
 
-            statement.setString(4, createdBy);
-
-            statement.execute();
-
-            return true;
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-
-            return false;
-        }
-    }
+            statement.setString(4, modifiedBy);
 
 
-    // =========================================================
-    // UPDATE DESIGNATION
-    // =========================================================
+            int result = statement.executeUpdate();
 
-    @Override
-    public boolean updateDesignation(
-            int designationId,
-            int departmentId,
-            String name,
-            String status,
-            String modifiedBy
-    ) {
-
-        String sql = "{CALL sp_update_designation(?, ?, ?, ?, ?)}";
-
-        try (
-                Connection connection =
-                        DBConnection.getConnection();
-
-                CallableStatement statement =
-                        connection.prepareCall(sql)
-        ) {
-
-            statement.setInt(1, designationId);
-
-            statement.setInt(2, departmentId);
-
-            statement.setString(3, name);
-
-            statement.setString(4, status);
-
-            statement.setString(5, modifiedBy);
-
-            statement.execute();
-
-            return true;
+            return result > 0;
 
         } catch (SQLException e) {
 
@@ -193,16 +189,17 @@ public class DesignationDAOImpl implements DesignationDAO {
     }
 
 
-    // =========================================================
-    // DELETE DESIGNATION
-    // =========================================================
+    // =====================================================
+    // DELETE DEPARTMENT
+    // =====================================================
 
     @Override
-    public boolean deleteDesignation(
-            int designationId
+    public boolean deleteDepartment(
+            int departmentId
     ) {
 
-        String sql = "{CALL sp_delete_designation(?)}";
+        String sql =
+                "{CALL sp_delete_department(?)}";
 
         try (
                 Connection connection =
@@ -212,11 +209,12 @@ public class DesignationDAOImpl implements DesignationDAO {
                         connection.prepareCall(sql)
         ) {
 
-            statement.setInt(1, designationId);
+            statement.setInt(1, departmentId);
 
-            statement.execute();
 
-            return true;
+            int result = statement.executeUpdate();
+
+            return result > 0;
 
         } catch (SQLException e) {
 
