@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -272,25 +273,45 @@
                         <span>Employees</span>
                         <span class="menu-arrow"></span>
                     </a>
+
                     <ul>
+
                         <li>
-                            <a href="javascript:void(0);">
-                                <span>Add Employee</span>
+                            <a href="${pageContext.request.contextPath}/Employee/AddDepartment">
+                                <span>Add Department</span>
                             </a>
                         </li>
+
+
                         <li>
-                            <a href="javascript:void(0);">
-                                <span>All Employees</span>
+                            <a href="${pageContext.request.contextPath}/Employee/Role">
+                                <span>Add Role</span>
                             </a>
                         </li>
+
+
                         <li>
-                            <a href="javascript:void(0);">
-                                <span>Department</span>
+                            <a href="${pageContext.request.contextPath}/Employee/AddDesignation">
+                                <span>Add Designation</span>
                             </a>
                         </li>
+
+
                         <li>
-                            <a href="javascript:void(0);">
-                                <span>Designation</span>
+                            <a href="${pageContext.request.contextPath}/Employee/EmployeeList">
+                                <span>Employee List</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/Employee/EmployeeGrid">
+                                <span>Employee Grid</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/Employee/EmployeeDetails">
+                                <span>Employee Details</span>
                             </a>
                         </li>
                     </ul>
@@ -777,7 +798,7 @@
                       </span>
                         <div class="ms-3">
                             <h3 class="mb-2">Welcome Back, Adrian <a href="javascript:void(0);" class="edit-icon"><i class="ti ti-edit fs-14"></i></a></h3>
-                            <p>You have <span class="text-primary text-decoration-underline">21</span> Pending Approvals & <span class="text-primary text-decoration-underline">14</span> Leave Requests</p>
+                            <p>You have <span class="text-primary text-decoration-underline">${pendingLeaves}</span> Pending Approvals & <span class="text-primary text-decoration-underline">${onLeave}</span> Employees On Leave Today</p>
                         </div>
                     </div>
                     <div class="d-flex align-items-center flex-wrap mb-1">
@@ -801,7 +822,7 @@
                                   <i class="ti ti-calendar-share fs-16"></i>
                                </span>
                                     <h6 class="fs-13 fw-medium text-default mb-1">Attendance Overview</h6>
-                                    <h3 class="mb-3">120/154 <span class="fs-12 fw-medium text-success"><i class="fa-solid fa-caret-up me-1"></i>+2.1%</span></h3>
+                                    <h3 class="mb-3">${presentToday}/${totalEmployees} <span class="fs-12 fw-medium text-success"><i class="fa-solid fa-caret-up me-1"></i>+2.1%</span></h3>
                                     <a href="javascript:void(0);" class="link-default">View Details</a>
                                 </div>
                             </div>
@@ -813,7 +834,8 @@
                                   <i class="ti ti-browser fs-16"></i>
                                </span>
                                     <h6 class="fs-13 fw-medium text-default mb-1">Total No of Project's</h6>
-                                    <h3 class="mb-3">90/125 <span class="fs-12 fw-medium text-danger"><i class="fa-solid fa-caret-down me-1"></i>-2.1%</span></h3>
+                                        <h3 class="mb-3">${totalProjects} <span class="fs-12 fw-medium text-danger">
+                                        <i class="fa-solid fa-caret-down me-1"></i>-2.1%</span></h3>
                                     <a href="javascript:void(0);" class="link-default">View All</a>
                                 </div>
                             </div>
@@ -825,7 +847,7 @@
                                   <i class="ti ti-users-group fs-16"></i>
                                </span>
                                     <h6 class="fs-13 fw-medium text-default mb-1">Total No of Clients</h6>
-                                    <h3 class="mb-3">69/86 <span class="fs-12 fw-medium text-danger"><i class="fa-solid fa-caret-down me-1"></i>-11.2%</span></h3>
+                                    <h3 class="mb-3">${totalClients} <span class="fs-12 fw-medium text-danger"><i class="fa-solid fa-caret-down me-1"></i>-11.2%</span></h3>
                                     <a href="javascript:void(0);" class="link-default">View All</a>
                                 </div>
                             </div>
@@ -837,7 +859,7 @@
                                   <i class="ti ti-checklist fs-16"></i>
                                </span>
                                     <h6 class="fs-13 fw-medium text-default mb-1">Total No of Tasks</h6>
-                                    <h3 class="mb-3">225/28 <span class="fs-12 fw-medium text-success"><i class="fa-solid fa-caret-down me-1"></i>+11.2%</span></h3>
+                                    <h3 class="mb-3">${totalTasks} <span class="fs-12 fw-medium text-success"><i class="fa-solid fa-caret-down me-1"></i>+11.2%</span></h3>
                                     <a href="javascript:void(0);" class="link-default">View All</a>
                                 </div>
                             </div>
@@ -849,7 +871,7 @@
                                   <i class="ti ti-moneybag fs-16"></i>
                                </span>
                                     <h6 class="fs-13 fw-medium text-default mb-1">Earnings</h6>
-                                    <h3 class="mb-3">$21445 <span class="fs-12 fw-medium text-success"><i class="fa-solid fa-caret-up me-1"></i>+10.2%</span></h3>
+                                    <h3 class="mb-3">$${totalEarnings} <span class="fs-12 fw-medium text-success"><i class="fa-solid fa-caret-up me-1"></i>+10.2%</span></h3>
                                     <a href="javascript:void(0);" class="link-default">View All</a>
                                 </div>
                             </div>
@@ -885,7 +907,7 @@
                                   <i class="ti ti-user-star fs-16"></i>
                                </span>
                                     <h6 class="fs-13 fw-medium text-default mb-1">New Hire</h6>
-                                    <h3 class="mb-3">45/48 <span class="fs-12 fw-medium text-danger"><i class="fa-solid fa-caret-down me-1"></i>-11.2%</span></h3>
+                                    <h3 class="mb-3">${newHires} <span class="fs-12 fw-medium text-danger"><i class="fa-solid fa-caret-down me-1"></i>-11.2%</span></h3>
                                     <a href="javascript:void(0);" class="link-default">View All</a>
                                 </div>
                             </div>
@@ -955,7 +977,7 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-1">
                                 <p class="fs-13 mb-3">Total Employee</p>
-                                <h3 class="mb-3">154</h3>
+                                <h3 class="mb-3">${totalEmployees}</h3>
                             </div>
                             <div class="progress-stacked emp-stack mb-3">
                                 <div class="progress" role="progressbar" aria-label="Segment one" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
@@ -1051,7 +1073,7 @@
                                 <canvas id="attendance" height="200"></canvas>
                                 <div class="position-absolute text-center attendance-canvas">
                                     <p class="fs-13 mb-1">Total Attendance</p>
-                                    <h3>120</h3>
+                                    <h3>${presentToday}</h3>
                                 </div>
                             </div>
                             <h6 class="mb-3">Status</h6>
@@ -2753,3 +2775,5 @@
 
 </body>
 </html>
+
+```
