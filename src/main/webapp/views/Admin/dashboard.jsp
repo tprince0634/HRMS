@@ -591,7 +591,7 @@
                     <ul>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/admin/employee-report">
                                 <span>Employee Report</span>
                             </a>
                         </li>
