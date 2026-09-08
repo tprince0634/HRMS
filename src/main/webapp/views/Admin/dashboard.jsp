@@ -597,7 +597,7 @@
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/admin/attendance-report">
                                 <span>Attendance Report</span>
                             </a>
                         </li>

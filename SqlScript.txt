@@ -20,3 +20,68 @@ BEGIN
       AND u.PasswordHash = p_password;
 END $$
 DELIMITER ;
+
+
+<-----------EmployeeReport--------->
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_employees()
+BEGIN
+    SELECT
+        u.UserId,
+        u.FirstName,
+        u.LastName,
+        u.Email,
+        u.PhoneNumber,
+        u.RoleId,
+        r.RoleName,
+        u.DepartmentId,
+        d.Name AS DepartmentName,
+        u.DesignationtId,
+        des.Name AS DesignationName,
+        u.DateOfJoining,
+        u.Status
+    FROM `User` u
+    LEFT JOIN `Role` r
+        ON u.RoleId = r.RoleId
+    LEFT JOIN `Departments` d
+        ON u.DepartmentId = d.DepartmentId
+    LEFT JOIN `Designations` des
+        ON u.DesignationtId = des.DesignationId
+    ORDER BY u.UserId DESC;
+END //
+
+DELIMITER ;
+
+
+
+<--------------AttendanceReport------------>
+DELIMITER //
+
+CREATE PROCEDURE get_all_attendance()
+BEGIN
+    SELECT
+        a.AttendanceId,
+        a.UserId,
+        u.FirstName,
+        u.LastName,
+        u.Email,
+        a.Date,
+        a.CheckIn,
+        a.CheckOut,
+        a.LunchIn,
+        a.LunchOut,
+        a.WorkingHours,
+        a.ProductionHours,
+        a.OvertimeHours,
+        a.BreakHours,
+        a.Late,
+        a.Status
+    FROM Attendance a
+    LEFT JOIN `User` u
+        ON a.UserId = u.UserId
+    ORDER BY a.Date DESC, a.AttendanceId DESC;
+END //
+
+DELIMITER ;

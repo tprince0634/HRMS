@@ -112,17 +112,108 @@ public class ReportDAOImpl implements ReportDao {
     }
 
 
-    // ---------------------------------------------------------
-    // Temporary methods
-    // We will implement these one by one after Employee Report.
-    // ---------------------------------------------------------
-
     @Override
     public List<AttendanceReport> getAllAttendance() {
 
-        return new ArrayList<>();
-    }
+        List<AttendanceReport> attendanceList = new ArrayList<>();
 
+        try (
+                Connection connection = DBConnection.getConnection();
+
+                CallableStatement statement =
+                        connection.prepareCall("{CALL get_all_attendance()}");
+
+                ResultSet rs = statement.executeQuery()
+        ) {
+
+            while (rs.next()) {
+
+                AttendanceReport attendance = new AttendanceReport();
+
+                attendance.setAttendanceId(
+                        rs.getInt("AttendanceId")
+                );
+
+                attendance.setUserId(
+                        rs.getInt("UserId")
+                );
+
+                attendance.setFirstName(
+                        rs.getString("FirstName")
+                );
+
+                attendance.setLastName(
+                        rs.getString("LastName")
+                );
+
+                attendance.setEmail(
+                        rs.getString("Email")
+                );
+
+                if (rs.getDate("Date") != null) {
+                    attendance.setDate(
+                            rs.getDate("Date").toLocalDate()
+                    );
+                }
+
+                if (rs.getTime("CheckIn") != null) {
+                    attendance.setCheckIn(
+                            rs.getTime("CheckIn").toLocalTime()
+                    );
+                }
+
+                if (rs.getTime("CheckOut") != null) {
+                    attendance.setCheckOut(
+                            rs.getTime("CheckOut").toLocalTime()
+                    );
+                }
+
+                if (rs.getTime("LunchIn") != null) {
+                    attendance.setLunchIn(
+                            rs.getTime("LunchIn").toLocalTime()
+                    );
+                }
+
+                if (rs.getTime("LunchOut") != null) {
+                    attendance.setLunchOut(
+                            rs.getTime("LunchOut").toLocalTime()
+                    );
+                }
+
+                attendance.setWorkingHours(
+                        rs.getString("WorkingHours")
+                );
+
+                attendance.setProductionHours(
+                        rs.getString("ProductionHours")
+                );
+
+                attendance.setOvertimeHours(
+                        rs.getString("OvertimeHours")
+                );
+
+                attendance.setBreakHours(
+                        rs.getString("BreakHours")
+                );
+
+                attendance.setLate(
+                        rs.getString("Late")
+                );
+
+                attendance.setStatus(
+                        rs.getString("Status")
+                );
+
+                attendanceList.add(attendance);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return attendanceList;
+    }
 
     @Override
     public List<LeaveReport> getAllLeaves() {
