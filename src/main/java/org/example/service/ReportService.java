@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.dao.ReportDAOImpl;
 import org.example.interfaces.ReportDao;
+import org.example.model.AttendanceReport;
 import org.example.model.EmployeeReport;
 
 import java.util.List;
@@ -16,5 +17,9 @@ public class ReportService {
 
     public List<EmployeeReport> getAllEmployees() {
         return reportDao.getAllEmployees();
+    }
+
+    public List<AttendanceReport> getAllAttendance() {
+        return reportDao.getAllAttendance();
     }
 }

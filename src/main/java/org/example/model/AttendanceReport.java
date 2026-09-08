@@ -16,33 +16,26 @@ public class AttendanceReport {
 
     private int attendanceId;
 
-    private int employeeId;
+    private int userId;
 
-    private String employeeName;
-
-    private String department;
-
-    private String designation;
+    private String firstName;
+    private String lastName;
+    private String email;
 
     private LocalDate date;
 
     private LocalTime checkIn;
-
     private LocalTime checkOut;
 
     private LocalTime lunchIn;
-
     private LocalTime lunchOut;
 
-    private double workingHours;
+    private String workingHours;
+    private String productionHours;
+    private String overtimeHours;
+    private String breakHours;
 
-    private double productionHours;
-
-    private double overtimeHours;
-
-    private double breakHours;
-
-    private boolean late;
+    private String late;
 
     private String status;
 }
