@@ -479,7 +479,7 @@
                             <ul>
 
                                 <li>
-                                    <a href="javascript:void(0);">
+                                    <a href="${pageContext.request.contextPath}/uploadFile">
                                         <span>Upload Document</span>
                                     </a>
                                 </li>

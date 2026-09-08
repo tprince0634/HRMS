@@ -40,13 +40,13 @@ public class TrainerDaoImpl  implements TrainerDao {
     }
 
     @Override
-    public Trainer updateTrainer(Trainer trainer) {
+    public Trainer updateTrainer( int id ,Trainer trainer) {
         String sql = "call update_trainer(?,?,?,?,?,?,?,?,?)";
 
         try (Connection connection = DBConnection.getConnection();
              CallableStatement callableStatement = connection.prepareCall(sql)) {
 
-            callableStatement.setInt(1, trainer.getTrainerId());
+            callableStatement.setInt(1, id);
             callableStatement.setString(2, trainer.getFirstName());
             callableStatement.setString(3, trainer.getLastName());
             callableStatement.setString(4, trainer.getRole());
