@@ -1,14 +1,14 @@
 package org.example.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
-@ToString
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeeReport {
@@ -17,14 +17,20 @@ public class EmployeeReport {
 
     private String firstName;
     private String lastName;
+
     private String email;
     private String phoneNumber;
 
+    private int roleId;
     private String role;
+
+    private Integer departmentId;
     private String department;
+
+    private Integer designationId;
     private String designation;
 
-    private LocalDate dateOfJoining;
-    private String status;
+    private LocalDateTime dateOfJoining;
 
+    private String status;
 }
