@@ -9,8 +9,8 @@ import org.example.model.ProjectReport;
 import org.example.model.TaskReport;
 import org.example.util.DBConnection;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -23,34 +23,12 @@ public class ReportDAOImpl implements ReportDao {
 
         List<EmployeeReport> employees = new ArrayList<>();
 
-        String sql = """
-        SELECT
-            u.UserId,
-            u.FirstName,
-            u.LastName,
-            u.Email,
-            u.PhoneNumber,
-            u.RoleId,
-            r.RoleName,
-            u.DepartmentId,
-            d.Name AS DepartmentName,
-            u.DesignationtId,
-            des.Name AS DesignationName,
-            u.DateOfJoining,
-            u.Status
-        FROM `User` u
-        LEFT JOIN `Role` r
-            ON u.RoleId = r.RoleId
-        LEFT JOIN `Departments` d
-            ON u.DepartmentId = d.DepartmentId
-        LEFT JOIN `Designations` des
-            ON u.DesignationtId = des.DesignationId
-        ORDER BY u.UserId DESC
-        """;
-
         try (
                 Connection connection = DBConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql);
+
+                CallableStatement statement =
+                        connection.prepareCall("{CALL get_all_employees()}");
+
                 ResultSet rs = statement.executeQuery()
         ) {
 
@@ -86,7 +64,8 @@ public class ReportDAOImpl implements ReportDao {
                         rs.getString("RoleName")
                 );
 
-                int departmentId = rs.getInt("DepartmentId");
+                int departmentId =
+                        rs.getInt("DepartmentId");
 
                 if (!rs.wasNull()) {
                     employee.setDepartmentId(departmentId);
@@ -96,7 +75,8 @@ public class ReportDAOImpl implements ReportDao {
                         rs.getString("DepartmentName")
                 );
 
-                int designationId = rs.getInt("DesignationtId");
+                int designationId =
+                        rs.getInt("DesignationtId");
 
                 if (!rs.wasNull()) {
                     employee.setDesignationId(designationId);
@@ -110,6 +90,7 @@ public class ReportDAOImpl implements ReportDao {
                         rs.getTimestamp("DateOfJoining");
 
                 if (joiningDate != null) {
+
                     employee.setDateOfJoining(
                             joiningDate.toLocalDateTime()
                     );
@@ -123,6 +104,7 @@ public class ReportDAOImpl implements ReportDao {
             }
 
         } catch (Exception e) {
+
             e.printStackTrace();
         }
 
@@ -137,26 +119,35 @@ public class ReportDAOImpl implements ReportDao {
 
     @Override
     public List<AttendanceReport> getAllAttendance() {
+
         return new ArrayList<>();
     }
+
 
     @Override
     public List<LeaveReport> getAllLeaves() {
+
         return new ArrayList<>();
     }
+
 
     @Override
     public List<PayslipReport> getAllPayslips() {
+
         return new ArrayList<>();
     }
+
 
     @Override
     public List<ProjectReport> getAllProjects() {
+
         return new ArrayList<>();
     }
 
+
     @Override
     public List<TaskReport> getAllTasks() {
+
         return new ArrayList<>();
     }
 }
