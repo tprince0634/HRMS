@@ -12,13 +12,17 @@ import org.example.service.AuthService;
 import org.example.service.AuthServiceImpl;
 
 import java.io.IOException;
+
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+
     private AuthService authService;
+
     @Override
     public void init() {
         authService = new AuthServiceImpl();
     }
+
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
@@ -33,20 +37,24 @@ public class LoginServlet extends HttpServlet {
                           HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Get email and password from login form
+        // Get login details
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Send credentials to Service
+        // Authenticate user
         User user = authService.authenticate(email, password);
 
         // Login failed
         if (user == null) {
+
             request.setAttribute(
                     "errorMessage",
                     "Invalid email or password!"
             );
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+
+            request.getRequestDispatcher("/login.jsp")
+                    .forward(request, response);
+
             return;
         }
 
@@ -59,32 +67,48 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("firstName", user.getFirstName());
         session.setAttribute("lastName", user.getLastName());
 
-        // Get role from User object
+        // Get role
         String role = user.getRoleName();
 
-        // Redirect according to role
+        // ==========================
+        // ADMIN
+        // ==========================
         if ("Admin".equalsIgnoreCase(role)) {
+            response.sendRedirect(
+                    request.getContextPath() +
+                            "/Admin/dashboard"
+            );
+
+        }
+
+        // ==========================
+        // MANAGER
+        // ==========================
+        else if ("Manager".equalsIgnoreCase(role)) {
 
             response.sendRedirect(
                     request.getContextPath() +
-                            "/views/admin/admin-dashboard.jsp"
+                            "/Manager/dashboard"
             );
 
-        } else if ("Manager".equalsIgnoreCase(role)) {
+        }
+
+        // ==========================
+        // EMPLOYEE
+        // ==========================
+        else if ("Employee".equalsIgnoreCase(role)) {
 
             response.sendRedirect(
                     request.getContextPath() +
-                            "/views/manager/manager-dashboard.jsp"
+                            "/Employee/dashboard"
             );
 
-        } else if ("Employee".equalsIgnoreCase(role)) {
+        }
 
-            response.sendRedirect(
-                    request.getContextPath() +
-                            "/views/employee/employee-dashboard.jsp"
-            );
-
-        } else {
+        // ==========================
+        // UNKNOWN ROLE
+        // ==========================
+        else {
 
             response.sendRedirect(
                     request.getContextPath() +

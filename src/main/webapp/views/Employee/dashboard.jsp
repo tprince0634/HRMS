@@ -1,5 +1,5 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,6 +28,10 @@
 
 <body>
 
+<c:set var="totalEmployees" value="0"/>
+<c:set var="presentToday" value="0"/>
+<c:set var="onLeave" value="0"/>
+<c:set var="pendingLeaves" value="0"/>
 
 <div id="global-loader">
     <div class="page-loader"></div>
@@ -384,7 +388,7 @@
                         <span>Documents</span>
 
                     </a>
-                    <ul>
+  <ul>
 
                         <!-- Documents -->
                         <li>
@@ -396,24 +400,24 @@
                             </a>
 
                         </li>
-                        <li>
+                          <li>
 
-                            <a href="javascript:void(0);">
+                                                    <a href="javascript:void(0);">
 
-                                <span>My Documents</span>
+                                                        <span>My Documents</span>
 
-                            </a>
+                                                    </a>
 
-                        </li>
-                        <li>
+                          </li>
+                            <li>
 
-                            <a href="javascript:void(0);">
+                                                      <a href="javascript:void(0);">
 
-                                <span>Upload Documents</span>
+                                                          <span>Upload Documents</span>
 
-                            </a>
+                                                      </a>
 
-                        </li>
+                             </li>
 
 
 
@@ -483,7 +487,7 @@
                 <div class="my-auto mb-2">
 
                     <h2 class="mb-1">
-                        Employee Dashboard
+                     Employee Dashboard
                     </h2>
 
                     <nav>
