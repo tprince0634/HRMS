@@ -218,7 +218,96 @@ public class ReportDAOImpl implements ReportDao {
     @Override
     public List<LeaveReport> getAllLeaves() {
 
-        return new ArrayList<>();
+        List<LeaveReport> leaveList = new ArrayList<>();
+
+        try (
+                Connection connection = DBConnection.getConnection();
+
+                CallableStatement statement =
+                        connection.prepareCall("{CALL get_all_leave_requests()}");
+
+                ResultSet rs = statement.executeQuery()
+        ) {
+
+            while (rs.next()) {
+
+                LeaveReport leave = new LeaveReport();
+
+                leave.setLeaveRequestId(
+                        rs.getInt("LeaveRequestId")
+                );
+
+                leave.setUserId(
+                        rs.getInt("UserId")
+                );
+
+                leave.setFirstName(
+                        rs.getString("FirstName")
+                );
+
+                leave.setLastName(
+                        rs.getString("LastName")
+                );
+
+                leave.setEmail(
+                        rs.getString("Email")
+                );
+
+                leave.setLeaveTypeId(
+                        rs.getInt("LeaveTypeId")
+                );
+
+                leave.setLeaveType(
+                        rs.getString("LeaveType")
+                );
+
+                Timestamp startDate =
+                        rs.getTimestamp("StartDate");
+
+                if (startDate != null) {
+                    leave.setStartDate(
+                            startDate.toLocalDateTime()
+                    );
+                }
+
+                Timestamp endDate =
+                        rs.getTimestamp("EndDate");
+
+                if (endDate != null) {
+                    leave.setEndDate(
+                            endDate.toLocalDateTime()
+                    );
+                }
+
+                leave.setNumberOfDays(
+                        rs.getInt("NumberOfDays")
+                );
+
+                leave.setReason(
+                        rs.getString("Reason")
+                );
+
+                leave.setApprovedBy(
+                        rs.getString("ApprovedBy")
+                );
+
+                leave.setStatus(
+                        rs.getString("Status")
+                );
+
+                leave.setStatusHistory(
+                        rs.getString("StatusHistory")
+                );
+
+                leaveList.add(leave);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return leaveList;
     }
 
 

@@ -1,8 +1,5 @@
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +10,7 @@
     <meta name="keywords" content="admin, estimates, bootstrap, business, html5, responsive, Projects">
     <meta name="author" content="Dreams technologies - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Smarthr Admin Template</title>
+    <title>Leave Report</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/favicon.png">
@@ -52,7 +49,7 @@
 
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/select2/css/select2.min.css">
-
+    
     <!-- Bootstrap Tagsinput CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
 
@@ -506,10 +503,10 @@
                                            <li><a href="project-report.html">Project Report</a></li>
                                            <li><a href="task-report.html">Task Report</a></li>
                                            <li><a href="user-report.html">User Report</a></li>
-                                           <li><a href="${pageContext.request.contextPath}/admin/employee-report" class="active">Employee Report</a></li>
+                                           <li><a href="employee-report.html" class="active">Employee Report</a></li>
                                            <li><a href="payslip-report.html">Payslip Report</a></li>
                                            <li><a href="attendance-report.html">Attendance Report</a></li>
-                                           <li><a href="leave-report.html">Leave Report</a></li>
+                                           <li><a href="${pageContext.request.contextPath}/admin/leave-report" class="active">Leave Report</a></li>
                                            <li><a href="daily-report.html">Daily Report</a></li>
                                         </ul>
                                      </li>
@@ -1232,7 +1229,7 @@
                                               <img src="${pageContext.request.contextPath}/assets/img/profiles/avatar-25.jpg" alt="Profile">
                                            </span>
                                            <div class="flex-grow-1">
-                                              <p class="mb-1">New student record <span class="text-dark fw-semibold"> George</span>
+                                              <p class="mb-1">New student record <span class="text-dark fw-semibold"> George</span> 
                                                  is created by <span class="text-dark fw-semibold">Teressa</span>
                                               </p>
                                               <span>2 hrs ago</span>
@@ -1289,7 +1286,7 @@
                                      href="bussiness-settings.html">
                                      <i class="ti ti-settings me-1"></i>Settings
                                   </a>
-
+                                  
                                   <a class="dropdown-item d-inline-flex align-items-center p-0 py-2"
                                      href="profile-settings.html">
                                      <i class="ti ti-circle-arrow-up me-1"></i>My Account
@@ -1804,10 +1801,10 @@
                                <li><a href="project-report.html">Project Report</a></li>
                                <li><a href="task-report.html">Task Report</a></li>
                                <li><a href="user-report.html">User Report</a></li>
-                               <li><a href="${pageContext.request.contextPath}/admin/employee-report" class="active">Employee Report</a></li>
+                               <li><a href="employee-report.html" class="active">Employee Report</a></li>
                                <li><a href="payslip-report.html">Payslip Report</a></li>
                                <li><a href="attendance-report.html">Attendance Report</a></li>
-                               <li><a href="leave-report.html">Leave Report</a></li>
+                               <li><a href="${pageContext.request.contextPath}/admin/leave-report" class="active">Leave Report</a></li>
                                <li><a href="daily-report.html">Daily Report</a></li>
                             </ul>
                          </li>
@@ -2754,10 +2751,10 @@
                                <li><a href="project-report.html">Project Report</a></li>
                                <li><a href="task-report.html">Task Report</a></li>
                                <li><a href="user-report.html">User Report</a></li>
-                               <li><a href="${pageContext.request.contextPath}/admin/employee-report" class="active">Employee Report</a></li>
+                               <li><a href="employee-report.html" class="active">Employee Report</a></li>
                                <li><a href="payslip-report.html">Payslip Report</a></li>
                                <li><a href="attendance-report.html">Attendance Report</a></li>
-                               <li><a href="leave-report.html">Leave Report</a></li>
+                               <li><a href="${pageContext.request.contextPath}/admin/leave-report" class="active">Leave Report</a></li>
                                <li><a href="daily-report.html">Daily Report</a></li>
                             </ul>
                          </li>
@@ -3632,10 +3629,10 @@
                                   <li><a href="project-report.html">Project Report</a></li>
                                   <li><a href="task-report.html">Task Report</a></li>
                                   <li><a href="user-report.html">User Report</a></li>
-                                  <li><a href="${pageContext.request.contextPath}/admin/employee-report" class="active">Employee Report</a></li>
+                                  <li><a href="employee-report.html" class="active">Employee Report</a></li>
                                   <li><a href="payslip-report.html">Payslip Report</a></li>
                                   <li><a href="attendance-report.html">Attendance Report</a></li>
-                                  <li><a href="leave-report.html">Leave Report</a></li>
+                                  <li><a href="${pageContext.request.contextPath}/admin/leave-report" class="active">Leave Report</a></li>
                                   <li><a href="daily-report.html">Daily Report</a></li>
                                </ul>
                             </li>
@@ -4401,10 +4398,10 @@
                                      <li><a href="project-report.html">Project Report</a></li>
                                      <li><a href="task-report.html">Task Report</a></li>
                                      <li><a href="user-report.html">User Report</a></li>
-                                     <li><a href="${pageContext.request.contextPath}/admin/employee-report" class="active">Employee Report</a></li>
+                                     <li><a href="employee-report.html" class="active">Employee Report</a></li>
                                      <li><a href="payslip-report.html">Payslip Report</a></li>
                                      <li><a href="attendance-report.html">Attendance Report</a></li>
-                                     <li><a href="leave-report.html">Leave Report</a></li>
+                                     <li><a href="${pageContext.request.contextPath}/admin/leave-report" class="active">Leave Report</a></li>
                                      <li><a href="daily-report.html">Daily Report</a></li>
                                   </ul>
                                </li>
@@ -4741,7 +4738,7 @@
              <!-- Breadcrumb -->
              <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
                 <div class="my-auto mb-2">
-                   <h2 class="mb-1">Employee Report</h2>
+                   <h2 class="mb-1">Leave Report</h2>
                    <nav>
                       <ol class="breadcrumb mb-0">
                          <li class="breadcrumb-item">
@@ -4750,7 +4747,7 @@
                          <li class="breadcrumb-item">
                             HR
                          </li>
-                         <li class="breadcrumb-item active" aria-current="page">Employee Report</li>
+                         <li class="breadcrumb-item active" aria-current="page">Leave Report</li>
                       </ol>
                    </nav>
                 </div>
@@ -4762,14 +4759,14 @@
                          </a>
                          <ul class="dropdown-menu  dropdown-menu-end p-3">
                             <li>
-                               <a href="#" id="exportEmployeePdf" class="dropdown-item rounded-1" onclick="return exportEmployeePdf();"><i class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
+                               <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
                             </li>
                             <li>
-                               <a href="#" id="exportEmployeeExcel" class="dropdown-item rounded-1" onclick="return exportEmployeeExcel();"><i class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
+                               <a href="javascript:void(0);" class="dropdown-item rounded-1"><i class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
                             </li>
                          </ul>
                       </div>
-
+                      
                    </div>
                    <div class="head-icons ms-2">
                       <a href="javascript:void(0);" class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Collapse" id="collapse-header">
@@ -4783,321 +4780,193 @@
                     <div class="col-xl-6 d-flex">
                         <div class="row flex-fill">
 
-                            <!-- Total Companies -->
                             <div class="col-lg-6 col-md-6 d-flex">
                                 <div class="card flex-fill">
                                     <div class="card-body">
                                         <div class="overflow-hidden d-flex mb-2 align-items-center">
-                                  <span class="me-2"><img src="${pageContext.request.contextPath}/assets/img/reports-img/employee-report-icon.svg" alt="Img" class="img-fluid"></span>
-                                  <div>
-                                     <p class="fs-14 fw-normal mb-1 text-truncate">Total Employee</p>
-                                     <h5>${totalEmployees}</h5>
-                                  </div>
-                               </div>
-                               <div>
-                                  <p class="fs-12 fw-normal d-flex align-items-center text-truncate">
-    <span class="text-success fs-12 d-flex align-items-center me-1">
-        <i class="ti ti-users me-1"></i>
-    </span>
-    Current employee count
-</p>
-                               </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /Total Companies -->
-
-                            <!-- Total Companies -->
-                      <div class="col-lg-6 col-md-6 d-flex">
-                                <div class="card flex-fill">
-                                    <div class="card-body">
-                                        <div class="overflow-hidden d-flex mb-2 align-items-center">
-                                  <span class="me-2"><img src="${pageContext.request.contextPath}/assets/img/reports-img/employee-report-success.svg" alt="Img" class="img-fluid"></span>
-                                  <div>
-                                     <p class="fs-14 fw-normal mb-1 text-truncate">Active Employee</p>
-                                     <h5>${activeEmployees}</h5>
-                                  </div>
-                               </div>
-                               <div>
-                                  <p class="fs-12 fw-normal d-flex align-items-center text-truncate">
-    <span class="text-success fs-12 d-flex align-items-center me-1">
-        <i class="ti ti-users me-1"></i>
-    </span>
-    Current employee count
-</p>
-                               </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /Total Companies -->
-
-                            <!-- Total Department -->
-                            <div class="col-lg-6 col-md-6 d-flex">
-                                <div class="card flex-fill">
-                                    <div class="card-body">
-                                        <div class="overflow-hidden d-flex mb-2 align-items-center">
-                                            <span class="me-2">
-                                                <img src="${pageContext.request.contextPath}/assets/img/reports-img/employee-report-info.svg"
-                                                     alt="Img" class="img-fluid">
-                                            </span>
+                                            <span class="me-2"><img src="${pageContext.request.contextPath}/assets/img/reports-img/employee-report-icon.svg" alt="Img" class="img-fluid"></span>
                                             <div>
-                                                <p class="fs-14 fw-normal mb-1 text-truncate">Total Department</p>
-                                                <h5>${totalDepartments}</h5>
+                                                <p class="fs-14 fw-normal mb-1 text-truncate">Total Leaves</p>
+                                                <h5>${totalLeaves}</h5>
                                             </div>
                                         </div>
-                                        <div>
-                                            <p class="fs-12 fw-normal d-flex align-items-center text-truncate">
-                                                <span class="text-success fs-12 d-flex align-items-center me-1">
-                                                    <i class="ti ti-building-community me-1"></i>
-                                                </span>
-                                                Departments
-                                            </p>
-                                        </div>
+                                        <p class="fs-12 fw-normal mb-0">All leave requests</p>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /Total Department -->
 
-                            <!-- Total Roles -->
                             <div class="col-lg-6 col-md-6 d-flex">
                                 <div class="card flex-fill">
                                     <div class="card-body">
                                         <div class="overflow-hidden d-flex mb-2 align-items-center">
-                                            <span class="me-2">
-                                                <img src="${pageContext.request.contextPath}/assets/img/reports-img/employee-report-danger.svg"
-                                                     alt="Img" class="img-fluid">
-                                            </span>
+                                            <span class="me-2"><img src="${pageContext.request.contextPath}/assets/img/reports-img/employee-report-success.svg" alt="Img" class="img-fluid"></span>
                                             <div>
-                                                <p class="fs-14 fw-normal mb-1 text-truncate">Total Roles</p>
-                                                <h5>${totalRoles}</h5>
+                                                <p class="fs-14 fw-normal mb-1 text-truncate">Approved</p>
+                                                <h5>${approvedLeaves}</h5>
                                             </div>
                                         </div>
-                                        <div>
-                                            <p class="fs-12 fw-normal d-flex align-items-center text-truncate">
-                                                <span class="text-success fs-12 d-flex align-items-center me-1">
-                                                    <i class="ti ti-user-star me-1"></i>
-                                                </span>
-                                                Roles
-                                            </p>
-                                        </div>
+                                        <p class="fs-12 fw-normal mb-0">Approved leave requests</p>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /Total Roles -->
+
+                            <div class="col-lg-6 col-md-6 d-flex">
+                                <div class="card flex-fill">
+                                    <div class="card-body">
+                                        <div class="overflow-hidden d-flex mb-2 align-items-center">
+                                            <span class="me-2"><img src="${pageContext.request.contextPath}/assets/img/reports-img/employee-report-info.svg" alt="Img" class="img-fluid"></span>
+                                            <div>
+                                                <p class="fs-14 fw-normal mb-1 text-truncate">Pending</p>
+                                                <h5>${pendingLeaves}</h5>
+                                            </div>
+                                        </div>
+                                        <p class="fs-12 fw-normal mb-0">Pending leave requests</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 d-flex">
+                                <div class="card flex-fill">
+                                    <div class="card-body">
+                                        <div class="overflow-hidden d-flex mb-2 align-items-center">
+                                            <span class="me-2"><img src="${pageContext.request.contextPath}/assets/img/reports-img/employee-report-danger.svg" alt="Img" class="img-fluid"></span>
+                                            <div>
+                                                <p class="fs-14 fw-normal mb-1 text-truncate">Rejected</p>
+                                                <h5>${rejectedLeaves}</h5>
+                                            </div>
+                                        </div>
+                                        <p class="fs-12 fw-normal mb-0">Rejected leave requests</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                <div class="col-xl-6 d-flex">
-                       <div class="card flex-fill">
-                      <div class="card-header border-0 pb-0">
-                         <div class="d-flex flex-wrap justify-content-between align-items-center row-gap-2">
-                            <div class="d-flex align-items-center ">
-                               <span class="me-2"><i class="ti ti-chart-bar text-danger"></i></span>
-                               <h5>Employee </h5>
+
+                    <div class="col-xl-6 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-header border-0 pb-0">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center row-gap-2">
+                                    <div class="d-flex align-items-center">
+                                        <span class="me-2"><i class="ti ti-chart-bar text-danger"></i></span>
+                                        <h5>Leave Type</h5>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="d-flex align-items-center">
-                               <p class="d-inline-flex align-items-center me-3 mb-0">
-                                  <i class="ti ti-square-filled fs-12 text-success me-2"></i>
-                                  Active Employees
-                               </p>
-                               <p class="d-inline-flex align-items-center">
-                                  <i class="ti ti-square-filled fs-12 text-gray-1 me-2 mb-0"></i>
-                                  Inactive Employees
-                               </p>
+                            <div class="card-body py-0">
+                                <div id="leave-reports"></div>
                             </div>
-                            <div class="dropdown">
-                               <a href="javascript:void(0);" id="employeeYearButton" class="dropdown-toggle btn btn-sm fs-12 btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
-                                  This Year
-                               </a>
-                               <ul id="employeeYearMenu" class="dropdown-menu dropdown-menu-end p-2">
-                                  <li><a href="javascript:void(0);" class="dropdown-item rounded-1 employee-year-filter" data-year="current">This Year</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                      </div>
-                      <div class="card-body py-0">
-                         <div id="employee-reports"></div>
-                      </div>
-                   </div>
+                        </div>
                     </div>
              </div>
 
              <div class="card">
                 <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
-                   <h5>Employees List</h5>
+                   <h5>Leave Requests List</h5>
                    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
-                            <div class="me-3">
-                                <div class="input-icon position-relative">
-                                    <span class="input-icon-addon">
-                                        <i class="ti ti-search"></i>
-                                    </span>
-                                    <input type="text"
-                                           id="employeeSearch"
-                                           class="form-control"
-                                           placeholder="Search employee...">
-                                </div>
-                            </div>
-                            <div class="me-3">
+                      <div class="me-3">
                          <div class="input-icon-end position-relative">
-                            <input type="text" id="employeeDateRange" class="form-control" placeholder="dd/mm/yyyy - dd/mm/yyyy">
-                            <span class="input-icon-addon">
-                               <i class="ti ti-chevron-down"></i>
-                            </span>
+                            <input type="text" id="leaveSearch" class="form-control" placeholder="Search employee, email or leave type">
+                            <span class="input-icon-addon"><i class="ti ti-search"></i></span>
                          </div>
                       </div>
-                            <div class="dropdown me-3">
-                         <a href="javascript:void(0);" id="designationFilterButton"
-                            class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
-                            data-bs-toggle="dropdown">
-                            Designation
-                         </a>
-                         <ul id="designationFilterMenu" class="dropdown-menu dropdown-menu-end p-3">
-                            <li>
-                               <a href="javascript:void(0);" class="dropdown-item rounded-1 designation-filter" data-value="">
-                                  All Designations
-                               </a>
-                            </li>
+                      <div class="me-3">
+                         <div class="input-icon-end position-relative">
+                            <input type="text" id="leaveDateRange" class="form-control date-range bookingrange" placeholder="dd/mm/yyyy - dd/mm/yyyy">
+                            <span class="input-icon-addon"><i class="ti ti-chevron-down"></i></span>
+                         </div>
+                      </div>
+                      <div class="dropdown me-3">
+                         <a href="javascript:void(0);" id="leaveTypeFilterBtn" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">Leave Type</a>
+                         <ul class="dropdown-menu dropdown-menu-end p-2">
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-type-filter" data-value="">All Types</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-type-filter" data-value="Paid Leave">Paid Leave</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-type-filter" data-value="Sick Leave">Sick Leave</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-type-filter" data-value="CL">CL</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-type-filter" data-value="ML">ML</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-type-filter" data-value="Unpaid Leave">Unpaid Leave</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-type-filter" data-value="Test Leave">Test Leave</a></li>
                          </ul>
                       </div>
-                            <div class="dropdown me-3">
-                         <a href="javascript:void(0);" id="statusFilterButton"
-                            class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
-                            data-bs-toggle="dropdown">
-                            Select Status
-                         </a>
-                         <ul id="statusFilterMenu" class="dropdown-menu dropdown-menu-end p-3">
-                            <li>
-                               <a href="javascript:void(0);" class="dropdown-item rounded-1 status-filter" data-value="">
-                                  All Status
-                               </a>
-                            </li>
-                            <li>
-                               <a href="javascript:void(0);" class="dropdown-item rounded-1 status-filter" data-value="Active">
-                                  Active
-                               </a>
-                            </li>
-                            <li>
-                               <a href="javascript:void(0);" class="dropdown-item rounded-1 status-filter" data-value="Inactive">
-                                  Inactive
-                               </a>
-                            </li>
+                      <div class="dropdown me-3">
+                         <a href="javascript:void(0);" id="leaveStatusFilterBtn" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">Select Status</a>
+                         <ul class="dropdown-menu dropdown-menu-end p-2">
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-status-filter" data-value="">All Status</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-status-filter" data-value="Approved">Approved</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-status-filter" data-value="Pending">Pending</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-status-filter" data-value="Rejected">Rejected</a></li>
                          </ul>
                       </div>
-                            <div class="dropdown">
-                         <a href="javascript:void(0);" id="employeeSortButton"
-                            class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
-                            data-bs-toggle="dropdown">
-                            Sort By : Recently Added
-                         </a>
-                         <ul id="employeeSortMenu" class="dropdown-menu dropdown-menu-end p-3">
-                            <li>
-                               <a href="javascript:void(0);" class="dropdown-item rounded-1 employee-sort" data-sort="recent">
-                                  Recently Added
-                               </a>
-                            </li>
-                            <li>
-                               <a href="javascript:void(0);" class="dropdown-item rounded-1 employee-sort" data-sort="asc">
-                                  Ascending
-                               </a>
-                            </li>
-                            <li>
-                               <a href="javascript:void(0);" class="dropdown-item rounded-1 employee-sort" data-sort="desc">
-                                  Descending
-                               </a>
-                            </li>
+                      <div class="dropdown">
+                         <a href="javascript:void(0);" id="leaveSortBtn" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">Sort By : Newest</a>
+                         <ul class="dropdown-menu dropdown-menu-end p-2">
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-sort" data-value="newest">Newest</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-sort" data-value="oldest">Oldest</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-sort" data-value="days-high">Days: High to Low</a></li>
+                            <li><a href="javascript:void(0);" class="dropdown-item rounded-1 leave-sort" data-value="days-low">Days: Low to High</a></li>
                          </ul>
                       </div>
                    </div>
                 </div>
+
                 <div class="card-body p-0">
-                   <div class="custom-datatable-filter table-responsive">
-                      <table class="table datatable">
+                   <div class="table-responsive">
+                      <table class="table table-nowrap leave-report-table mb-0">
                          <thead class="thead-light">
                             <tr>
-                               <th>Emp ID</th>
-                               <th>Name</th>
+                               <th>Leave ID</th>
+                               <th>Employee</th>
                                <th>Email</th>
-                               <th>Department</th>
-                               <th>Phone</th>
-                               <th>Joining Date</th>
+                               <th>Leave Type</th>
+                               <th>Start Date</th>
+                               <th>End Date</th>
+                               <th>Days</th>
+                               <th>Reason</th>
+                               <th>Approved By</th>
                                <th>Status</th>
-                               <th class="employee-designation-column">Designation</th>
                             </tr>
                          </thead>
-                         <tbody>
-<c:choose>
-    <c:when test="${not empty employees}">
-        <c:forEach var="employee" items="${employees}">
-            <tr>
-                <td>
-                    <a href="#" class="link-default">Emp-${employee.employeeId}</a>
-                </td>
-
-                <td>
-                    <div class="d-flex align-items-center">
-                        <a href="#" class="avatar avatar-md">
-                            <img src="${pageContext.request.contextPath}/assets/img/users/user-01.jpg"
-                             class="img-fluid rounded-circle" alt="Employee">
-                        </a>
-
-                        <div class="ms-2">
-                            <p class="text-dark mb-0">
-                                ${employee.firstName} ${employee.lastName}
-                            </p>
-                            <span class="fs-12">
-                                ${employee.designation}
-                            </span>
-                        </div>
-                    </div>
-                </td>
-
-                <td>${employee.email}</td>
-                <td>${employee.department}</td>
-                <td>${employee.phoneNumber}</td>
-
-                <td data-joining-date="${employee.dateOfJoining}">
-                    <c:choose>
-                        <c:when test="${not empty employee.dateOfJoining}">
-                            ${employee.dateOfJoining.dayOfMonth}
-                            ${employee.dateOfJoining.month}
-                            ${employee.dateOfJoining.year}
-                        </c:when>
-                        <c:otherwise>
-                            -
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-
-                <td>
-                    <c:choose>
-                        <c:when test="${employee.status eq 'Active'}">
-                            <span class="badge badge-success d-inline-flex align-items-center badge-xs">
-                                <i class="ti ti-point-filled me-1"></i>Active
-                            </span>
-                        </c:when>
-
-                        <c:otherwise>
-                            <span class="badge badge-danger d-inline-flex align-items-center badge-sm">
-                                <i class="ti ti-point-filled me-1"></i>
-                                ${employee.status}
-                            </span>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-
-                <td class="employee-designation-column">${employee.designation}</td>
-            </tr>
-        </c:forEach>
-    </c:when>
-
-    <c:otherwise>
-        <tr>
-            <td colspan="8" class="text-center py-4">
-                No employees found.
-            </td>
-        </tr>
-    </c:otherwise>
-</c:choose>
-</tbody>
+                         <tbody id="leaveTableBody">
+                            <c:choose>
+                               <c:when test="${not empty leaveList}">
+                                  <c:forEach var="leave" items="${leaveList}">
+                                     <tr data-start-date="${leave.startDate}" data-end-date="${leave.endDate}" data-days="${leave.numberOfDays}" data-status="${leave.status}" data-leave-type="${leave.leaveType}">
+                                        <td><span class="link-default">LR-${leave.leaveRequestId}</span></td>
+                                        <td>
+                                           <div class="d-flex align-items-center">
+                                              <div class="avatar avatar-md bg-primary text-white rounded-circle d-flex align-items-center justify-content-center">
+                                                 <c:choose>
+                                                    <c:when test="${not empty leave.firstName}">${leave.firstName.substring(0,1)}</c:when>
+                                                    <c:otherwise>?</c:otherwise>
+                                                 </c:choose>
+                                              </div>
+                                              <div class="ms-2">
+                                                 <p class="text-dark mb-0">${leave.firstName} ${leave.lastName}</p>
+                                              </div>
+                                           </div>
+                                        </td>
+                                        <td>${leave.email}</td>
+                                        <td>${leave.leaveType}</td>
+                                        <td class="leave-start-date">${leave.startDate}</td>
+                                        <td class="leave-end-date">${leave.endDate}</td>
+                                        <td>${leave.numberOfDays}</td>
+                                        <td>${leave.reason}</td>
+                                        <td>${leave.approvedBy}</td>
+                                        <td>
+                                           <c:choose>
+                                              <c:when test="${leave.status eq 'Approved'}"><span class="badge badge-success d-inline-flex align-items-center badge-xs"><i class="ti ti-point-filled me-1"></i>Approved</span></c:when>
+                                              <c:when test="${leave.status eq 'Pending'}"><span class="badge badge-warning d-inline-flex align-items-center badge-xs"><i class="ti ti-point-filled me-1"></i>Pending</span></c:when>
+                                              <c:when test="${leave.status eq 'Rejected'}"><span class="badge badge-danger d-inline-flex align-items-center badge-xs"><i class="ti ti-point-filled me-1"></i>Rejected</span></c:when>
+                                              <c:otherwise><span class="badge badge-secondary d-inline-flex align-items-center badge-xs"><i class="ti ti-point-filled me-1"></i>${leave.status}</span></c:otherwise>
+                                           </c:choose>
+                                        </td>
+                                     </tr>
+                                  </c:forEach>
+                               </c:when>
+                               <c:otherwise>
+                                  <tr id="noLeaveData"><td colspan="10" class="text-center py-4">No leave requests found.</td></tr>
+                               </c:otherwise>
+                            </c:choose>
+                         </tbody>
                       </table>
                    </div>
                 </div>
@@ -5133,7 +5002,7 @@
 
     <!-- Datatable JS -->
     <script src="${pageContext.request.contextPath}/assets/js/jquery.dataTables.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/dataTables.bootstrap5.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/dataTables.bootstrap5.min.js"></script> 
 
     <!-- Daterangepikcer JS -->
     <script src="${pageContext.request.contextPath}/assets/js/moment.js"></script>
@@ -5154,477 +5023,263 @@
     <script src="${pageContext.request.contextPath}/assets/js/theme-colorpicker.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 
-
-<style>
-    .employee-designation-column {
-        display: none !important;
-    }
-
-    /* Keep the report table readable on smaller screens. */
-    #employeeSearch {
-        min-width: 220px;
-    }
-
-    #employee-reports {
-        min-height: 300px;
-    }
-</style>
-
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
+    const tableBody = document.getElementById('leaveTableBody');
+    const search = document.getElementById('leaveSearch');
+    const dateRange = document.getElementById('leaveDateRange');
+    const typeBtn = document.getElementById('leaveTypeFilterBtn');
+    const statusBtn = document.getElementById('leaveStatusFilterBtn');
+    const sortBtn = document.getElementById('leaveSortBtn');
 
-    var $ = window.jQuery;
+    if (!tableBody) return;
 
-    if (!$) {
-        console.error("jQuery is not loaded.");
-        return;
+    const rows = Array.from(tableBody.querySelectorAll('tr[data-status]'));
+    let typeFilter = '';
+    let statusFilter = '';
+    let sortMode = 'newest';
+    let startDate = null;
+    let endDate = null;
+
+    function parseDate(value) {
+        if (!value) return null;
+        const normalized = String(value).trim().replace(' ', 'T');
+        const date = new Date(normalized);
+        return Number.isNaN(date.getTime()) ? null : date;
     }
 
-    var tableElement = document.querySelector(".datatable");
-    if (!tableElement || !$.fn.DataTable) {
-        console.error("Employee report table/DataTables is not loaded.");
-        return;
+    function formatDate(value) {
+        const date = parseDate(value);
+        if (!date) return value || '-';
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return day + '/' + month + '/' + year;
     }
 
-    // SmartHR script.js can initialize .datatable automatically.
-    // Remove that instance and create one dedicated to this report.
-    if ($.fn.DataTable.isDataTable(tableElement)) {
-        $(tableElement).DataTable().destroy();
+    // Make LocalDateTime values user-friendly.
+    rows.forEach(row => {
+        const startCell = row.querySelector('.leave-start-date');
+        const endCell = row.querySelector('.leave-end-date');
+        if (startCell) startCell.textContent = formatDate(row.dataset.startDate);
+        if (endCell) endCell.textContent = formatDate(row.dataset.endDate);
+    });
+
+    function applyFilters() {
+        const query = (search ? search.value : '').trim().toLowerCase();
+
+        let filtered = rows.filter(row => {
+            const text = row.innerText.toLowerCase();
+            const type = (row.dataset.leaveType || '').toLowerCase();
+            const status = (row.dataset.status || '').toLowerCase();
+            const rowStart = parseDate(row.dataset.startDate);
+            const rowEnd = parseDate(row.dataset.endDate);
+
+            const searchOk = !query || text.includes(query);
+            const typeOk = !typeFilter || type === typeFilter.toLowerCase();
+            const statusOk = !statusFilter || status === statusFilter.toLowerCase();
+            const dateOk = (!startDate || (rowEnd && rowEnd >= startDate)) &&
+                           (!endDate || (rowStart && rowStart <= endDate));
+
+            return searchOk && typeOk && statusOk && dateOk;
+        });
+
+        filtered.sort((a, b) => {
+            const dateA = parseDate(a.dataset.startDate)?.getTime() || 0;
+            const dateB = parseDate(b.dataset.startDate)?.getTime() || 0;
+            const daysA = Number(a.dataset.days) || 0;
+            const daysB = Number(b.dataset.days) || 0;
+
+            if (sortMode === 'oldest') return dateA - dateB;
+            if (sortMode === 'days-high') return daysB - daysA;
+            if (sortMode === 'days-low') return daysA - daysB;
+            return dateB - dateA;
+        });
+
+        rows.forEach(row => row.style.display = 'none');
+        filtered.forEach(row => {
+            row.style.display = '';
+            tableBody.appendChild(row);
+        });
+
+        let empty = document.getElementById('leaveFilterEmpty');
+        if (!empty) {
+            empty = document.createElement('tr');
+            empty.id = 'leaveFilterEmpty';
+            empty.innerHTML = '<td colspan="10" class="text-center py-4">No leave requests match the selected filters.</td>';
+            tableBody.appendChild(empty);
+        }
+        empty.style.display = filtered.length ? 'none' : '';
     }
 
-    var employeeTable = $(tableElement).DataTable({
-        pageLength: 10,
-        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
-        order: [[5, "desc"]],
-        columnDefs: [
-            { targets: 7, visible: false, searchable: true }
-        ],
-        dom: "rtip",
-        language: {
-            emptyTable: "No employees found.",
-            zeroRecords: "No matching employees found."
-        }
-    });
+    if (search) search.addEventListener('input', applyFilters);
 
-    window.employeeReportTable = employeeTable;
-
-    /* =========================================================
-       SEARCH
-       ========================================================= */
-    $("#employeeSearch").off("keyup.employeeReport").on("keyup.employeeReport", function () {
-        employeeTable.search($(this).val()).draw();
-    });
-
-    /* =========================================================
-       DESIGNATION FILTER - CREATED FROM REAL TABLE DATA
-       ========================================================= */
-    var designationMenu = $("#designationFilterMenu");
-    var designations = {};
-
-    employeeTable.column(7).data().each(function (value) {
-        var designation = $("<div>").html(value || "").text().trim();
-        if (designation && designation !== "-") {
-            designations[designation] = true;
-        }
-    });
-
-    Object.keys(designations).sort(function (a, b) {
-        return a.localeCompare(b);
-    }).forEach(function (designation) {
-        designationMenu.append(
-            $("<li>").append(
-                $("<a>", {
-                    href: "#",
-                    class: "dropdown-item rounded-1 designation-filter",
-                    "data-value": designation,
-                    text: designation
-                })
-            )
-        );
-    });
-
-    $(document).off("click.employeeDesignation", ".designation-filter")
-        .on("click.employeeDesignation", ".designation-filter", function (e) {
-            e.preventDefault();
-            var value = $(this).attr("data-value") || "";
-
-            $("#designationFilterButton").text(value || "Designation");
-
-            employeeTable.column(7).search(
-                value ? "^" + $.fn.dataTable.util.escapeRegex(value) + "$" : "",
-                true,
-                false
-            ).draw();
+    document.querySelectorAll('.leave-type-filter').forEach(item => {
+        item.addEventListener('click', function () {
+            typeFilter = this.dataset.value || '';
+            typeBtn.textContent = typeFilter || 'Leave Type';
+            applyFilters();
         });
-
-    /* =========================================================
-       STATUS FILTER
-       ========================================================= */
-    $(document).off("click.employeeStatus", ".status-filter")
-        .on("click.employeeStatus", ".status-filter", function (e) {
-            e.preventDefault();
-            var value = $(this).attr("data-value") || "";
-
-            $("#statusFilterButton").text(value || "Select Status");
-
-            employeeTable.column(6).search(
-                value ? "^" + $.fn.dataTable.util.escapeRegex(value) + "$" : "",
-                true,
-                false
-            ).draw();
-        });
-
-    /* =========================================================
-       SORT
-       ========================================================= */
-    $(document).off("click.employeeSort", ".employee-sort")
-        .on("click.employeeSort", ".employee-sort", function (e) {
-            e.preventDefault();
-
-            var sortType = $(this).attr("data-sort");
-            var label = $(this).text().trim();
-
-            $("#employeeSortButton").text("Sort By : " + label);
-
-            if (sortType === "asc") {
-                employeeTable.order([0, "asc"]).draw();
-            } else if (sortType === "desc") {
-                employeeTable.order([0, "desc"]).draw();
-            } else {
-                employeeTable.order([5, "desc"]).draw();
-            }
-        });
-
-    /* =========================================================
-       DATE RANGE FILTER
-       IMPORTANT: Do NOT use .bookingrange/.date-range because
-       SmartHR's global script pre-populates those automatically.
-       ========================================================= */
-    var dateRangeInput = $("#employeeDateRange");
-
-    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-
-        if (settings.nTable !== tableElement) {
-            return true;
-        }
-
-        var selectedRange = dateRangeInput.val().trim();
-
-        // Empty means SHOW ALL employees.
-        if (!selectedRange) {
-            return true;
-        }
-
-        var parts = selectedRange.split(" - ");
-        if (parts.length !== 2) {
-            return true;
-        }
-
-        function parseDMY(value) {
-            var p = value.trim().split("/");
-            if (p.length !== 3) return null;
-
-            var day = parseInt(p[0], 10);
-            var month = parseInt(p[1], 10) - 1;
-            var year = parseInt(p[2], 10);
-
-            var d = new Date(year, month, day);
-            if (isNaN(d.getTime())) return null;
-
-            d.setHours(0, 0, 0, 0);
-            return d;
-        }
-
-        var startDate = parseDMY(parts[0]);
-        var endDate = parseDMY(parts[1]);
-
-        if (!startDate || !endDate) {
-            return true;
-        }
-
-        endDate.setHours(23, 59, 59, 999);
-
-        var row = employeeTable.row(dataIndex).node();
-        if (!row || !row.cells[5]) {
-            return true;
-        }
-
-        var rawDate = row.cells[5].getAttribute("data-joining-date") || "";
-        if (!rawDate) {
-            return false;
-        }
-
-        var employeeDate = new Date(rawDate);
-        if (isNaN(employeeDate.getTime())) {
-            return false;
-        }
-
-        return employeeDate >= startDate && employeeDate <= endDate;
     });
 
-    if ($.fn.daterangepicker && dateRangeInput.length) {
+    document.querySelectorAll('.leave-status-filter').forEach(item => {
+        item.addEventListener('click', function () {
+            statusFilter = this.dataset.value || '';
+            statusBtn.textContent = statusFilter || 'Select Status';
+            applyFilters();
+        });
+    });
 
-        // Explicitly remove any value left by a previous page/template script.
-        dateRangeInput.val("");
+    document.querySelectorAll('.leave-sort').forEach(item => {
+        item.addEventListener('click', function () {
+            sortMode = this.dataset.value;
+            sortBtn.textContent = 'Sort By : ' + this.textContent.trim();
+            applyFilters();
+        });
+    });
 
-        dateRangeInput.daterangepicker({
+    if (window.jQuery && jQuery.fn.daterangepicker && dateRange) {
+        jQuery(dateRange).daterangepicker({
             autoUpdateInput: false,
-            alwaysShowCalendars: false,
             locale: {
-                format: "DD/MM/YYYY",
-                separator: " - ",
-                cancelLabel: "Clear",
-                applyLabel: "Apply"
+                cancelLabel: 'Clear',
+                format: 'DD/MM/YYYY'
             }
         });
 
-        dateRangeInput.off("apply.daterangepicker.employeeReport")
-            .on("apply.daterangepicker.employeeReport", function (event, picker) {
-                $(this).val(
-                    picker.startDate.format("DD/MM/YYYY") +
-                    " - " +
-                    picker.endDate.format("DD/MM/YYYY")
-                );
-                employeeTable.draw();
-            });
+        jQuery(dateRange).on('apply.daterangepicker', function (ev, picker) {
+            startDate = picker.startDate.clone().startOf('day').toDate();
+            endDate = picker.endDate.clone().endOf('day').toDate();
+            this.value = picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY');
+            applyFilters();
+        });
 
-        dateRangeInput.off("cancel.daterangepicker.employeeReport")
-            .on("cancel.daterangepicker.employeeReport", function () {
-                $(this).val("");
-                employeeTable.draw();
-            });
+        jQuery(dateRange).on('cancel.daterangepicker', function () {
+            this.value = '';
+            startDate = null;
+            endDate = null;
+            applyFilters();
+        });
     }
 
-    /* =========================================================
-       EMPLOYEE STATUS CHART + YEAR FILTER
-       ========================================================= */
-    var chartElement = document.querySelector("#employee-reports");
-    var yearButton = document.querySelector("#employeeYearButton");
-    var yearMenu = document.querySelector("#employeeYearMenu");
-
-    if (chartElement && typeof ApexCharts !== "undefined") {
-
-        var allRows = [];
-        employeeTable.rows().every(function () {
-            var row = this.node();
-            if (row) allRows.push(row);
-        });
-
-        function getRowYear(row) {
-            var cell = row.cells[5];
-            if (!cell) return null;
-            var raw = cell.getAttribute("data-joining-date") || "";
-            var match = raw.match(/(\d{4})/);
-            return match ? parseInt(match[1], 10) : null;
-        }
-
-        function getRowStatus(row) {
-            var cell = row.cells[6];
-            return cell ? cell.textContent.trim().toLowerCase() : "";
-        }
-
-        var yearSet = {};
-        allRows.forEach(function (row) {
-            var year = getRowYear(row);
-            if (year) yearSet[year] = true;
-        });
-
-        var years = Object.keys(yearSet).map(Number).sort(function (a, b) {
-            return b - a;
-        });
-
-        var currentYear = new Date().getFullYear();
-
-        // Remove duplicate dynamic year entries if script is ever executed twice.
-        if (yearMenu) {
-            $(yearMenu).find(".dynamic-employee-year").remove();
-
-            years.forEach(function (year) {
-                if (year === currentYear) return;
-
-                $(yearMenu).append(
-                    $("<li>", { class: "dynamic-employee-year" }).append(
-                        $("<a>", {
-                            href: "#",
-                            class: "dropdown-item rounded-1 employee-year-filter",
-                            "data-year": String(year),
-                            text: String(year)
-                        })
-                    )
-                );
-            });
-        }
-
-        var chart = new ApexCharts(chartElement, {
-            chart: {
-                type: "bar",
-                height: 300,
-                toolbar: { show: false }
-            },
-            series: [{ name: "Employees", data: [0, 0] }],
-            xaxis: {
-                categories: ["Active Employees", "Inactive Employees"]
-            },
-            dataLabels: { enabled: true },
-            plotOptions: {
-                bar: {
-                    borderRadius: 4,
-                    columnWidth: "45%"
-                }
-            },
-            legend: { show: false },
-            yaxis: {
-                min: 0,
-                forceNiceScale: true,
-                title: { text: "Employee Count" }
-            }
-        });
-
-        chart.render();
-
-        function updateChart(year) {
-            var active = 0;
-            var inactive = 0;
-
-            allRows.forEach(function (row) {
-                var rowYear = getRowYear(row);
-
-                if (year !== null && rowYear !== year) return;
-
-                var status = getRowStatus(row);
-
-                if (status === "active") {
-                    active++;
-                } else if (status === "inactive") {
-                    inactive++;
-                }
-            });
-
-            chart.updateSeries([
-                { name: "Employees", data: [active, inactive] }
-            ]);
-        }
-
-        var defaultYear = yearSet[currentYear] ? currentYear :
-            (years.length ? years[0] : null);
-
-        if (defaultYear !== null) {
-            yearButton.textContent = String(defaultYear);
-            updateChart(defaultYear);
-        } else {
-            yearButton.textContent = "All Years";
-            updateChart(null);
-        }
-
-        $(document).off("click.employeeYear", ".employee-year-filter")
-            .on("click.employeeYear", ".employee-year-filter", function (e) {
-                e.preventDefault();
-
-                var value = $(this).attr("data-year");
-
-                if (value === "current") {
-                    yearButton.textContent = "This Year";
-                    updateChart(currentYear);
-                } else {
-                    var selectedYear = parseInt(value, 10);
-                    if (!isNaN(selectedYear)) {
-                        yearButton.textContent = String(selectedYear);
-                        updateChart(selectedYear);
-                    }
-                }
-            });
-    }
-
-    /* =========================================================
-       EXPORT - EXPORT CURRENTLY FILTERED DATA
-       ========================================================= */
-    function getEmployeeReportData() {
-        var rows = [];
-
-        employeeTable.rows({ search: "applied" }).every(function () {
-            var cells = $(this.node()).find("td");
-            if (cells.length < 8) return;
-
-            rows.push([
-                cells.eq(0).text().trim(),
-                cells.eq(1).find("p").text().trim(),
-                cells.eq(2).text().trim(),
-                cells.eq(3).text().trim(),
-                cells.eq(4).text().trim(),
-                cells.eq(5).text().trim(),
-                cells.eq(6).text().trim()
-            ]);
-        });
-
-        return rows;
-    }
-
-    function escapeCsv(value) {
-        return '"' + String(value == null ? "" : value).replace(/"/g, '""') + '"';
-    }
-
-    window.exportEmployeeExcel = function () {
-        var rows = getEmployeeReportData();
-        var headers = ["Emp ID", "Name", "Email", "Department", "Phone", "Joining Date", "Status"];
-
-        var csv = [headers].concat(rows).map(function (row) {
-            return row.map(escapeCsv).join(",");
-        }).join("\r\n");
-
-        var blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
-        var url = URL.createObjectURL(blob);
-        var link = document.createElement("a");
-
+    function downloadFile(filename, content, type) {
+        const blob = new Blob([content], { type: type });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
         link.href = url;
-        link.download = "Employee_Report.csv";
+        link.download = filename;
         document.body.appendChild(link);
         link.click();
         link.remove();
+        URL.revokeObjectURL(url);
+    }
 
-        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-        return false;
-    };
+    function visibleRows() {
+        return rows.filter(row => row.style.display !== 'none');
+    }
 
-    window.exportEmployeePdf = function () {
-        var rows = getEmployeeReportData();
-        var printWindow = window.open("", "_blank", "width=1100,height=800");
+    function exportExcel() {
+        const data = [['Leave ID', 'Employee', 'Email', 'Leave Type', 'Start Date', 'End Date', 'Days', 'Reason', 'Approved By', 'Status']];
 
-        if (!printWindow) {
-            alert("Please allow pop-ups for PDF export.");
-            return false;
-        }
-
-        var html = '<!DOCTYPE html><html><head><meta charset="UTF-8">' +
-            '<title>Employee Report</title>' +
-            '<style>body{font-family:Arial,sans-serif;padding:25px;color:#222}' +
-            'h2{text-align:center;margin-bottom:5px}.date{text-align:center;color:#666;margin-bottom:20px}' +
-            'table{width:100%;border-collapse:collapse;font-size:12px}' +
-            'th,td{border:1px solid #999;padding:7px;text-align:left}' +
-            'th{font-weight:bold}@media print{body{padding:10px}}</style></head><body>' +
-            '<h2>Employee Report</h2>' +
-            '<div class="date">Generated on ' + new Date().toLocaleDateString("en-IN") + '</div>' +
-            '<table><thead><tr><th>Emp ID</th><th>Name</th><th>Email</th>' +
-            '<th>Department</th><th>Phone</th><th>Joining Date</th><th>Status</th>' +
-            '</tr></thead><tbody>';
-
-        rows.forEach(function (row) {
-            html += "<tr>";
-            row.forEach(function (cell) {
-                html += "<td>" + $("<div>").text(cell).html() + "</td>";
-            });
-            html += "</tr>";
+        visibleRows().forEach(row => {
+            data.push(Array.from(row.cells).map(cell => cell.innerText.trim()));
         });
 
+        const csv = data.map(row =>
+            row.map(value => '"' + value.replace(/"/g, '""') + '"').join(',')
+        ).join('\n');
+
+        downloadFile('leave-report.csv', '\ufeff' + csv, 'text/csv;charset=utf-8;');
+    }
+
+    function exportPdf() {
+        const visible = visibleRows();
+        const header = document.querySelector('.leave-report-table thead');
+        const w = window.open('', '_blank');
+
+        if (!w) {
+            alert('Please allow pop-ups to export the PDF.');
+            return;
+        }
+
+        let html = '<!DOCTYPE html><html><head><title>Leave Report</title>' +
+            '<style>' +
+            'body{font-family:Arial,sans-serif;padding:20px;color:#222}' +
+            'h2{margin-bottom:20px}' +
+            'table{width:100%;border-collapse:collapse;font-size:12px}' +
+            'th,td{border:1px solid #ccc;padding:7px;text-align:left;vertical-align:top}' +
+            'th{background:#f2f2f2}' +
+            '@media print{body{padding:0}}' +
+            '</style></head><body><h2>Leave Report</h2><table>';
+
+        if (header) html += header.outerHTML;
+        html += '<tbody>';
+        visible.forEach(row => html += row.outerHTML);
         html += '</tbody></table></body></html>';
 
-        printWindow.document.open();
-        printWindow.document.write(html);
-        printWindow.document.close();
-        printWindow.focus();
+        w.document.open();
+        w.document.write(html);
+        w.document.close();
+        w.focus();
+        setTimeout(() => w.print(), 300);
+    }
 
-        setTimeout(function () { printWindow.print(); }, 500);
-        return false;
-    };
+    // Export dropdown items from the existing template.
+    document.querySelectorAll('.dropdown-menu .dropdown-item').forEach(link => {
+        const label = link.innerText.trim().toLowerCase();
+        if (label.includes('excel')) link.addEventListener('click', exportExcel);
+        if (label.includes('pdf')) link.addEventListener('click', exportPdf);
+    });
+
+    // Dynamic Leave Type chart.
+    const chartElement = document.querySelector('#leave-reports');
+    if (window.ApexCharts && chartElement) {
+        const chartData = [
+            Number('${paidLeaveCount}') || 0,
+            Number('${sickLeaveCount}') || 0,
+            Number('${clCount}') || 0,
+            Number('${mlCount}') || 0,
+            Number('${unpaidLeaveCount}') || 0,
+            Number('${testLeaveCount}') || 0
+        ];
+
+        new ApexCharts(chartElement, {
+            series: chartData,
+            chart: {
+                type: 'donut',
+                height: 280
+            },
+            labels: ['Paid Leave', 'Sick Leave', 'CL', 'ML', 'Unpaid Leave', 'Test Leave'],
+            legend: {
+                position: 'bottom'
+            },
+            dataLabels: {
+                enabled: true
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '65%',
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                                label: 'Total',
+                                formatter: function (w) {
+                                    return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            noData: {
+                text: 'No leave data available'
+            }
+        }).render();
+    }
+
+    applyFilters();
 });
 </script>
 </body>
