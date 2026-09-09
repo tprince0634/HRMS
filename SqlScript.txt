@@ -21,6 +21,453 @@ BEGIN
 END $$
 DELIMITER ;
 
+
+<-----------EmployeeReport--------->
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_employees()
+BEGIN
+    SELECT
+        u.UserId,
+        u.FirstName,
+        u.LastName,
+        u.Email,
+        u.PhoneNumber,
+        u.RoleId,
+        r.RoleName,
+        u.DepartmentId,
+        d.Name AS DepartmentName,
+        u.DesignationtId,
+        des.Name AS DesignationName,
+        u.DateOfJoining,
+        u.Status
+    FROM `User` u
+    LEFT JOIN `Role` r
+        ON u.RoleId = r.RoleId
+    LEFT JOIN `Departments` d
+        ON u.DepartmentId = d.DepartmentId
+    LEFT JOIN `Designations` des
+        ON u.DesignationtId = des.DesignationId
+    ORDER BY u.UserId DESC;
+END //
+
+DELIMITER ;
+
+
+
+<--------------AttendanceReport------------>
+DELIMITER //
+
+CREATE PROCEDURE get_all_attendance()
+BEGIN
+    SELECT
+        a.AttendanceId,
+        a.UserId,
+        u.FirstName,
+        u.LastName,
+        u.Email,
+        a.Date,
+        a.CheckIn,
+        a.CheckOut,
+        a.LunchIn,
+        a.LunchOut,
+        a.WorkingHours,
+        a.ProductionHours,
+        a.OvertimeHours,
+        a.BreakHours,
+        a.Late,
+        a.Status
+    FROM Attendance a
+    LEFT JOIN `User` u
+        ON a.UserId = u.UserId
+    ORDER BY a.Date DESC, a.AttendanceId DESC;
+END //
+
+DELIMITER ;
+
+
+
+
+/*
+                  DEPARTMENT MODULE
+*/
+
+
+
+DROP PROCEDURE IF EXISTS sp_get_all_departments;
+DROP PROCEDURE IF EXISTS sp_add_department;
+DROP PROCEDURE IF EXISTS sp_update_department;
+DROP PROCEDURE IF EXISTS sp_delete_department;
+
+DELIMITER $$
+CREATE PROCEDURE sp_get_all_departments()
+BEGIN
+    SELECT
+        DepartmentId,
+        Name,
+        NoOfEmployee,
+        status,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+
+    FROM departments
+
+    ORDER BY DepartmentId DESC;
+
+END $$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_add_department(
+    IN p_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_created_by VARCHAR(255)
+)
+BEGIN
+    INSERT INTO departments
+    (
+        Name,
+        NoOfEmployee,
+        status,
+        CreatedAt,
+        CreatedBy
+    )
+
+    VALUES
+    (
+        p_name,
+        0,
+        p_status,
+        NOW(),
+        p_created_by
+    );
+
+END $$
+
+DELIMITER ;
+
+
+
+-- UPDATE DEPARTMENT
+
+DELIMITER $$
+CREATE PROCEDURE sp_update_department(
+    IN p_department_id INT,
+    IN p_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_modified_by VARCHAR(255)
+)
+BEGIN
+
+    UPDATE departments
+
+    SET
+        Name = p_name,
+        status = p_status,
+        ModifiedBy = p_modified_by,
+        ModifiedAt = NOW()
+
+    WHERE DepartmentId = p_department_id;
+
+END $$
+
+DELIMITER ;
+
+
+-- DELETE DEPARTMENT
+
+DELIMITER $$
+CREATE PROCEDURE sp_delete_department(
+    IN p_department_id INT
+)
+BEGIN
+
+    DELETE FROM departments
+
+    WHERE DepartmentId = p_department_id;
+
+END $$
+
+DELIMITER ;
+
+
+
+/*
+=========================================================
+                  DESIGNATION MODULE
+=========================================================
+*/
+
+
+-- -------------------------------------------------------
+-- DROP OLD DESIGNATION PROCEDURES
+-- -------------------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_get_all_designations;
+DROP PROCEDURE IF EXISTS sp_add_designation;
+DROP PROCEDURE IF EXISTS sp_update_designation;
+DROP PROCEDURE IF EXISTS sp_delete_designation;
+
+
+-- -------------------------------------------------------
+-- GET ALL DESIGNATIONS
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_designations()
+BEGIN
+
+    SELECT
+        DesignationId,
+        DepartmentId,
+        Name,
+        NoOfEmployee,
+        status,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+
+    FROM designations
+
+    ORDER BY DesignationId DESC;
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- ADD DESIGNATION
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_designation(
+    IN p_department_id INT,
+    IN p_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_created_by VARCHAR(255)
+)
+BEGIN
+
+    INSERT INTO designations
+    (
+        DepartmentId,
+        Name,
+        NoOfEmployee,
+        status,
+        CreatedAt,
+        CreatedBy
+    )
+
+    VALUES
+    (
+        p_department_id,
+        p_name,
+        0,
+        p_status,
+        NOW(),
+        p_created_by
+    );
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- UPDATE DESIGNATION
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_designation(
+    IN p_designation_id INT,
+    IN p_department_id INT,
+    IN p_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_modified_by VARCHAR(255)
+)
+BEGIN
+
+    UPDATE designations
+
+    SET
+        DepartmentId = p_department_id,
+        Name = p_name,
+        status = p_status,
+        ModifiedBy = p_modified_by,
+        ModifiedAt = NOW()
+
+    WHERE DesignationId = p_designation_id;
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- DELETE DESIGNATION
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_designation(
+    IN p_designation_id INT
+)
+BEGIN
+
+    DELETE FROM designations
+
+    WHERE DesignationId = p_designation_id;
+
+END $$
+
+DELIMITER ;
+
+
+
+/*
+=========================================================
+                     ROLE MODULE
+=========================================================
+*/
+
+
+-- -------------------------------------------------------
+-- DROP OLD ROLE PROCEDURES
+-- -------------------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_get_all_roles;
+DROP PROCEDURE IF EXISTS sp_add_role;
+DROP PROCEDURE IF EXISTS sp_update_role;
+DROP PROCEDURE IF EXISTS sp_delete_role;
+
+
+-- -------------------------------------------------------
+-- GET ALL ROLES
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_roles()
+BEGIN
+
+    SELECT
+        RoleId,
+        RoleName,
+        Status,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+
+    FROM `role`
+
+    ORDER BY RoleId ASC;
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- ADD ROLE
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_role(
+    IN p_role_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_created_by VARCHAR(255)
+)
+BEGIN
+
+    INSERT INTO `role`
+    (
+        RoleName,
+        Status,
+        CreatedAt,
+        CreatedBy
+    )
+
+    VALUES
+    (
+        p_role_name,
+        p_status,
+        NOW(),
+        p_created_by
+    );
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- UPDATE ROLE
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_role(
+    IN p_role_id INT,
+    IN p_role_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_modified_by VARCHAR(255)
+)
+BEGIN
+
+    UPDATE `role`
+
+    SET
+        RoleName = p_role_name,
+        Status = p_status,
+        ModifiedBy = p_modified_by,
+        ModifiedAt = NOW()
+
+    WHERE RoleId = p_role_id;
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- DELETE ROLE
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_role(
+    IN p_role_id INT
+)
+BEGIN
+
+    DELETE FROM `role`
+    WHERE RoleId = p_role_id;
+END $$
+DELIMITER ;
+
+
+/*
+=========================================================
+              PROCEDURES VERIFICATION
+=========================================================
+*/
+
+SHOW PROCEDURE STATUS
+WHERE Db = 'pulse360_finaldb';
+
 -- ===============================================================================================================
 --  Training and File upload procedures
 -- ===============================================================================================================

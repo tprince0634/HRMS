@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import org.example.service.AdminDashboardService;
+import org.example.service.Admin.AdminDashboardService;
 
 import java.io.IOException;
 
@@ -70,9 +70,30 @@ public class AdminDashboardServlet extends HttpServlet {
                 adminDashboardService.getPendingLeaves()
         );
 
+        request.setAttribute("totalProjects",
+                adminDashboardService.getTotalProjects());
+
+        request.setAttribute("totalClients",
+                adminDashboardService.getTotalClients());
+
+        request.setAttribute("totalTasks",
+                adminDashboardService.getTotalTasks());
+
+        request.setAttribute("totalEarnings",
+                adminDashboardService.getTotalEarnings());
+
+        request.setAttribute("newHires",
+                adminDashboardService.getNewHires());
+
+        request.setAttribute("departmentEmployeeCount",
+                adminDashboardService.getDepartmentEmployeeCount());
+
+        request.setAttribute("employeeStatusCount",
+                adminDashboardService.getEmployeeStatusCount());
+
         // Forward to JSP
         request.getRequestDispatcher(
-                "/views/Admin/dashboard.jsp"
+                "/views/admin/dashboard.jsp"
         ).forward(request, response);
 
     }
