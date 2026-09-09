@@ -18,6 +18,7 @@ public class AdminDashboardServlet extends HttpServlet {
     public void init() {
         adminDashboardService = new AdminDashboardService();
     }
+
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)

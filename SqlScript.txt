@@ -5,6 +5,7 @@ CREATE PROCEDURE sp_login_user(
     IN p_email VARCHAR(255),
     IN p_password VARCHAR(255)
 )
+
 BEGIN
     SELECT
         u.UserId,
