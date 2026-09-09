@@ -1,0 +1,1000 @@
+CREATE TABLE `Events` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Title` LONGTEXT NOT NULL,
+  `Date` LONGTEXT NOT NULL,
+  `EventTypeId` INT NOT NULL,
+  `Status` LONGTEXT NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `EventTypes` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(50) NOT NULL,
+  `Color` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `Experience` (
+  `ExperienceId` INT NOT NULL AUTO_INCREMENT,
+  `DesignationName` LONGTEXT NOT NULL,
+  `FromDate` DATETIME NOT NULL,
+  `ToDate` DATETIME NOT NULL,
+  `UserId` INT NOT NULL,
+  `CompanyName` VARCHAR(100) NULL,
+  PRIMARY KEY (`ExperienceId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `Promotion` (
+  `PromotionId` INT NOT NULL AUTO_INCREMENT,
+  `UserID` INT NOT NULL,
+  `DesignationFrom` VARCHAR(100) NOT NULL,
+  `DesignationTo` VARCHAR(100) NOT NULL,
+  `Date` DATETIME NOT NULL,
+  PRIMARY KEY (`PromotionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `Resignation` (
+  `ResignationId` INT NOT NULL AUTO_INCREMENT,
+  `UserID` INT NOT NULL,
+  `DepartmentId` INT NOT NULL,
+  `NoticeDate` DATETIME NOT NULL,
+  `ResignDate` DATETIME NOT NULL,
+  `Reason` VARCHAR(500) NOT NULL,
+  PRIMARY KEY (`ResignationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `Termination` (
+  `TerminationId` INT NOT NULL AUTO_INCREMENT,
+  `UserID` INT NOT NULL,
+  `TerminationType` VARCHAR(100) NOT NULL,
+  `NoticeDate` DATETIME NOT NULL,
+  `ResignDate` DATETIME NOT NULL,
+  `Reason` VARCHAR(500) NOT NULL,
+  PRIMARY KEY (`TerminationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `TicketReplies` (
+  `ReplyId` INT NOT NULL AUTO_INCREMENT,
+  `TicketId` INT NOT NULL,
+  `ReplyMessage` VARCHAR(500) NOT NULL,
+  `RepliedBy` VARCHAR(100) NOT NULL,
+  `RepliedAt` DATETIME NOT NULL,
+  PRIMARY KEY (`ReplyId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `Tickets` (
+  `TicketId` INT NOT NULL AUTO_INCREMENT,
+  `TicketTitle` VARCHAR(200) NOT NULL,
+  `EventCategory` LONGTEXT NOT NULL,
+  `Subject` VARCHAR(200) NOT NULL,
+  `AssignedBy` INT NOT NULL,
+  `AssignedTo` INT NOT NULL,
+  `TicketDescription` LONGTEXT NOT NULL,
+  `Priority` VARCHAR(50) NOT NULL,
+  `Status` VARCHAR(50) NOT NULL,
+  `Visibility` VARCHAR(10) NOT NULL,
+  `CreatedAt` DATETIME NOT NULL,
+  PRIMARY KEY (`TicketId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+use Pulse360_FinalDb;
+-- Add Events
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_event(
+    IN p_title LONGTEXT,
+    IN p_date LONGTEXT,
+    IN p_event_type_id INT,
+    IN p_status LONGTEXT
+)
+BEGIN
+
+    INSERT INTO Events
+    (
+        Title,
+        `Date`,
+        EventTypeId,
+        Status
+    )
+    VALUES
+    (
+        p_title,
+        p_date,
+        p_event_type_id,
+        p_status
+    );
+
+END $$
+
+DELIMITER ;
+
+CALL sp_add_event(
+    'Annual Company Meeting',
+    '2026-09-15',
+    1,
+    'Active'
+);
+
+select * from Events;
+
+-- Get Event By ID
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_event_by_id(
+    IN p_id INT
+)
+BEGIN
+
+    SELECT
+        Id,
+        Title,
+        `Date`,
+        EventTypeId,
+        Status
+    FROM Events
+    WHERE Id = p_id;
+
+END $$
+
+DELIMITER ;
+
+
+CALL sp_get_event_by_id(10);
+
+-- ***********************
+
+-- Get All Events
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_events()
+BEGIN
+
+    SELECT
+        Id,
+        Title,
+        `Date`,
+        EventTypeId,
+        Status
+    FROM Events
+    ORDER BY Id DESC;
+
+END $$
+
+DELIMITER ;
+
+CALL sp_get_all_events();
+
+-- ********
+
+-- Update event
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_event(
+    IN p_id INT,
+    IN p_title LONGTEXT,
+    IN p_date LONGTEXT,
+    IN p_event_type_id INT,
+    IN p_status LONGTEXT
+)
+BEGIN
+
+    UPDATE Events
+    SET
+        Title = p_title,
+        `Date` = p_date,
+        EventTypeId = p_event_type_id,
+        Status = p_status
+    WHERE Id = p_id;
+
+END $$
+
+DELIMITER ;
+
+CALL sp_update_event(
+    1,
+    'Updated Annual Company Meeting',
+    '2026-09-20',
+    12,
+    'Active'
+);
+
+-- *********
+-- delete event using id
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_event(
+    IN p_id INT
+)
+BEGIN
+
+    DELETE FROM Events
+    WHERE Id = p_id;
+
+END $$
+
+DELIMITER ;
+
+
+CALL sp_delete_event(12);
+
+
+select * from events;
+
+-- **************************************************
+
+-- Experience table
+select * from Experience;
+
+show tables;
+
+-- Add Exprerience
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_experience(
+    IN p_designation_name LONGTEXT,
+    IN p_from_date DATETIME,
+    IN p_to_date DATETIME,
+    IN p_user_id INT,
+    IN p_company_name VARCHAR(100)
+)
+BEGIN
+
+    INSERT INTO Experience
+    (
+        DesignationName,
+        FromDate,
+        ToDate,
+        UserId,
+        CompanyName
+    )
+    VALUES
+    (
+        p_designation_name,
+        p_from_date,
+        p_to_date,
+        p_user_id,
+        p_company_name
+    );
+
+END $$
+
+DELIMITER ;
+
+CALL sp_add_experience(
+    'Java Developer',
+    '2024-01-01 09:00:00',
+    '2026-01-01 18:00:00',
+    1,
+    'masstech Technologies'
+);
+
+select * from Experience;
+
+-- ******
+
+-- Get Experience By ID
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_experience_by_id(
+    IN p_experience_id INT
+)
+BEGIN
+
+    SELECT
+        ExperienceId,
+        DesignationName,
+        FromDate,
+        ToDate,
+        UserId,
+        CompanyName
+    FROM Experience
+    WHERE ExperienceId = p_experience_id;
+
+END $$
+
+DELIMITER ;
+
+call sp_get_experience_by_id(1);
+
+-- **************
+
+-- Get All Experience table
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_experiences()
+BEGIN
+
+    SELECT
+        ExperienceId,
+        DesignationName,
+        FromDate,
+        ToDate,
+        UserId,
+        CompanyName
+    FROM Experience
+    ORDER BY ExperienceId DESC;
+
+END $$
+
+DELIMITER ;
+
+call sp_get_all_experiences();
+
+-- ***************************************
+
+-- Update Experience By Id
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_experience(
+    IN p_experience_id INT,
+    IN p_designation_name LONGTEXT,
+    IN p_from_date DATETIME,
+    IN p_to_date DATETIME,
+    IN p_user_id INT,
+    IN p_company_name VARCHAR(100)
+)
+BEGIN
+
+    UPDATE Experience
+    SET
+        DesignationName = p_designation_name,
+        FromDate = p_from_date,
+        ToDate = p_to_date,
+        UserId = p_user_id,
+        CompanyName = p_company_name
+    WHERE ExperienceId = p_experience_id;
+
+END $$
+
+DELIMITER ;
+
+CALL sp_update_experience(
+    2,
+    'Senior Java Developer',
+    '2024-01-01 09:00:00',
+    '2026-09-01 18:00:00',
+    1,
+    'maatech Technologies'
+);
+
+select * from Experience;
+
+-- **************************
+
+-- Delete Experience By Id ----------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_experience(
+    IN p_experience_id INT
+)
+BEGIN
+
+    DELETE FROM Experience
+    WHERE ExperienceId = p_experience_id;
+
+END $$
+
+DELIMITER ;
+
+CALL sp_delete_experience(1);
+
+-- ****************************
+
+
+-- Promotion procedures --------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_promotion(
+    IN p_user_id INT,
+    IN p_designation_from VARCHAR(100),
+    IN p_designation_to VARCHAR(100),
+    IN p_date DATETIME
+)
+BEGIN
+
+    INSERT INTO Promotion
+    (
+        UserID,
+        DesignationFrom,
+        DesignationTo,
+        `Date`
+    )
+    VALUES
+    (
+        p_user_id,
+        p_designation_from,
+        p_designation_to,
+        p_date
+    );
+
+END $$
+
+DELIMITER ;
+
+CALL sp_add_promotion(
+    1,
+    'Java Developer',
+    'Senior Java Developer',
+    '2026-09-01 10:00:00'
+);
+
+
+select * from Promotion;
+
+-- ********************
+
+-- Get Promotion By Id
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_promotion_by_id(
+    IN p_promotion_id INT
+)
+BEGIN
+
+    SELECT
+        PromotionId,
+        UserID,
+        DesignationFrom,
+        DesignationTo,
+        `Date`
+    FROM Promotion
+    WHERE PromotionId = p_promotion_id;
+
+END $$
+
+DELIMITER ;
+
+call sp_get_promotion_by_id(11);
+
+-- ******************
+
+-- Get All Promotions
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_promotions()
+BEGIN
+
+    SELECT
+        PromotionId,
+        UserID,
+        DesignationFrom,
+        DesignationTo,
+        `Date`
+    FROM Promotion
+    ORDER BY PromotionId DESC;
+
+END $$
+
+DELIMITER ;
+
+call  sp_get_all_promotions();
+
+-- **********************
+
+-- Update Promotion By Id
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_promotion(
+    IN p_promotion_id INT,
+    IN p_user_id INT,
+    IN p_designation_from VARCHAR(100),
+    IN p_designation_to VARCHAR(100),
+    IN p_date DATETIME
+)
+BEGIN
+
+    UPDATE Promotion
+    SET
+        UserID = p_user_id,
+        DesignationFrom = p_designation_from,
+        DesignationTo = p_designation_to,
+        `Date` = p_date
+    WHERE PromotionId = p_promotion_id;
+
+END $$
+
+DELIMITER ;
+
+
+CALL sp_update_promotion(
+    14,
+    1,
+    'Senior Java Developer',
+    'Lead Java Developer',
+    '2026-09-10 10:00:00'
+);
+select * from Promotion;
+
+-- ***************
+
+-- Delete Promotion Bt Id
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_promotion(
+    IN p_promotion_id INT
+)
+BEGIN
+
+    DELETE FROM Promotion
+    WHERE PromotionId = p_promotion_id;
+
+END $$
+
+DELIMITER ;
+
+call sp_delete_promotion(1);
+
+-- ******************************************
+
+
+-- Resignation procedures
+
+-- Add
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_resignation(
+    IN p_user_id INT,
+    IN p_department_id INT,
+    IN p_notice_date DATETIME,
+    IN p_resign_date DATETIME,
+    IN p_reason VARCHAR(500)
+)
+BEGIN
+
+    INSERT INTO Resignation
+    (
+        UserID,
+        DepartmentId,
+        NoticeDate,
+        ResignDate,
+        Reason
+    )
+    VALUES
+    (
+        p_user_id,
+        p_department_id,
+        p_notice_date,
+        p_resign_date,
+        p_reason
+    );
+
+END $$
+
+DELIMITER ;
+
+CALL sp_add_resignation(
+    1,
+    10,
+    '2026-09-01 10:00:00',
+    '2026-10-01 18:00:00',
+    'Personal reasons'
+);
+
+select * from Resignation;
+
+-- ********************************
+
+-- Get By Id
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_resignation_by_id(
+    IN p_resignation_id INT
+)
+BEGIN
+
+    SELECT
+        ResignationId,
+        UserID,
+        DepartmentId,
+        NoticeDate,
+        ResignDate,
+        Reason
+    FROM Resignation
+    WHERE ResignationId = p_resignation_id;
+
+END $$
+
+DELIMITER ;
+
+CALL sp_get_resignation_by_id(1);
+
+
+-- *********************
+
+-- Get All
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_resignations()
+BEGIN
+
+    SELECT
+        ResignationId,
+        UserID,
+        DepartmentId,
+        NoticeDate,
+        ResignDate,
+        Reason
+    FROM Resignation
+    ORDER BY ResignationId DESC;
+
+END $$
+
+DELIMITER ;
+
+call sp_get_all_resignations;
+
+-- ************
+
+-- Update
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_resignation(
+    IN p_resignation_id INT,
+    IN p_user_id INT,
+    IN p_department_id INT,
+    IN p_notice_date DATETIME,
+    IN p_resign_date DATETIME,
+    IN p_reason VARCHAR(500)
+)
+BEGIN
+
+    UPDATE Resignation
+    SET
+        UserID = p_user_id,
+        DepartmentId = p_department_id,
+        NoticeDate = p_notice_date,
+        ResignDate = p_resign_date,
+        Reason = p_reason
+    WHERE ResignationId = p_resignation_id;
+
+END $$
+
+DELIMITER ;
+
+CALL sp_update_resignation(
+    11,
+    10,
+    25,
+    '2026-09-05 10:00:00',
+    '2026-10-05 18:00:00',
+    'Relocation'
+);
+
+select * from Resignation;
+
+-- *********************************
+
+-- delete
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_resignation(
+    IN p_resignation_id INT
+)
+BEGIN
+
+    DELETE FROM Resignation
+    WHERE ResignationId = p_resignation_id;
+
+END $$
+
+DELIMITER ;
+
+call sp_delete_resignation(1);
+
+-- ****************
+
+
+-- *************Termination procedures ********************
+
+-- Add
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_termination(
+    IN p_user_id INT,
+    IN p_termination_type VARCHAR(100),
+    IN p_notice_date DATETIME,
+    IN p_resign_date DATETIME,
+    IN p_reason VARCHAR(500)
+)
+BEGIN
+
+    INSERT INTO Termination
+    (
+        UserID,
+        TerminationType,
+        NoticeDate,
+        ResignDate,
+        Reason
+    )
+    VALUES
+    (
+        p_user_id,
+        p_termination_type,
+        p_notice_date,
+        p_resign_date,
+        p_reason
+    );
+
+END $$
+
+DELIMITER ;
+
+CALL sp_add_termination(
+    1,
+    'Performance',
+    '2026-09-01 10:00:00',
+    '2026-09-15 18:00:00',
+    'Performance did not meet company requirements'
+);
+
+select * from Termination;
+
+-- *******************
+
+-- Get BY Id
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_termination_by_id(
+    IN p_termination_id INT
+)
+BEGIN
+
+    SELECT
+        TerminationId,
+        UserID,
+        TerminationType,
+        NoticeDate,
+        ResignDate,
+        Reason
+    FROM Termination
+    WHERE TerminationId = p_termination_id;
+
+END $$
+
+DELIMITER ;
+
+call sp_get_termination_by_id(11);
+
+-- **************************
+
+-- Get All
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_terminations()
+BEGIN
+
+    SELECT
+        TerminationId,
+        UserID,
+        TerminationType,
+        NoticeDate,
+        ResignDate,
+        Reason
+    FROM Termination
+    ORDER BY TerminationId DESC;
+
+END $$
+
+DELIMITER ;
+
+call sp_get_all_terminations;
+
+-- *******************
+
+-- Update
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_termination(
+    IN p_termination_id INT,
+    IN p_user_id INT,
+    IN p_termination_type VARCHAR(100),
+    IN p_notice_date DATETIME,
+    IN p_resign_date DATETIME,
+    IN p_reason VARCHAR(500)
+)
+BEGIN
+
+    UPDATE Termination
+    SET
+        UserID = p_user_id,
+        TerminationType = p_termination_type,
+        NoticeDate = p_notice_date,
+        ResignDate = p_resign_date,
+        Reason = p_reason
+    WHERE TerminationId = p_termination_id;
+
+END $$
+
+DELIMITER ;
+
+CALL sp_update_termination(
+    1,
+    1,
+    'Misconduct',
+    '2026-09-05 10:00:00',
+    '2026-09-20 18:00:00',
+    'Company policy violation'
+);
+
+
+-- ************************
+
+-- Delete By Id
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_termination(
+    IN p_termination_id INT
+)
+BEGIN
+
+    DELETE FROM Termination
+    WHERE TerminationId = p_termination_id;
+
+END $$
+
+DELIMITER ;
+
+call sp_delete_termination(1);
+
+-- **********************************************
+
+
+-- ********************** Event Type Procedure
+-- Add
+select * from EventTypes;
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_event_type(
+    IN p_name VARCHAR(50),
+    IN p_color VARCHAR(20)
+)
+BEGIN
+
+    INSERT INTO EventTypes
+    (
+        Name,
+        Color
+    )
+    VALUES
+    (
+        p_name,
+        p_color
+    );
+
+END $$
+
+DELIMITER ;
+
+
+CALL sp_add_event_type(
+    'Meeting',
+    'BLUE'
+);
+
+-- ******************
+
+-- Get By Id
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_event_type_by_id(
+    IN p_id INT
+)
+BEGIN
+
+    SELECT
+        Id,
+        Name,
+        Color
+    FROM EventTypes
+    WHERE Id = p_id;
+
+END $$
+
+DELIMITER ;
+
+call sp_get_event_type_by_id(7);
+
+-- *********************
+
+-- Get All
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_event_types()
+BEGIN
+
+    SELECT
+        Id,
+        Name,
+        Color
+    FROM EventTypes
+    ORDER BY Id DESC;
+
+END $$
+
+DELIMITER ;
+
+call sp_get_all_event_types();
+
+-- ************************
+
+-- Update
+
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_event_type(
+    IN p_id INT,
+    IN p_name VARCHAR(50),
+    IN p_color VARCHAR(20)
+)
+BEGIN
+
+    UPDATE EventTypes
+    SET
+        Name = p_name,
+        Color = p_color
+    WHERE Id = p_id;
+
+END $$
+
+DELIMITER ;
+
+CALL sp_update_event_type(
+    1,
+    'Conference',
+    'GREEN'
+);
+
+-- ************************
+
+-- Delete
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_event_type(
+    IN p_id INT
+)
+BEGIN
+
+    DELETE FROM EventTypes
+    WHERE Id = p_id;
+
+END $$
+
+DELIMITER ;
+
+CALL sp_delete_event_type(1);
+
+-- ******************************************
+
+
+git
