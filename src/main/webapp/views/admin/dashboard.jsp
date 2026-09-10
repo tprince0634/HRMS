@@ -459,7 +459,7 @@
                     <ul>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/trainerList">
                                 <span>Trainer List</span>
                             </a>
                         </li>
@@ -506,7 +506,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="javascript:void(0);">
+                                    <a href="${pageContext.request.contextPath}/documentList">
                                         <span>Document List</span>
                                     </a>
                                 </li>

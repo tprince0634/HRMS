@@ -13,23 +13,33 @@ import java.util.UUID;
 public class FileStorageUtil {
 
 
-    // UPLOAD DIRECTORY
+    // ROOT DIRECTORY
+    // Parent folder that holds every upload sub-folder
+    // (uploads/, profilePictures/, taskDocs/, ...)
+
+    private static final String ROOT_DIRECTORY =
+            "C:/Users/Asus/OneDrive/Desktop/EliteNex Notes/Projects/Hrms/HRMS";
 
 
-    // Physical location where files will actually be stored
-    private static final String UPLOAD_DIRECTORY =
-            "C:/Users/Asus/OneDrive/Desktop/EliteNex Notes/Projects/Hrms/HRMS/uploads";
+    // Common folder names — use these instead of typing raw strings
+    // at call sites so a typo can't create a stray folder.
+    public static final String FOLDER_DOCUMENTS = "uploads";
+    public static final String FOLDER_PROFILE_PICTURES = "profilePictures";
+    public static final String FOLDER_TASK_DOCS = "taskDocs";
 
 
+    // SAVE FILE (folder-aware)
 
-    // SAVE FILE
 
+    public static String saveFile(Part filePart, String folderName) throws IOException {
 
-    public static String saveFile(Part filePart) throws IOException {
+        if (folderName == null || folderName.isBlank()) {
+            folderName = FOLDER_DOCUMENTS;
+        }
 
-        // Create upload directory if it doesn't exist
+        // Create <ROOT_DIRECTORY>/<folderName> if it doesn't exist
         Path uploadPath =
-                Paths.get(UPLOAD_DIRECTORY);
+                Paths.get(ROOT_DIRECTORY, folderName);
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
@@ -46,8 +56,8 @@ public class FileStorageUtil {
         // Generate unique file name
         String uniqueFileName =
                 UUID.randomUUID() +
-                "_" +
-                originalFileName;
+                        "_" +
+                        originalFileName;
 
 
         // Complete physical file path
@@ -67,8 +77,18 @@ public class FileStorageUtil {
         }
 
 
-        // Return path that can be stored in database
-        return "uploads/" + uniqueFileName;
+        // Return path that can be stored in database, e.g. "uploads/<uuid>_name.jpg"
+        // or "profilePictures/<uuid>_name.jpg" depending on folderName
+        return folderName + "/" + uniqueFileName;
+    }
+
+
+    // SAVE FILE (backward-compatible overload)
+    // Existing call sites that don't pass a folder still work,
+    // and default to the "uploads" folder.
+
+    public static String saveFile(Part filePart) throws IOException {
+        return saveFile(filePart, FOLDER_DOCUMENTS);
     }
 
 
@@ -78,16 +98,12 @@ public class FileStorageUtil {
 
     public static Path getFilePath(String relativePath) {
 
-        // Remove "uploads/" from database path
-        String fileName =
-                relativePath.replace(
-                        "uploads/",
-                        ""
-                );
-
+        // relativePath is now always "<folderName>/<fileName>"
+        // (e.g. "uploads/xxx.jpg", "profilePictures/xxx.png"),
+        // so we just resolve it straight against the root.
         return Paths.get(
-                UPLOAD_DIRECTORY,
-                fileName
+                ROOT_DIRECTORY,
+                relativePath
         );
     }
 

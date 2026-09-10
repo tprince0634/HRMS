@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -763,74 +764,112 @@
             </c:if>
 
             <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <c:choose>
+                            <c:when test="${isAdmin}">All Uploaded Documents</c:when>
+                            <c:otherwise>My Uploaded Documents</c:otherwise>
+                        </c:choose>
+                    </h5>
+                </div>
+
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
                             <thead>
-                                <tr>
-                                    <th style="width: 50px;">#</th>
-                                    <th style="width: 70px;">Preview</th>
-                                    <th>Document Title</th>
-                                    <th>Type</th>
-                                    <th>Employee</th>
-                                    <th>Uploaded On</th>
-                                    <th class="text-end">Actions</th>
-                                </tr>
+                            <tr>
+                                <th style="width: 60px;">#</th>
+                                <th style="width: 80px;">Preview</th>
+                                <th>Document Name</th>
+                                <th>File Type</th>
+                                <th>User ID</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
                             </thead>
+
                             <tbody>
-                                <!--
-                                    Populate via the servlet: set request attribute "documentList"
-                                    (List of documents), each item expected to expose getters for:
-                                    id, documentTitle, documentType, employeeName, filePath,
-                                    uploadDate, and a boolean isImageFile() used below to decide
-                                    whether to render a thumbnail or a generic file icon.
-                                -->
-                                <c:choose>
-                                    <c:when test="${not empty documentList}">
-                                        <c:forEach var="doc" items="${documentList}" varStatus="loop">
-                                            <tr>
-                                                <td>${loop.index + 1}</td>
-                                                <td>
+                            <c:choose>
+                                <c:when test="${not empty documentList}">
+                                    <c:forEach var="doc"
+                                               items="${documentList}"
+                                               varStatus="loop">
+
+                                        <c:set var="lowerFileName"
+                                               value="${fn:toLowerCase(doc.fileName)}"/>
+
+                                        <tr>
+                                            <td>${loop.index + 1}</td>
+
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${fn:endsWith(lowerFileName, '.png')
+                                                                or fn:endsWith(lowerFileName, '.jpg')
+                                                                or fn:endsWith(lowerFileName, '.jpeg')
+                                                                or fn:endsWith(lowerFileName, '.gif')
+                                                                or fn:endsWith(lowerFileName, '.webp')}">
+
+                                                        <img src="${pageContext.request.contextPath}/${doc.filePath}"
+                                                             alt="${doc.fileName}"
+                                                             class="doc-list-thumb">
+                                                    </c:when>
+
+                                                    <c:otherwise>
+                                                        <i class="ti ti-file-text fs-24 text-primary"></i>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+
+                                            <td>
+                                                <span class="fw-medium">${doc.fileName}</span>
+                                            </td>
+
+                                            <td>
+                                                <span class="badge bg-light text-dark">
                                                     <c:choose>
-                                                        <c:when test="${doc.imageFile}">
-                                                            <img src="${pageContext.request.contextPath}/${doc.filePath}"
-                                                                 alt="${doc.documentTitle}"
-                                                                 class="doc-list-thumb">
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <i class="ti ti-file-text fs-24 text-primary"></i>
-                                                        </c:otherwise>
+                                                        <c:when test="${fn:endsWith(lowerFileName, '.pdf')}">PDF</c:when>
+                                                        <c:when test="${fn:endsWith(lowerFileName, '.doc')}">DOC</c:when>
+                                                        <c:when test="${fn:endsWith(lowerFileName, '.docx')}">DOCX</c:when>
+                                                        <c:when test="${fn:endsWith(lowerFileName, '.xls')}">XLS</c:when>
+                                                        <c:when test="${fn:endsWith(lowerFileName, '.xlsx')}">XLSX</c:when>
+                                                        <c:when test="${fn:endsWith(lowerFileName, '.png')}">PNG</c:when>
+                                                        <c:when test="${fn:endsWith(lowerFileName, '.jpg')
+                                                                    or fn:endsWith(lowerFileName, '.jpeg')}">JPG</c:when>
+                                                        <c:otherwise>FILE</c:otherwise>
                                                     </c:choose>
-                                                </td>
-                                                <td>${doc.documentTitle}</td>
-                                                <td><span class="badge bg-light text-dark">${doc.documentType}</span></td>
-                                                <td>${doc.employeeName}</td>
-                                                <td>${doc.uploadDate}</td>
-                                                <td class="text-end">
-                                                    <a href="${pageContext.request.contextPath}/${doc.filePath}"
-                                                       target="_blank"
-                                                       class="btn btn-sm btn-outline-primary me-1"
-                                                       title="View / Download">
-                                                        <i class="ti ti-download"></i>
-                                                    </a>
+                                                </span>
+                                            </td>
+
+                                            <td>${doc.userId}</td>
+
+                                            <td class="text-end">
+                                                <a href="${pageContext.request.contextPath}/${doc.filePath}"
+                                                   target="_blank"
+                                                   class="btn btn-sm btn-outline-primary me-1"
+                                                   title="View / Download">
+                                                    <i class="ti ti-download"></i>
+                                                </a>
+
+                                                <c:if test="${isAdmin}">
                                                     <a href="${pageContext.request.contextPath}/deleteDocument?id=${doc.id}"
                                                        class="btn btn-sm btn-outline-danger"
                                                        title="Delete"
                                                        onclick="return confirm('Delete this document?');">
                                                         <i class="ti ti-trash"></i>
                                                     </a>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <tr>
-                                            <td colspan="7" class="text-center py-4 text-muted">
-                                                No documents uploaded yet.
+                                                </c:if>
                                             </td>
                                         </tr>
-                                    </c:otherwise>
-                                </c:choose>
+                                    </c:forEach>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4 text-muted">
+                                            No documents uploaded yet.
+                                        </td>
+                                    </tr>
+                                </c:otherwise>
+                            </c:choose>
                             </tbody>
                         </table>
                     </div>

@@ -35,14 +35,14 @@ public class FileUploadServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
-      String role = (String) session.getAttribute("userRole");
+        String role = (String) session.getAttribute("userRole");
         int  id = (int) session.getAttribute("userId");
 
-       if (role.equalsIgnoreCase("admin")) {
-           request.setAttribute("files" , fileUploadsService.getALlFileUploads());
-       } else if (role.equalsIgnoreCase("user")) {
-           request.setAttribute("files" , fileUploadsService.findByUserId(id));
-       }
+        if (role.equalsIgnoreCase("admin")) {
+            request.setAttribute("files" , fileUploadsService.getALlFileUploads());
+        } else if (role.equalsIgnoreCase("user")) {
+            request.setAttribute("files" , fileUploadsService.findByUserId(id));
+        }
         request.getRequestDispatcher("/uploadFile.jsp")
                 .forward(request, response);
 
@@ -58,8 +58,7 @@ public class FileUploadServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-
-            Part filePart = request.getPart("file");
+            Part filePart = request.getPart("documentFile");
 
             if (filePart == null || filePart.getSize() == 0) {
                 response.sendError(
@@ -89,10 +88,7 @@ public class FileUploadServlet extends HttpServlet {
             if (session == null ||
                     session.getAttribute("userId") == null) {
 
-                response.sendError(
-                        HttpServletResponse.SC_UNAUTHORIZED,
-                        "User is not logged in"
-                );
+                response.sendRedirect("login");
                 return;
             }
 
@@ -104,7 +100,7 @@ public class FileUploadServlet extends HttpServlet {
             // =====================================================
 
             String filePath =
-                    FileStorageUtil.saveFile(filePart);
+                    FileStorageUtil.saveFile(filePart, FileStorageUtil.FOLDER_DOCUMENTS);
 
             // =====================================================
             // SAVE FILE INFORMATION TO DATABASE
@@ -128,7 +124,7 @@ public class FileUploadServlet extends HttpServlet {
                 );
                 return;
             }
-             request.setAttribute("success" , "File uploaded successfully");
+            request.setAttribute("success" , "File uploaded successfully");
             // After upload, go back to upload page
             response.sendRedirect(
                     request.getContextPath() + "/uploadFile"
