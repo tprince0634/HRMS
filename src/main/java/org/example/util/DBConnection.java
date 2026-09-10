@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class DBConnection {
 private static final String URL = "jdbc:mysql://localhost:3306/Pulse360_FinalDb?useSSL=false&allowPublicKeyRetrieval=true";
 private static final String USERNAME = "root";
-private static final String PASSWORD = "2003@manish";
+private static final String PASSWORD = "root";
 
 // Static initializer block runs ONCE when the class is loaded into memory
 static {

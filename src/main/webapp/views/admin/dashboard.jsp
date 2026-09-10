@@ -451,7 +451,7 @@
                     <ul>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/trainerList">
                                 <span>Trainer List</span>
                             </a>
                         </li>
@@ -492,13 +492,13 @@
                             <ul>
 
                                 <li>
-                                    <a href="javascript:void(0);">
+                                    <a href="${pageContext.request.contextPath}/uploadFile">
                                         <span>Upload Document</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="javascript:void(0);">
+                                    <a href="${pageContext.request.contextPath}/documentList">
                                         <span>Document List</span>
                                     </a>
                                 </li>
