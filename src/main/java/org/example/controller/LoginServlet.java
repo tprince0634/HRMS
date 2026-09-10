@@ -42,12 +42,8 @@ public class LoginServlet extends HttpServlet {
 
         // Login failed
         if (user == null) {
-            request.setAttribute(
-                    "errorMessage",
-                    "Invalid email or password!"
-            );
-            request.getRequestDispatcher("/login.jsp")
-                    .forward(request, response);
+            request.setAttribute("errorMessage", "Invalid email or password!");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
 

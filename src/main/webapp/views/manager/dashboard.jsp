@@ -1025,9 +1025,7 @@
 <script src="${pageContext.request.contextPath}/assets/js/moment.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/js/bootstrap-datetimepicker.min.js"></script>
-
 <script src="${pageContext.request.contextPath}/assets/plugins/daterangepicker/daterangepicker.js"></script>
-
 <script src="${pageContext.request.contextPath}/assets/plugins/select2/js/select2.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/js/theme-colorpicker.js"></script>
