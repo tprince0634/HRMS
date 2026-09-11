@@ -2,8 +2,11 @@
          pageEncoding="UTF-8"
          isELIgnored="false" %>
 
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <%
-    String trainingTypeUrl = request.getContextPath() + "/training-type";
+    String trainingTypeUrl =
+            request.getContextPath() + "/training-type";
 
     java.util.List<models.Trainers.TrainingType> trainingTypes =
             (java.util.List<models.Trainers.TrainingType>)
@@ -22,35 +25,62 @@
 
     <title>Training Type</title>
 
-    <!-- Bootstrap -->
+
+    <!-- ===================================================== -->
+    <!-- BOOTSTRAP -->
+    <!-- ===================================================== -->
+
     <link rel="stylesheet"
           href="<%= request.getContextPath() %>/assets/css/bootstrap.min.css">
 
-    <!-- Feather -->
+
+    <!-- ===================================================== -->
+    <!-- FEATHER -->
+    <!-- ===================================================== -->
+
     <link rel="stylesheet"
           href="<%= request.getContextPath() %>/assets/plugins/icons/feather/feather.css">
 
-    <!-- Tabler -->
+
+    <!-- ===================================================== -->
+    <!-- TABLER -->
+    <!-- ===================================================== -->
+
     <link rel="stylesheet"
           href="<%= request.getContextPath() %>/assets/plugins/tabler-icons/tabler-icons.css">
 
-    <!-- Font Awesome -->
+
+    <!-- ===================================================== -->
+    <!-- FONT AWESOME -->
+    <!-- ===================================================== -->
+
     <link rel="stylesheet"
           href="<%= request.getContextPath() %>/assets/plugins/fontawesome/css/fontawesome.min.css">
 
     <link rel="stylesheet"
           href="<%= request.getContextPath() %>/assets/plugins/fontawesome/css/all.min.css">
 
-    <!-- DataTables -->
+
+    <!-- ===================================================== -->
+    <!-- DATATABLES -->
+    <!-- ===================================================== -->
+
     <link rel="stylesheet"
           href="<%= request.getContextPath() %>/assets/css/dataTables.bootstrap5.min.css">
 
-    <!-- Main CSS -->
+
+    <!-- ===================================================== -->
+    <!-- MAIN CSS -->
+    <!-- ===================================================== -->
+
     <link rel="stylesheet"
           href="<%= request.getContextPath() %>/assets/css/style.css">
 
 
-    <!-- Sidebar Scroll -->
+    <!-- ===================================================== -->
+    <!-- SIDEBAR SCROLL -->
+    <!-- ===================================================== -->
+
     <style>
 
         .sidebar {
@@ -71,6 +101,22 @@
         .sidebar::-webkit-scrollbar-thumb {
             background: #ccc;
             border-radius: 10px;
+        }
+
+        .sidebar-menu li.submenu > ul {
+            display: none !important;
+        }
+
+        .sidebar-menu li.submenu.active > ul {
+            display: block !important;
+        }
+
+        .sidebar-menu li.submenu > a .menu-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .sidebar-menu li.submenu.active > a .menu-arrow {
+            transform: rotate(90deg);
         }
 
     </style>
@@ -125,7 +171,7 @@
 
                             <li class="breadcrumb-item">
 
-                                <a href="<%= request.getContextPath() %>/admin/dashboard">
+                                <a href="<%= request.getContextPath() %>/Admin/dashboard">
 
                                     <i class="ti ti-smart-home"></i>
 
@@ -152,7 +198,7 @@
 
 
                 <!-- ================================================= -->
-                <!-- ADD BUTTON -->
+                <!-- ADD TRAINING TYPE -->
                 <!-- ================================================= -->
 
                 <div class="d-flex my-xl-auto right-content
@@ -190,12 +236,15 @@
                 <div class="card-header d-flex align-items-center
                             justify-content-between flex-wrap row-gap-3">
 
-                    <h5>
+                    <h5 class="mb-0">
                         Training Type List
                     </h5>
 
 
+                    <!-- ================================================= -->
                     <!-- SORT -->
+                    <!-- ================================================= -->
+
                     <div class="d-flex my-xl-auto right-content
                                 align-items-center flex-wrap row-gap-3">
 
@@ -275,6 +324,7 @@
 
                             <tr>
 
+
                                 <!-- CHECKBOX -->
 
                                 <th class="no-sort">
@@ -297,7 +347,7 @@
                                 </th>
 
 
-                                <!-- TYPE -->
+                                <!-- TRAINING TYPE -->
 
                                 <th>
                                     Type
@@ -331,6 +381,7 @@
 
                             <tbody>
 
+
                             <%
 
                                 if (trainingTypes != null &&
@@ -341,9 +392,13 @@
 
                             %>
 
+
                             <tr>
 
+
+                                <!-- ================================================= -->
                                 <!-- CHECKBOX -->
+                                <!-- ================================================= -->
 
                                 <td>
 
@@ -357,7 +412,9 @@
                                 </td>
 
 
+                                <!-- ================================================= -->
                                 <!-- ID -->
+                                <!-- ================================================= -->
 
                                 <td>
 
@@ -366,7 +423,9 @@
                                 </td>
 
 
+                                <!-- ================================================= -->
                                 <!-- TYPE -->
+                                <!-- ================================================= -->
 
                                 <td>
 
@@ -375,7 +434,9 @@
                                 </td>
 
 
+                                <!-- ================================================= -->
                                 <!-- DESCRIPTION -->
+                                <!-- ================================================= -->
 
                                 <td>
 
@@ -384,7 +445,9 @@
                                 </td>
 
 
+                                <!-- ================================================= -->
                                 <!-- STATUS -->
+                                <!-- ================================================= -->
 
                                 <td>
 
@@ -394,6 +457,7 @@
                                                 trainingType.getStatus())) {
 
                                     %>
+
 
                                     <span class="badge badge-success
                                                  d-inline-flex align-items-center
@@ -405,11 +469,13 @@
 
                                     </span>
 
+
                                     <%
 
                                     } else {
 
                                     %>
+
 
                                     <span class="badge badge-danger
                                                  d-inline-flex align-items-center
@@ -421,6 +487,7 @@
 
                                     </span>
 
+
                                     <%
 
                                         }
@@ -430,11 +497,14 @@
                                 </td>
 
 
+                                <!-- ================================================= -->
                                 <!-- ACTION -->
+                                <!-- ================================================= -->
 
                                 <td>
 
                                     <div class="d-flex align-items-center">
+
 
                                         <!-- EDIT -->
 
@@ -442,6 +512,8 @@
                                            class="btn btn-sm btn-primary me-2"
                                            data-bs-toggle="modal"
                                            data-bs-target="#edit_training_type_<%= trainingType.getTrainingTypeId() %>">
+
+                                            <i class="ti ti-edit me-1"></i>
 
                                             Edit
 
@@ -454,6 +526,8 @@
                                            class="btn btn-sm btn-danger"
                                            data-bs-toggle="modal"
                                            data-bs-target="#delete_training_type_<%= trainingType.getTrainingTypeId() %>">
+
+                                            <i class="ti ti-trash me-1"></i>
 
                                             Delete
 
@@ -474,10 +548,11 @@
 
                             %>
 
+
                             <tr>
 
                                 <td colspan="6"
-                                    class="text-center">
+                                    class="text-center py-4">
 
                                     No Training Types Found
 
@@ -485,11 +560,13 @@
 
                             </tr>
 
+
                             <%
 
                                 }
 
                             %>
+
 
                             </tbody>
 
@@ -504,9 +581,9 @@
         </div>
 
 
-        <!-- ================================================= -->
+        <!-- ===================================================== -->
         <!-- FOOTER -->
-        <!-- ================================================= -->
+        <!-- ===================================================== -->
 
         <div class="footer d-sm-flex align-items-center
                     justify-content-between border-top bg-white p-3">
@@ -539,21 +616,28 @@
 
 %>
 
+
 <div class="modal fade"
      id="edit_training_type_<%= trainingType.getTrainingTypeId() %>"
      tabindex="-1"
      aria-hidden="true">
+
 
     <div class="modal-dialog modal-dialog-centered modal-md">
 
         <div class="modal-content">
 
 
+            <!-- ================================================= -->
+            <!-- MODAL HEADER -->
+            <!-- ================================================= -->
+
             <div class="modal-header">
 
                 <h4 class="modal-title">
                     Edit Training Type
                 </h4>
+
 
                 <button type="button"
                         class="btn-close custom-btn-close"
@@ -567,12 +651,18 @@
             </div>
 
 
+            <!-- ================================================= -->
+            <!-- EDIT FORM -->
+            <!-- ================================================= -->
+
             <form action="<%= trainingTypeUrl %>"
                   method="post">
+
 
                 <input type="hidden"
                        name="action"
                        value="update">
+
 
                 <input type="hidden"
                        name="trainingTypeId"
@@ -584,15 +674,20 @@
                     <div class="row">
 
 
-                        <!-- TYPE -->
+                        <!-- ================================================= -->
+                        <!-- TRAINING TYPE NAME -->
+                        <!-- ================================================= -->
 
                         <div class="col-md-12">
 
                             <div class="mb-3">
 
                                 <label class="form-label">
+
                                     Type
+
                                 </label>
+
 
                                 <input type="text"
                                        name="trainingTypeName"
@@ -605,15 +700,20 @@
                         </div>
 
 
+                        <!-- ================================================= -->
                         <!-- DESCRIPTION -->
+                        <!-- ================================================= -->
 
                         <div class="col-md-12">
 
                             <div class="mb-3">
 
                                 <label class="form-label">
+
                                     Description
+
                                 </label>
+
 
                                 <textarea name="description"
                                           class="form-control"
@@ -625,19 +725,25 @@
                         </div>
 
 
+                        <!-- ================================================= -->
                         <!-- STATUS -->
+                        <!-- ================================================= -->
 
                         <div class="col-md-12">
 
                             <div class="mb-3">
 
                                 <label class="form-label">
+
                                     Status
+
                                 </label>
+
 
                                 <select name="status"
                                         class="form-select"
                                         required>
+
 
                                     <option value="Active"
                                             <%= "Active".equalsIgnoreCase(
@@ -648,14 +754,16 @@
 
                                     </option>
 
-                                    <option value="Inactive"
-                                            <%= "Inactive".equalsIgnoreCase(
+
+                                    <option value="InActive"
+                                            <%= "InActive".equalsIgnoreCase(
                                                     trainingType.getStatus())
                                                     ? "selected" : "" %>>
 
-                                        Inactive
+                                        InActive
 
                                     </option>
+
 
                                 </select>
 
@@ -668,6 +776,10 @@
                 </div>
 
 
+                <!-- ================================================= -->
+                <!-- MODAL FOOTER -->
+                <!-- ================================================= -->
+
                 <div class="modal-footer">
 
                     <button type="button"
@@ -678,8 +790,11 @@
 
                     </button>
 
+
                     <button type="submit"
                             class="btn btn-primary">
+
+                        <i class="ti ti-device-floppy me-1"></i>
 
                         Save Changes
 
@@ -718,17 +833,24 @@
 
 %>
 
+
 <div class="modal fade"
      id="delete_training_type_<%= trainingType.getTrainingTypeId() %>"
      tabindex="-1"
      aria-hidden="true">
 
+
     <div class="modal-dialog modal-dialog-centered">
 
         <div class="modal-content">
 
+
             <div class="modal-body text-center">
 
+
+                <!-- ================================================= -->
+                <!-- DELETE ICON -->
+                <!-- ================================================= -->
 
                 <span class="avatar avatar-xl
                              bg-transparent-danger
@@ -739,17 +861,29 @@
                 </span>
 
 
+                <!-- ================================================= -->
+                <!-- TITLE -->
+                <!-- ================================================= -->
+
                 <h4 class="mb-1">
+
                     Confirm Delete
+
                 </h4>
 
+
+                <!-- ================================================= -->
+                <!-- MESSAGE -->
+                <!-- ================================================= -->
 
                 <p class="mb-3">
 
                     You want to delete
 
                     <strong>
+
                         <%= trainingType.getTrainingTypeName() %>
+
                     </strong>.
 
                     This can't be undone once you delete.
@@ -757,23 +891,51 @@
                 </p>
 
 
+                <!-- ================================================= -->
+                <!-- BUTTONS -->
+                <!-- ================================================= -->
+
                 <div class="d-flex justify-content-center">
 
-                    <a href="javascript:void(0);"
-                       class="btn btn-light me-3"
-                       data-bs-dismiss="modal">
+
+                    <!-- CANCEL -->
+
+                    <button type="button"
+                            class="btn btn-light me-3"
+                            data-bs-dismiss="modal">
 
                         Cancel
 
-                    </a>
+                    </button>
 
 
-                    <a href="<%= trainingTypeUrl %>?action=delete&id=<%= trainingType.getTrainingTypeId() %>"
-                       class="btn btn-danger">
+                    <!-- DELETE FORM -->
 
-                        Yes, Delete
+                    <form action="<%= trainingTypeUrl %>"
+                          method="post"
+                          class="d-inline">
 
-                    </a>
+
+                        <input type="hidden"
+                               name="action"
+                               value="delete">
+
+
+                        <input type="hidden"
+                               name="trainingTypeId"
+                               value="<%= trainingType.getTrainingTypeId() %>">
+
+
+                        <button type="submit"
+                                class="btn btn-danger">
+
+                            <i class="ti ti-trash me-1"></i>
+
+                            Yes, Delete
+
+                        </button>
+
+                    </form>
 
                 </div>
 
@@ -799,6 +961,7 @@
 <!-- JAVASCRIPT -->
 <!-- ========================================================= -->
 
+
 <script src="<%= request.getContextPath() %>/assets/js/jquery-3.7.1.min.js"></script>
 
 <script src="<%= request.getContextPath() %>/assets/js/bootstrap.bundle.min.js"></script>
@@ -814,14 +977,18 @@
 <script src="<%= request.getContextPath() %>/assets/js/script.js"></script>
 
 
+<!-- ========================================================= -->
+<!-- DATATABLE + SORT -->
+<!-- ========================================================= -->
+
 <script>
 
     $(document).ready(function () {
 
-        /*
-         * script.js already initializes DataTables.
-         * Get the existing DataTable instance.
-         */
+
+        // =====================================================
+        // GET DATATABLE
+        // =====================================================
 
         var table = $('.datatable').DataTable();
 
@@ -830,7 +997,9 @@
         // ROWS PER PAGE = 5
         // =====================================================
 
-        var lengthSelect = $('.dataTables_length select');
+        var lengthSelect =
+            $('.dataTables_length select');
+
 
         if (lengthSelect.find('option[value="5"]').length === 0) {
 
@@ -840,7 +1009,9 @@
 
         }
 
+
         lengthSelect.val('5');
+
 
         table.page.len(5).draw();
 
@@ -897,11 +1068,139 @@
         $('#select-all').on('change', function () {
 
             $('.datatable tbody input[type="checkbox"]')
-                .prop('checked', this.checked);
+                .prop(
+                    'checked',
+                    this.checked
+                );
 
         });
 
+
+        // =====================================================
+        // UPDATE SELECT ALL CHECKBOX
+        // =====================================================
+
+        $('.datatable tbody').on(
+            'change',
+            'input[type="checkbox"]',
+            function () {
+
+                var total =
+                    $('.datatable tbody input[type="checkbox"]').length;
+
+                var checked =
+                    $('.datatable tbody input[type="checkbox"]:checked').length;
+
+                $('#select-all').prop(
+                    'checked',
+                    total > 0 && total === checked
+                );
+
+            }
+        );
+
     });
+
+</script>
+
+
+<!-- ========================================================= -->
+<!-- SIDEBAR -->
+<!-- ========================================================= -->
+
+<script>
+
+    (function () {
+
+        function initHRMSSidebar() {
+
+            var sidebar =
+                document.querySelector('.sidebar-menu');
+
+            if (!sidebar) {
+                return;
+            }
+
+
+            sidebar.addEventListener(
+                'click',
+                function (event) {
+
+                    var link =
+                        event.target.closest(
+                            'li.submenu > a'
+                        );
+
+
+                    if (!link ||
+                        !sidebar.contains(link)) {
+
+                        return;
+
+                    }
+
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    var currentItem =
+                        link.parentElement;
+
+                    var parentList =
+                        currentItem.parentElement;
+
+                    var isOpen =
+                        currentItem.classList.contains(
+                            'active'
+                        );
+
+
+                    Array.prototype.forEach.call(
+                        parentList.children,
+                        function (item) {
+
+                            if (item !== currentItem &&
+                                item.classList.contains(
+                                    'submenu'
+                                )) {
+
+                                item.classList.remove(
+                                    'active'
+                                );
+
+                            }
+
+                        }
+                    );
+
+
+                    currentItem.classList.toggle(
+                        'active',
+                        !isOpen
+                    );
+
+                }
+            );
+
+        }
+
+
+        if (document.readyState === 'loading') {
+
+            document.addEventListener(
+                'DOMContentLoaded',
+                initHRMSSidebar
+            );
+
+        } else {
+
+            initHRMSSidebar();
+
+        }
+
+    })();
 
 </script>
 

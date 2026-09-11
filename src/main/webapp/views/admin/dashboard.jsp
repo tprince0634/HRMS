@@ -460,18 +460,18 @@
 
                         <li>
                             <a href="${pageContext.request.contextPath}/trainerList">
-                                <span>Trainer List</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
                                 <span>Trainers</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="${pageContext.request.contextPath}/training-type">
+                            <a href="${pageContext.request.contextPath}/trainingList">
+                                <span>Training</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/trainingTypeList">
                                 <span>Training Type</span>
                             </a>
                         </li>
@@ -2775,5 +2775,3 @@
 
 </body>
 </html>
-
-```

@@ -5,30 +5,52 @@ import org.example.model.Training;
 import org.example.util.DBConnection;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrainingDaoImpl implements TrainingDao {
     @Override
     public Training createTraining(Training training) {
-        String sql = "call create_training(?,?,?,?,?,?,?,?,?,?)";
+
+        String sql = "CALL create_training(?,?,?,?,?,?,?,?,?,?)";
 
         try (Connection connection = DBConnection.getConnection();
-             CallableStatement callableStatement = connection.prepareCall(sql)) {
+             CallableStatement statement = connection.prepareCall(sql)) {
 
-            callableStatement.setInt(1, training.getTrainerId());
-            callableStatement.setInt(2, training.getTrainingTypeId());
-            callableStatement.setInt(3, training.getUserId());
-            callableStatement.setDouble(4, training.getTrainingCost());
-            callableStatement.setString(5, training.getDescription());
-            callableStatement.setString(6, training.getStatus());
-            callableStatement.setTimestamp(7, Timestamp.valueOf(training.getStartDate()));
-            callableStatement.setTimestamp(8, Timestamp.valueOf(training.getEndDate()));
-            callableStatement.setTimestamp(9, Timestamp.valueOf(training.getCreatedAt()));
-            callableStatement.setString(10, training.getCreatedBy());
+            statement.setInt(1, training.getTrainerId());
+            statement.setInt(2, training.getTrainingTypeId());
+            statement.setInt(3, training.getUserId());
+            statement.setDouble(4, training.getTrainingCost());
+            statement.setString(5, training.getDescription());
+            statement.setString(6, training.getStatus());
 
-            try (ResultSet resultSet = callableStatement.executeQuery()) {
-                return resultSet.next() ? map(resultSet) : null;
+            statement.setTimestamp(
+                    7,
+                    Timestamp.valueOf(training.getStartDate())
+            );
+
+            statement.setTimestamp(
+                    8,
+                    Timestamp.valueOf(training.getEndDate())
+            );
+
+            statement.setTimestamp(
+                    9,
+                    training.getCreatedAt() == null
+                            ? null
+                            : Timestamp.valueOf(training.getCreatedAt())
+            );
+
+            statement.setString(10, training.getCreatedBy());
+
+            try (ResultSet rs = statement.executeQuery()) {
+
+                if (rs.next()) {
+                    return map(rs);
+                }
+
+                return null;
             }
 
         } catch (SQLException e) {

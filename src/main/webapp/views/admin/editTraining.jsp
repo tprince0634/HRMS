@@ -1,51 +1,23 @@
-<%@ page contentType="text/html;charset=UTF-8"
-         language="java"
-         isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
 
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=0">
+          content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-          content="HRMS Admin Dashboard">
-
-    <meta name="keywords"
-          content="HRMS, Human Resource Management System, Admin Dashboard">
-
-    <meta name="author"
-          content="HRMS Team">
-
-    <meta name="robots"
-          content="noindex, nofollow">
-
-    <title>Add Training Type | HRMS</title>
-
-
-    <!-- =========================================================
-         FAVICON
-         ========================================================= -->
+    <title>Edit Training | HRMS</title>
 
     <link rel="shortcut icon"
           type="image/x-icon"
           href="${pageContext.request.contextPath}/assets/img/favicon.png">
 
-
-    <!-- =========================================================
-         THEME
-         ========================================================= -->
-
     <script src="${pageContext.request.contextPath}/assets/js/theme-script.js"></script>
-
-
-    <!-- =========================================================
-         CSS
-         ========================================================= -->
 
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css">
@@ -77,10 +49,6 @@
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/style.css">
 
-
-    <!-- =========================================================
-         HRMS SIDEBAR CSS
-         ========================================================= -->
 
     <style>
 
@@ -125,173 +93,16 @@
             align-items: center;
         }
 
-
-        /* =====================================================
-           PAGE
-           ===================================================== */
-
-        .training-type-form-card {
-            border: 1px solid #e9edf4;
-            border-radius: 6px;
-            background: #ffffff;
-            overflow: hidden;
+        .training-form-card {
+            border-radius: 8px;
         }
 
-        .training-type-form-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #e9edf4;
-        }
-
-        .training-type-form-header h5 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 600;
-            color: #1f2937;
-        }
-
-        .training-type-form-body {
-            padding: 24px;
-        }
-
-
-        /* =====================================================
-           LABEL
-           ===================================================== */
-
-        .training-type-form-body .form-label {
-            font-size: 14px;
+        .form-label {
             font-weight: 500;
-            color: #374151;
-            margin-bottom: 8px;
         }
 
         .required {
-            color: #f04438;
-            margin-left: 2px;
-        }
-
-
-        /* =====================================================
-           INPUT
-           ===================================================== */
-
-        .training-type-form-body .form-control,
-        .training-type-form-body .form-select {
-            min-height: 44px;
-            border: 1px solid #d9dfe8;
-            border-radius: 5px;
-            box-shadow: none;
-            font-size: 14px;
-            color: #1f2937;
-        }
-
-        .training-type-form-body .form-control:focus,
-        .training-type-form-body .form-select:focus {
-            border-color: #ff5b35;
-
-            box-shadow:
-                    0 0 0 0.15rem
-                    rgba(255, 91, 53, 0.10);
-        }
-
-        .training-type-form-body textarea.form-control {
-            min-height: 130px;
-            resize: vertical;
-        }
-
-
-        /* =====================================================
-           FORM ACTIONS
-           ===================================================== */
-
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 10px;
-            padding-top: 20px;
-            margin-top: 8px;
-            border-top: 1px solid #e9edf4;
-        }
-
-
-        /* =====================================================
-           CANCEL
-           ===================================================== */
-
-        .btn-training-cancel {
-            min-height: 42px;
-            padding: 0 20px;
-            border: 1px solid #d9dfe8;
-            border-radius: 5px;
-            background: #ffffff;
-            color: #374151;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .btn-training-cancel:hover {
-            background: #f5f6f8;
-            color: #111827;
-        }
-
-
-        /* =====================================================
-           SAVE BUTTON
-           ===================================================== */
-
-        .btn-training-save {
-            min-height: 42px;
-            padding: 0 22px;
-            border: 0;
-            border-radius: 5px;
-            background: #ff5b35;
-            color: #ffffff;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-training-save:hover {
-            background: #e94e2b;
-            color: #ffffff;
-        }
-
-
-        /* =====================================================
-           RESPONSIVE
-           ===================================================== */
-
-        @media (max-width: 767px) {
-
-            .training-type-form-body {
-                padding: 16px;
-            }
-
-            .training-type-form-header {
-                padding: 16px;
-            }
-
-            .form-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .btn-training-cancel,
-            .btn-training-save {
-                width: 100%;
-            }
-
+            color: #dc3545;
         }
 
     </style>
@@ -303,71 +114,71 @@
 
 
 <!-- =========================================================
-     LOADER
-     ========================================================= -->
-
-<div id="global-loader">
-
-    <div class="page-loader"></div>
-
-</div>
-
-
-<!-- =========================================================
      MAIN WRAPPER
      ========================================================= -->
 
 <div class="main-wrapper">
 
 
-    <!-- =========================================================
+    <!-- =====================================================
          HEADER
-         ========================================================= -->
+         ===================================================== -->
 
     <div class="header">
 
         <div class="main-header">
 
 
-            <!-- HEADER LEFT -->
+            <!-- LOGO -->
 
             <div class="header-left">
 
-                <a href="${pageContext.request.contextPath}/admin/dashboard"
-                   class="logo">
+                <div class="logo">
 
-                    <img src="${pageContext.request.contextPath}/assets/img/logo.svg"
-                         alt="HRMS Logo">
+                    <a href="${pageContext.request.contextPath}/admin/dashboard"
+                       class="logo-normal">
 
-                </a>
+                        <img src="${pageContext.request.contextPath}/assets/img/logo.svg"
+                             alt="HRMS Logo">
+
+                    </a>
 
 
-                <a href="${pageContext.request.contextPath}/admin/dashboard"
-                   class="dark-logo">
+                    <a href="${pageContext.request.contextPath}/admin/dashboard"
+                       class="logo-small">
 
-                    <img src="${pageContext.request.contextPath}/assets/img/logo-white.svg"
-                         alt="HRMS Logo">
+                        <img src="${pageContext.request.contextPath}/assets/img/logo-small.svg"
+                             alt="HRMS Logo">
+
+                    </a>
+
+
+                    <a href="${pageContext.request.contextPath}/admin/dashboard"
+                       class="dark-logo">
+
+                        <img src="${pageContext.request.contextPath}/assets/img/logo-white.svg"
+                             alt="HRMS Logo">
+
+                    </a>
+
+                </div>
+
+
+                <!-- MOBILE BUTTON -->
+
+                <a id="mobile_btn"
+                   class="mobile_btn"
+                   href="#sidebar">
+
+                    <span class="bar-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
 
                 </a>
 
             </div>
-
-
-            <!-- MOBILE BUTTON -->
-
-            <a id="mobile_btn"
-               class="mobile_btn"
-               href="#sidebar">
-
-                <span class="bar-icon">
-
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
-                </span>
-
-            </a>
 
 
             <!-- HEADER USER -->
@@ -376,11 +187,11 @@
 
                 <div class="nav user-menu nav-list">
 
+
+                    <!-- SEARCH -->
+
                     <div class="me-auto d-flex align-items-center"
                          id="header-search">
-
-
-                        <!-- SIDEBAR TOGGLE -->
 
                         <a id="toggle_btn"
                            href="javascript:void(0);"
@@ -391,8 +202,6 @@
                         </a>
 
 
-                        <!-- SEARCH -->
-
                         <div class="input-group input-group-flat d-inline-flex me-1">
 
                             <span class="input-icon-addon">
@@ -401,9 +210,11 @@
 
                             </span>
 
+
                             <input type="text"
                                    class="form-control"
                                    placeholder="Search in HRMS">
+
 
                             <span class="input-group-text">
 
@@ -413,8 +224,6 @@
 
                         </div>
 
-
-                        <!-- SETTINGS -->
 
                         <a href="javascript:void(0);"
                            class="btn btn-menubar">
@@ -448,32 +257,39 @@
 
                     <a class="dropdown-item"
                        href="javascript:void(0);">
+
                         Profile
+
                     </a>
+
 
                     <a class="dropdown-item"
                        href="javascript:void(0);">
+
                         Settings
+
                     </a>
+
 
                     <a class="dropdown-item"
                        href="javascript:void(0);">
+
                         Logout
+
                     </a>
 
                 </div>
 
             </div>
 
-
         </div>
 
     </div>
 
 
-    <!-- =========================================================
+    <!-- =====================================================
          SIDEBAR
-         ========================================================= -->
+         ===================================================== -->
 
     <div class="sidebar"
          id="sidebar">
@@ -526,29 +342,26 @@
 
                 </div>
 
+
                 <h6 class="fs-12 fw-normal mb-1">
                     Admin
                 </h6>
-
-                <p class="fs-10 mb-0">
-                    Administrator
-                </p>
 
             </div>
 
         </div>
 
 
-        <!-- =====================================================
-             SIDEBAR MENU
-             ===================================================== -->
+        <!-- SIDEBAR MENU -->
 
         <div class="sidebar-menu">
 
             <ul>
 
 
-                <!-- MAIN MENU -->
+                <!-- =================================================
+                     MAIN MENU
+                     ================================================= -->
 
                 <li class="menu-title">
 
@@ -563,7 +376,7 @@
 
                     <a href="${pageContext.request.contextPath}/admin/dashboard">
 
-                        <i class="ti ti-smart-home"></i>
+                        <i class="ti ti-layout-dashboard"></i>
 
                         <span>Dashboard</span>
 
@@ -588,6 +401,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
@@ -596,11 +410,13 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="${pageContext.request.contextPath}/Employee/Role">
                                 <span>Add Role</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="${pageContext.request.contextPath}/Employee/AddDesignation">
@@ -608,17 +424,20 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="${pageContext.request.contextPath}/Employee/EmployeeList">
                                 <span>Employee List</span>
                             </a>
                         </li>
 
+
                         <li>
                             <a href="${pageContext.request.contextPath}/Employee/EmployeeGrid">
                                 <span>Employee Grid</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="${pageContext.request.contextPath}/Employee/EmployeeDetails">
@@ -647,6 +466,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li class="submenu">
@@ -659,6 +479,7 @@
 
                             </a>
 
+
                             <ul>
 
                                 <li>
@@ -667,11 +488,13 @@
                                     </a>
                                 </li>
 
+
                                 <li>
                                     <a href="javascript:void(0);">
                                         <span>Leave Details</span>
                                     </a>
                                 </li>
+
 
                                 <li>
                                     <a href="javascript:void(0);">
@@ -683,18 +506,24 @@
 
                         </li>
 
+
                         <li>
 
                             <a href="javascript:void(0);">
+
                                 <span>Attendance (Admin)</span>
+
                             </a>
 
                         </li>
 
+
                         <li>
 
                             <a href="javascript:void(0);">
+
                                 <span>Timesheet</span>
+
                             </a>
 
                         </li>
@@ -720,6 +549,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
@@ -728,11 +558,13 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Add Master Event</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -761,6 +593,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
@@ -769,11 +602,13 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Master Payroll</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -781,11 +616,13 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Generate Payslips Monthly</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -814,6 +651,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
@@ -826,7 +664,8 @@
 
                         </li>
 
-                        <li>
+
+                        <li class="active">
 
                             <a href="${pageContext.request.contextPath}/trainingList">
 
@@ -836,9 +675,10 @@
 
                         </li>
 
-                        <li class="active">
 
-                            <a href="${pageContext.request.contextPath}/trainingTypeList">
+                        <li>
+
+                            <a href="${pageContext.request.contextPath}/training-type">
 
                                 <span>Training Type</span>
 
@@ -867,6 +707,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li class="submenu">
@@ -879,6 +720,7 @@
 
                             </a>
 
+
                             <ul>
 
                                 <li>
@@ -890,6 +732,7 @@
                                     </a>
 
                                 </li>
+
 
                                 <li>
 
@@ -904,6 +747,7 @@
                             </ul>
 
                         </li>
+
 
                         <li>
 
@@ -920,13 +764,15 @@
                 </li>
 
 
-                <!-- MASTER DOCUMENT -->
+                <!-- =================================================
+                     MASTER DOCUMENT
+                     ================================================= -->
 
                 <li class="submenu">
 
                     <a href="javascript:void(0);">
 
-                        <i class="ti ti-files"></i>
+                        <i class="ti ti-file"></i>
 
                         <span>Master Document</span>
 
@@ -934,18 +780,28 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
+
                             <a href="javascript:void(0);">
+
                                 <span>Master Document</span>
+
                             </a>
+
                         </li>
 
+
                         <li>
+
                             <a href="javascript:void(0);">
+
                                 <span>Master Document List</span>
+
                             </a>
+
                         </li>
 
                     </ul>
@@ -953,19 +809,22 @@
                 </li>
 
 
-                <!-- PERFORMANCE -->
+                <!-- =================================================
+                     PERFORMANCE & GOAL
+                     ================================================= -->
 
                 <li class="submenu">
 
                     <a href="javascript:void(0);">
 
-                        <i class="ti ti-chart-line"></i>
+                        <i class="ti ti-chart-bar"></i>
 
                         <span>Performance &amp; Goal</span>
 
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -975,17 +834,20 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Goals</span>
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Appraisal</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -998,7 +860,9 @@
                 </li>
 
 
-                <!-- PROJECTS -->
+                <!-- =================================================
+                     PROJECTS
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -1012,6 +876,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
@@ -1020,11 +885,13 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Tasks</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -1037,13 +904,15 @@
                 </li>
 
 
-                <!-- REPORTS -->
+                <!-- =================================================
+                     REPORTS
+                     ================================================= -->
 
                 <li class="submenu">
 
                     <a href="javascript:void(0);">
 
-                        <i class="ti ti-report-analytics"></i>
+                        <i class="ti ti-report"></i>
 
                         <span>Reports</span>
 
@@ -1051,19 +920,22 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/admin/employee-report">
                                 <span>Employee Report</span>
                             </a>
                         </li>
 
+
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/admin/attendance-report">
                                 <span>Attendance Report</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -1071,17 +943,20 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Payslip Report</span>
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Task Report</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -1094,19 +969,22 @@
                 </li>
 
 
-                <!-- PROMOTIONS -->
+                <!-- =================================================
+                     PROMOTIONS
+                     ================================================= -->
 
                 <li class="submenu">
 
                     <a href="javascript:void(0);">
 
-                        <i class="ti ti-trending-up"></i>
+                        <i class="ti ti-award"></i>
 
                         <span>Promotions</span>
 
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -1116,11 +994,13 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Promotion List</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -1133,19 +1013,22 @@
                 </li>
 
 
-                <!-- RESIGNATION -->
+                <!-- =================================================
+                     RESIGNATION
+                     ================================================= -->
 
                 <li class="submenu">
 
                     <a href="javascript:void(0);">
 
-                        <i class="ti ti-logout-2"></i>
+                        <i class="ti ti-user-minus"></i>
 
                         <span>Resignation</span>
 
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -1155,11 +1038,13 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Resignation List</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -1172,7 +1057,9 @@
                 </li>
 
 
-                <!-- TERMINATION -->
+                <!-- =================================================
+                     TERMINATION
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -1186,6 +1073,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
@@ -1194,11 +1082,13 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>Termination List</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -1211,19 +1101,22 @@
                 </li>
 
 
-                <!-- HELP -->
+                <!-- =================================================
+                     HELP & SUPPORTS
+                     ================================================= -->
 
                 <li class="submenu">
 
                     <a href="javascript:void(0);">
 
-                        <i class="ti ti-headset"></i>
+                        <i class="ti ti-help"></i>
 
                         <span>Help &amp; Supports</span>
 
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -1233,11 +1126,13 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>FAQs</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -1250,7 +1145,9 @@
                 </li>
 
 
-                <!-- TICKETS -->
+                <!-- =================================================
+                     TICKETS
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -1264,6 +1161,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
@@ -1272,11 +1170,13 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="javascript:void(0);">
                                 <span>My Tickets</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="javascript:void(0);">
@@ -1291,7 +1191,7 @@
 
                 <!-- LOGOUT -->
 
-                <li class="mt-2">
+                <li>
 
                     <a href="javascript:void(0);">
 
@@ -1303,7 +1203,6 @@
 
                 </li>
 
-
             </ul>
 
         </div>
@@ -1312,25 +1211,28 @@
 
 
     <!-- =========================================================
-         PAGE CONTENT
+         PAGE WRAPPER
          ========================================================= -->
 
     <div class="page-wrapper">
 
+
         <div class="content">
 
 
-            <!-- =====================================================
+            <!-- =================================================
                  PAGE HEADER
-                 ===================================================== -->
+                 ================================================= -->
 
             <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+
 
                 <div class="my-auto mb-2">
 
                     <h2 class="mb-1">
-                        Add Training Type
+                        Edit Training
                     </h2>
+
 
                     <nav>
 
@@ -1340,30 +1242,24 @@
 
                                 <a href="${pageContext.request.contextPath}/admin/dashboard">
 
-                                    <i class="ti ti-smart-home"></i>
+                                    Home
 
                                 </a>
 
                             </li>
 
+
                             <li class="breadcrumb-item">
+
                                 Training
-                            </li>
-
-                            <li class="breadcrumb-item">
-
-                                <a href="${pageContext.request.contextPath}/trainingTypeList">
-
-                                    Training Type
-
-                                </a>
 
                             </li>
+
 
                             <li class="breadcrumb-item active"
                                 aria-current="page">
 
-                                Add Training Type
+                                Edit Training
 
                             </li>
 
@@ -1374,18 +1270,16 @@
                 </div>
 
 
-                <!-- BACK BUTTON -->
-
                 <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
 
                     <div class="mb-2">
 
-                        <a href="${pageContext.request.contextPath}/trainingTypeList"
-                           class="btn btn-light d-inline-flex align-items-center">
+                        <a href="${pageContext.request.contextPath}/trainingList"
+                           class="btn btn-light d-flex align-items-center">
 
-                            <i class="ti ti-arrow-left me-1"></i>
+                            <i class="ti ti-arrow-left me-2"></i>
 
-                            Back to List
+                            Training List
 
                         </a>
 
@@ -1396,67 +1290,216 @@
             </div>
 
 
-            <!-- =====================================================
-                 FORM CARD
-                 ===================================================== -->
+            <!-- =================================================
+                 TRAINING FORM
+                 ================================================= -->
 
-            <div class="training-type-form-card card border-0">
+            <div class="card training-form-card">
 
 
-                <!-- CARD HEADER -->
+                <div class="card-header">
 
-                <div class="training-type-form-header">
+                    <h5 class="card-title mb-0">
 
-                    <h5>
-                        Training Type Information
+                        Training Information
+
                     </h5>
 
                 </div>
 
 
-                <!-- CARD BODY -->
-
-                <div class="training-type-form-body">
-
-                    <!-- IMPORTANT:
-                         Uses pageContext.request.contextPath
-                         so POST goes to /HRMS/addTrainingType
-                    -->
-
-                    <form action="${pageContext.request.contextPath}/addTrainingType"
-                          method="post">
+                <div class="card-body">
 
 
-                        <!-- =================================================
-                             NAME + STATUS
-                             ================================================= -->
+                    <form method="post"
+                          action="${pageContext.request.contextPath}/editTraining">
+
+
+                        <!-- =========================================
+                             TRAINING ID
+                             ========================================= -->
+
+                        <input type="hidden"
+                               name="trainingId"
+                               value="${training.trainingId}">
+
 
                         <div class="row">
 
 
-                            <!-- TRAINING TYPE NAME -->
+                            <!-- =====================================
+                                 EMPLOYEE
+                                 ===================================== -->
 
                             <div class="col-md-6">
 
                                 <div class="mb-3">
 
-                                    <label for="trainingTypeName"
-                                           class="form-label">
+                                    <label class="form-label">
 
-                                        Training Type Name
+                                        Employee
 
-                                        <span class="required">
-                                            *
-                                        </span>
+                                        <span class="required">*</span>
 
                                     </label>
 
-                                    <input type="text"
-                                           id="trainingTypeName"
-                                           name="trainingTypeName"
+
+                                    <select name="userId"
+                                            class="form-select"
+                                            required>
+
+                                        <option value="">
+
+                                            Select Employee
+
+                                        </option>
+
+
+                                        <c:forEach var="user"
+                                                   items="${users}">
+
+                                            <option value="${user.userId}"
+                                                    <c:if test="${user.userId == training.userId}">
+                                                        selected
+                                                    </c:if>>
+
+                                                    ${user.firstName}
+                                                    ${user.lastName}
+
+                                            </option>
+
+                                        </c:forEach>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =====================================
+                                 TRAINER
+                                 ===================================== -->
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+
+                                        Trainer
+
+                                        <span class="required">*</span>
+
+                                    </label>
+
+
+                                    <select name="trainerId"
+                                            class="form-select"
+                                            required>
+
+                                        <option value="">
+
+                                            Select Trainer
+
+                                        </option>
+
+
+                                        <c:forEach var="trainer"
+                                                   items="${trainers}">
+
+                                            <option value="${trainer.trainerId}"
+                                                    <c:if test="${trainer.trainerId == training.trainerId}">
+                                                        selected
+                                                    </c:if>>
+
+                                                    ${trainer.firstName}
+                                                    ${trainer.lastName}
+
+                                            </option>
+
+                                        </c:forEach>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =====================================
+                                 TRAINING TYPE
+                                 ===================================== -->
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+
+                                        Training Type
+
+                                        <span class="required">*</span>
+
+                                    </label>
+
+
+                                    <select name="trainingTypeId"
+                                            class="form-select"
+                                            required>
+
+                                        <option value="">
+
+                                            Select Training Type
+
+                                        </option>
+
+
+                                        <c:forEach var="trainingType"
+                                                   items="${trainingTypes}">
+
+                                            <option value="${trainingType.trainingTypeId}"
+                                                    <c:if test="${trainingType.trainingTypeId == training.trainingTypeId}">
+                                                        selected
+                                                    </c:if>>
+
+                                                    ${trainingType.trainingTypeName}
+
+                                            </option>
+
+                                        </c:forEach>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =====================================
+                                 TRAINING COST
+                                 ===================================== -->
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+
+                                        Training Cost
+
+                                        <span class="required">*</span>
+
+                                    </label>
+
+
+                                    <input type="number"
+                                           name="trainingCost"
                                            class="form-control"
-                                           placeholder="Enter training type name"
-                                           maxlength="255"
+                                           placeholder="Enter training cost"
+                                           min="0"
+                                           step="0.01"
+                                           value="${training.trainingCost}"
                                            required>
 
                                 </div>
@@ -1464,35 +1507,100 @@
                             </div>
 
 
-                            <!-- STATUS -->
+                            <!-- =====================================
+                                 START DATE
+                                 ===================================== -->
 
                             <div class="col-md-6">
 
                                 <div class="mb-3">
 
-                                    <label for="status"
-                                           class="form-label">
+                                    <label class="form-label">
 
-                                        Status
+                                        Start Date
 
-                                        <span class="required">
-                                            *
-                                        </span>
+                                        <span class="required">*</span>
 
                                     </label>
 
-                                    <select id="status"
-                                            name="status"
+
+                                    <input type="datetime-local"
+                                           name="startDate"
+                                           class="form-control"
+                                           value="${training.startDate.toString().substring(0,16)}"
+                                           required>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =====================================
+                                 END DATE
+                                 ===================================== -->
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+
+                                        End Date
+
+                                        <span class="required">*</span>
+
+                                    </label>
+
+
+                                    <input type="datetime-local"
+                                           name="endDate"
+                                           class="form-control"
+                                           value="${training.endDate.toString().substring(0,16)}"
+                                           required>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =====================================
+                                 STATUS
+                                 ===================================== -->
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+
+                                        Status
+
+                                        <span class="required">*</span>
+
+                                    </label>
+
+
+                                    <select name="status"
                                             class="form-select"
                                             required>
 
                                         <option value="Active"
-                                                selected>
+                                                <c:if test="${'Active'.equalsIgnoreCase(training.status)}">
+                                                    selected
+                                                </c:if>>
+
                                             Active
+
                                         </option>
 
-                                        <option value="InActive">
+
+                                        <option value="InActive"
+                                                <c:if test="${'InActive'.equalsIgnoreCase(training.status)}">
+                                                    selected
+                                                </c:if>>
+
                                             InActive
+
                                         </option>
 
                                     </select>
@@ -1501,72 +1609,62 @@
 
                             </div>
 
-                        </div>
 
-
-                        <!-- =================================================
-                             DESCRIPTION
-                             ================================================= -->
-
-                        <div class="row">
+                            <!-- =====================================
+                                 DESCRIPTION
+                                 ===================================== -->
 
                             <div class="col-md-12">
 
                                 <div class="mb-3">
 
-                                    <label for="description"
-                                           class="form-label">
+                                    <label class="form-label">
 
                                         Description
 
-                                        <span class="required">
-                                            *
-                                        </span>
+                                        <span class="required">*</span>
 
                                     </label>
 
-                                    <textarea id="description"
-                                              name="description"
+
+                                    <textarea name="description"
                                               class="form-control"
-                                              placeholder="Enter training type description"
-                                              required></textarea>
+                                              rows="5"
+                                              placeholder="Enter training description"
+                                              required>${training.description}</textarea>
 
                                 </div>
 
                             </div>
 
+
                         </div>
 
 
-                        <!-- =================================================
-                             ACTIONS
-                             ================================================= -->
+                        <!-- =========================================
+                             FORM BUTTONS
+                             ========================================= -->
 
-                        <div class="form-actions">
+                        <div class="d-flex align-items-center justify-content-end">
 
 
-                            <!-- CANCEL -->
-
-                            <a href="${pageContext.request.contextPath}/trainingTypeList"
-                               class="btn-training-cancel">
-
-                                <i class="ti ti-arrow-left me-1"></i>
+                            <a href="${pageContext.request.contextPath}/trainingList"
+                               class="btn btn-light me-2">
 
                                 Cancel
 
                             </a>
 
 
-                            <!-- SAVE -->
-
                             <button type="submit"
-                                    class="btn-training-save">
+                                    class="btn btn-primary">
 
-                                <i class="ti ti-plus"></i>
+                                <i class="ti ti-device-floppy me-1"></i>
 
-                                Add Training Type
+                                Update Training
 
                             </button>
+
 
                         </div>
 
@@ -1577,14 +1675,11 @@
 
             </div>
 
-
         </div>
 
     </div>
 
-
 </div>
-<!-- /main-wrapper -->
 
 
 <!-- =========================================================
@@ -1595,33 +1690,19 @@
 
 <script src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/assets/js/feather.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/select2/js/select2.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/assets/plugins/apexchart/apexcharts.min.js"></script>
-
-<script src="${pageContext.request.contextPath}/assets/js/moment.js"></script>
-
-<script src="${pageContext.request.contextPath}/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/moment.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/plugins/daterangepicker/daterangepicker.js"></script>
 
-<script src="${pageContext.request.contextPath}/assets/plugins/select2/js/select2.min.js"></script>
-
-<script src="${pageContext.request.contextPath}/assets/js/theme-colorpicker.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/flatpickr/flatpickr.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 
-<script src="${pageContext.request.contextPath}/assets/js/todo.js"></script>
-
-<script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-
-<script src="${pageContext.request.contextPath}/assets/plugins/chartjs/chart.min.js"></script>
-
-<script src="${pageContext.request.contextPath}/assets/plugins/chartjs/chart-data.js"></script>
-
 
 <!-- =========================================================
-     SIDEBAR JAVASCRIPT
+     SIDEBAR SCRIPT
      ========================================================= -->
 
 <script>
@@ -1630,71 +1711,66 @@
 
         function initHRMSSidebar() {
 
-            var sidebar =
-                document.querySelector('.sidebar-menu');
+            var sidebar = document.querySelector('.sidebar-menu');
 
             if (!sidebar) {
                 return;
             }
 
-            sidebar.addEventListener(
-                'click',
-                function (event) {
 
-                    var link =
-                        event.target.closest(
-                            'li.submenu > a'
-                        );
+            sidebar.addEventListener('click', function (event) {
 
-                    if (!link ||
-                        !sidebar.contains(link)) {
+                var link =
+                    event.target.closest('li.submenu > a');
 
-                        return;
+
+                if (!link ||
+                    !sidebar.contains(link)) {
+
+                    return;
+
+                }
+
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+
+                var currentItem =
+                    link.parentElement;
+
+                var parentList =
+                    currentItem.parentElement;
+
+                var isOpen =
+                    currentItem.classList.contains('active');
+
+
+                Array.prototype.forEach.call(
+
+                    parentList.children,
+
+                    function (item) {
+
+                        if (item !== currentItem &&
+                            item.classList.contains('submenu')) {
+
+                            item.classList.remove('active');
+
+                        }
 
                     }
 
-                    event.preventDefault();
+                );
 
-                    event.stopPropagation();
 
-                    var currentItem =
-                        link.parentElement;
+                currentItem.classList.toggle(
+                    'active',
+                    !isOpen
+                );
 
-                    var parentList =
-                        currentItem.parentElement;
-
-                    var isOpen =
-                        currentItem.classList.contains(
-                            'active'
-                        );
-
-                    Array.prototype.forEach.call(
-                        parentList.children,
-                        function (item) {
-
-                            if (
-                                item !== currentItem &&
-                                item.classList.contains(
-                                    'submenu'
-                                )
-                            ) {
-
-                                item.classList.remove(
-                                    'active'
-                                );
-
-                            }
-
-                        }
-                    );
-
-                    currentItem.classList.toggle(
-                        'active',
-                        !isOpen
-                    );
-
-                }
-            );
+            });
 
         }
 

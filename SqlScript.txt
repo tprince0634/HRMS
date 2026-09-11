@@ -1580,3 +1580,38 @@ DELIMITER ;
 
 --  ====================================================================================================================
 --  ===================================================================================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE get_all_users()
+BEGIN
+
+    SELECT
+        UserId,
+        FirstName,
+        LastName,
+        Email,
+        PasswordHash,
+        PhoneNumber,
+        RoleId,
+        DepartmentId,
+        DesignationtId,
+        DateOfJoining,
+        DateOfBirth,
+        Gender,
+        Address,
+        AboutEmployee,
+        ProfilePicture,
+        RoleId1,
+        ReportingManager,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt,
+        Status
+    FROM User
+    ORDER BY UserId DESC;
+
+END $$
+
+DELIMITER ;

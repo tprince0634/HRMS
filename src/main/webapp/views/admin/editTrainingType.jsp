@@ -2,6 +2,24 @@
          language="java"
          isELIgnored="false" %>
 
+<%@ page import="jakarta.servlet.http.HttpServletResponse" %>
+<%@ page import="org.example.model.TrainingType" %>
+
+<%
+    String context = request.getContextPath();
+
+    TrainingType trainingType =
+            (TrainingType) request.getAttribute("trainingType");
+
+    if (trainingType == null) {
+        response.sendError(
+                HttpServletResponse.SC_NOT_FOUND,
+                "Training type not found"
+        );
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +42,7 @@
     <meta name="robots"
           content="noindex, nofollow">
 
-    <title>Add Training Type | HRMS</title>
+    <title>Edit Training Type | HRMS</title>
 
 
     <!-- =========================================================
@@ -37,7 +55,7 @@
 
 
     <!-- =========================================================
-         THEME
+         THEME SCRIPT
          ========================================================= -->
 
     <script src="${pageContext.request.contextPath}/assets/js/theme-script.js"></script>
@@ -79,7 +97,7 @@
 
 
     <!-- =========================================================
-         HRMS SIDEBAR CSS
+         SIDEBAR FIX
          ========================================================= -->
 
     <style>
@@ -104,6 +122,10 @@
             border-radius: 10px;
         }
 
+        /* =====================================================
+           SIDEBAR SUBMENU
+           ===================================================== */
+
         .sidebar-menu li.submenu > ul {
             display: none !important;
         }
@@ -127,7 +149,20 @@
 
 
         /* =====================================================
-           PAGE
+           EDIT TRAINING TYPE PAGE
+           ===================================================== */
+
+        .edit-training-type-page {
+            min-height: calc(100vh - 60px);
+        }
+
+        .edit-training-type-page .page-breadcrumb h2 {
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           FORM CARD
            ===================================================== */
 
         .training-type-form-card {
@@ -155,7 +190,7 @@
 
 
         /* =====================================================
-           LABEL
+           LABELS
            ===================================================== */
 
         .training-type-form-body .form-label {
@@ -172,7 +207,7 @@
 
 
         /* =====================================================
-           INPUT
+           INPUTS
            ===================================================== */
 
         .training-type-form-body .form-control,
@@ -188,15 +223,23 @@
         .training-type-form-body .form-control:focus,
         .training-type-form-body .form-select:focus {
             border-color: #ff5b35;
-
-            box-shadow:
-                    0 0 0 0.15rem
-                    rgba(255, 91, 53, 0.10);
+            box-shadow: 0 0 0 0.15rem rgba(255, 91, 53, 0.10);
         }
 
         .training-type-form-body textarea.form-control {
             min-height: 130px;
             resize: vertical;
+        }
+
+
+        /* =====================================================
+           ID FIELD
+           ===================================================== */
+
+        .training-type-id-box {
+            background: #f5f6f8 !important;
+            color: #6b7280 !important;
+            cursor: not-allowed;
         }
 
 
@@ -216,7 +259,7 @@
 
 
         /* =====================================================
-           CANCEL
+           CANCEL BUTTON
            ===================================================== */
 
         .btn-training-cancel {
@@ -227,11 +270,14 @@
             background: #ffffff;
             color: #374151;
             text-decoration: none;
+
             display: inline-flex;
             align-items: center;
             justify-content: center;
+
             font-size: 14px;
             font-weight: 500;
+
             transition: all 0.2s ease;
         }
 
@@ -242,27 +288,34 @@
 
 
         /* =====================================================
-           SAVE BUTTON
+           UPDATE BUTTON
            ===================================================== */
 
-        .btn-training-save {
+        .btn-training-update {
             min-height: 42px;
             padding: 0 22px;
+
             border: 0;
             border-radius: 5px;
+
             background: #ff5b35;
             color: #ffffff;
+
             display: inline-flex;
             align-items: center;
             justify-content: center;
+
             gap: 7px;
+
             font-size: 14px;
             font-weight: 500;
+
             cursor: pointer;
+
             transition: all 0.2s ease;
         }
 
-        .btn-training-save:hover {
+        .btn-training-update:hover {
             background: #e94e2b;
             color: #ffffff;
         }
@@ -288,7 +341,7 @@
             }
 
             .btn-training-cancel,
-            .btn-training-save {
+            .btn-training-update {
                 width: 100%;
             }
 
@@ -303,13 +356,11 @@
 
 
 <!-- =========================================================
-     LOADER
+     GLOBAL LOADER
      ========================================================= -->
 
 <div id="global-loader">
-
     <div class="page-loader"></div>
-
 </div>
 
 
@@ -329,7 +380,9 @@
         <div class="main-header">
 
 
-            <!-- HEADER LEFT -->
+            <!-- =================================================
+                 HEADER LEFT / LOGO
+                 ================================================= -->
 
             <div class="header-left">
 
@@ -353,24 +406,26 @@
             </div>
 
 
-            <!-- MOBILE BUTTON -->
+            <!-- =================================================
+                 MOBILE BUTTON
+                 ================================================= -->
 
             <a id="mobile_btn"
                class="mobile_btn"
                href="#sidebar">
 
                 <span class="bar-icon">
-
                     <span></span>
                     <span></span>
                     <span></span>
-
                 </span>
 
             </a>
 
 
-            <!-- HEADER USER -->
+            <!-- =================================================
+                 HEADER SEARCH
+                 ================================================= -->
 
             <div class="header-user">
 
@@ -380,7 +435,7 @@
                          id="header-search">
 
 
-                        <!-- SIDEBAR TOGGLE -->
+                        <!-- Sidebar toggle -->
 
                         <a id="toggle_btn"
                            href="javascript:void(0);"
@@ -391,7 +446,7 @@
                         </a>
 
 
-                        <!-- SEARCH -->
+                        <!-- Search -->
 
                         <div class="input-group input-group-flat d-inline-flex me-1">
 
@@ -414,7 +469,7 @@
                         </div>
 
 
-                        <!-- SETTINGS -->
+                        <!-- Settings -->
 
                         <a href="javascript:void(0);"
                            class="btn btn-menubar">
@@ -430,7 +485,9 @@
             </div>
 
 
-            <!-- MOBILE USER MENU -->
+            <!-- =================================================
+                 MOBILE USER MENU
+                 ================================================= -->
 
             <div class="dropdown mobile-user-menu">
 
@@ -448,23 +505,28 @@
 
                     <a class="dropdown-item"
                        href="javascript:void(0);">
+
                         Profile
+
                     </a>
 
                     <a class="dropdown-item"
                        href="javascript:void(0);">
+
                         Settings
+
                     </a>
 
                     <a class="dropdown-item"
                        href="javascript:void(0);">
+
                         Logout
+
                     </a>
 
                 </div>
 
             </div>
-
 
         </div>
 
@@ -479,7 +541,9 @@
          id="sidebar">
 
 
-        <!-- SIDEBAR LOGO -->
+        <!-- =====================================================
+             SIDEBAR LOGO
+             ===================================================== -->
 
         <div class="sidebar-logo">
 
@@ -512,7 +576,9 @@
         </div>
 
 
-        <!-- ADMIN PROFILE -->
+        <!-- =====================================================
+             ADMIN PROFILE
+             ===================================================== -->
 
         <div class="modern-profile p-3 pb-0">
 
@@ -526,9 +592,11 @@
 
                 </div>
 
+
                 <h6 class="fs-12 fw-normal mb-1">
                     Admin
                 </h6>
+
 
                 <p class="fs-10 mb-0">
                     Administrator
@@ -548,7 +616,9 @@
             <ul>
 
 
-                <!-- MAIN MENU -->
+                <!-- =================================================
+                     MAIN MENU
+                     ================================================= -->
 
                 <li class="menu-title">
 
@@ -557,7 +627,9 @@
                 </li>
 
 
-                <!-- DASHBOARD -->
+                <!-- =================================================
+                     DASHBOARD
+                     ================================================= -->
 
                 <li>
 
@@ -587,6 +659,7 @@
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -647,6 +720,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li class="submenu">
@@ -658,6 +732,7 @@
                                 <span class="menu-arrow"></span>
 
                             </a>
+
 
                             <ul>
 
@@ -683,18 +758,24 @@
 
                         </li>
 
+
                         <li>
 
                             <a href="javascript:void(0);">
+
                                 <span>Attendance (Admin)</span>
+
                             </a>
 
                         </li>
 
+
                         <li>
 
                             <a href="javascript:void(0);">
+
                                 <span>Timesheet</span>
+
                             </a>
 
                         </li>
@@ -719,6 +800,7 @@
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -760,6 +842,7 @@
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -814,7 +897,11 @@
 
                     </a>
 
+
                     <ul>
+
+
+                        <!-- TRAINERS -->
 
                         <li>
 
@@ -826,6 +913,9 @@
 
                         </li>
 
+
+                        <!-- TRAINING -->
+
                         <li>
 
                             <a href="${pageContext.request.contextPath}/trainingList">
@@ -835,6 +925,9 @@
                             </a>
 
                         </li>
+
+
+                        <!-- TRAINING TYPE -->
 
                         <li class="active">
 
@@ -867,6 +960,7 @@
 
                     </a>
 
+
                     <ul>
 
                         <li class="submenu">
@@ -879,6 +973,7 @@
 
                             </a>
 
+
                             <ul>
 
                                 <li>
@@ -890,6 +985,7 @@
                                     </a>
 
                                 </li>
+
 
                                 <li>
 
@@ -904,6 +1000,7 @@
                             </ul>
 
                         </li>
+
 
                         <li>
 
@@ -920,7 +1017,9 @@
                 </li>
 
 
-                <!-- MASTER DOCUMENT -->
+                <!-- =================================================
+                     MASTER DOCUMENT
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -934,18 +1033,28 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
+
                             <a href="javascript:void(0);">
+
                                 <span>Master Document</span>
+
                             </a>
+
                         </li>
 
+
                         <li>
+
                             <a href="javascript:void(0);">
+
                                 <span>Master Document List</span>
+
                             </a>
+
                         </li>
 
                     </ul>
@@ -953,7 +1062,9 @@
                 </li>
 
 
-                <!-- PERFORMANCE -->
+                <!-- =================================================
+                     PERFORMANCE & GOAL
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -966,6 +1077,7 @@
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -998,7 +1110,9 @@
                 </li>
 
 
-                <!-- PROJECTS -->
+                <!-- =================================================
+                     PROJECTS
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -1011,6 +1125,7 @@
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -1037,7 +1152,9 @@
                 </li>
 
 
-                <!-- REPORTS -->
+                <!-- =================================================
+                     REPORTS
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -1051,42 +1168,72 @@
 
                     </a>
 
+
                     <ul>
 
                         <li>
-                            <a href="javascript:void(0);">
+
+                            <a href="${pageContext.request.contextPath}/admin/employee-report">
+
                                 <span>Employee Report</span>
+
                             </a>
+
                         </li>
 
+
                         <li>
-                            <a href="javascript:void(0);">
+
+                            <a href="${pageContext.request.contextPath}/admin/attendance-report">
+
                                 <span>Attendance Report</span>
+
                             </a>
+
                         </li>
 
+
                         <li>
+
                             <a href="javascript:void(0);">
+
                                 <span>Leave Report</span>
+
                             </a>
+
                         </li>
 
+
                         <li>
+
                             <a href="javascript:void(0);">
+
                                 <span>Payslip Report</span>
+
                             </a>
+
                         </li>
 
+
                         <li>
+
                             <a href="javascript:void(0);">
+
                                 <span>Task Report</span>
+
                             </a>
+
                         </li>
 
+
                         <li>
+
                             <a href="javascript:void(0);">
+
                                 <span>Daily Report</span>
+
                             </a>
+
                         </li>
 
                     </ul>
@@ -1094,7 +1241,9 @@
                 </li>
 
 
-                <!-- PROMOTIONS -->
+                <!-- =================================================
+                     PROMOTIONS
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -1107,6 +1256,7 @@
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -1133,7 +1283,9 @@
                 </li>
 
 
-                <!-- RESIGNATION -->
+                <!-- =================================================
+                     RESIGNATION
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -1146,6 +1298,7 @@
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -1172,7 +1325,9 @@
                 </li>
 
 
-                <!-- TERMINATION -->
+                <!-- =================================================
+                     TERMINATION
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -1185,6 +1340,7 @@
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -1211,7 +1367,9 @@
                 </li>
 
 
-                <!-- HELP -->
+                <!-- =================================================
+                     HELP & SUPPORT
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -1224,6 +1382,7 @@
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -1250,7 +1409,9 @@
                 </li>
 
 
-                <!-- TICKETS -->
+                <!-- =================================================
+                     TICKETS
+                     ================================================= -->
 
                 <li class="submenu">
 
@@ -1263,6 +1424,7 @@
                         <span class="menu-arrow"></span>
 
                     </a>
+
 
                     <ul>
 
@@ -1289,7 +1451,9 @@
                 </li>
 
 
-                <!-- LOGOUT -->
+                <!-- =================================================
+                     LOGOUT
+                     ================================================= -->
 
                 <li class="mt-2">
 
@@ -1312,10 +1476,10 @@
 
 
     <!-- =========================================================
-         PAGE CONTENT
+         PAGE WRAPPER
          ========================================================= -->
 
-    <div class="page-wrapper">
+    <div class="page-wrapper edit-training-type-page">
 
         <div class="content">
 
@@ -1326,15 +1490,18 @@
 
             <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
 
+
                 <div class="my-auto mb-2">
 
                     <h2 class="mb-1">
-                        Add Training Type
+                        Edit Training Type
                     </h2>
+
 
                     <nav>
 
                         <ol class="breadcrumb mb-0">
+
 
                             <li class="breadcrumb-item">
 
@@ -1346,9 +1513,13 @@
 
                             </li>
 
+
                             <li class="breadcrumb-item">
+
                                 Training
+
                             </li>
+
 
                             <li class="breadcrumb-item">
 
@@ -1360,36 +1531,17 @@
 
                             </li>
 
+
                             <li class="breadcrumb-item active"
                                 aria-current="page">
 
-                                Add Training Type
+                                Edit Training Type
 
                             </li>
 
                         </ol>
 
                     </nav>
-
-                </div>
-
-
-                <!-- BACK BUTTON -->
-
-                <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
-
-                    <div class="mb-2">
-
-                        <a href="${pageContext.request.contextPath}/trainingTypeList"
-                           class="btn btn-light d-inline-flex align-items-center">
-
-                            <i class="ti ti-arrow-left me-1"></i>
-
-                            Back to List
-
-                        </a>
-
-                    </div>
 
                 </div>
 
@@ -1403,7 +1555,9 @@
             <div class="training-type-form-card card border-0">
 
 
-                <!-- CARD HEADER -->
+                <!-- =================================================
+                     CARD HEADER
+                     ================================================= -->
 
                 <div class="training-type-form-header">
 
@@ -1414,27 +1568,57 @@
                 </div>
 
 
-                <!-- CARD BODY -->
+                <!-- =================================================
+                     FORM BODY
+                     ================================================= -->
 
                 <div class="training-type-form-body">
 
-                    <!-- IMPORTANT:
-                         Uses pageContext.request.contextPath
-                         so POST goes to /HRMS/addTrainingType
-                    -->
 
-                    <form action="${pageContext.request.contextPath}/addTrainingType"
+                    <form action="${pageContext.request.contextPath}/editTrainingType"
                           method="post">
 
 
                         <!-- =================================================
-                             NAME + STATUS
+                             HIDDEN ID
+                             ================================================= -->
+
+                        <input type="hidden"
+                               name="trainingTypeId"
+                               value="<%= trainingType.getTrainingTypeId() %>">
+
+
+                        <!-- =================================================
+                             ID + TRAINING TYPE NAME
                              ================================================= -->
 
                         <div class="row">
 
 
-                            <!-- TRAINING TYPE NAME -->
+                            <!-- Training Type ID -->
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+
+                                        Training Type ID
+
+                                    </label>
+
+
+                                    <input type="text"
+                                           class="form-control training-type-id-box"
+                                           value="<%= trainingType.getTrainingTypeId() %>"
+                                           readonly>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Training Type Name -->
 
                             <div class="col-md-6">
 
@@ -1451,51 +1635,17 @@
 
                                     </label>
 
+
                                     <input type="text"
                                            id="trainingTypeName"
                                            name="trainingTypeName"
                                            class="form-control"
+                                           value="<%= trainingType.getTrainingTypeName() == null
+                                                   ? ""
+                                                   : trainingType.getTrainingTypeName() %>"
                                            placeholder="Enter training type name"
                                            maxlength="255"
                                            required>
-
-                                </div>
-
-                            </div>
-
-
-                            <!-- STATUS -->
-
-                            <div class="col-md-6">
-
-                                <div class="mb-3">
-
-                                    <label for="status"
-                                           class="form-label">
-
-                                        Status
-
-                                        <span class="required">
-                                            *
-                                        </span>
-
-                                    </label>
-
-                                    <select id="status"
-                                            name="status"
-                                            class="form-select"
-                                            required>
-
-                                        <option value="Active"
-                                                selected>
-                                            Active
-                                        </option>
-
-                                        <option value="InActive">
-                                            InActive
-                                        </option>
-
-                                    </select>
 
                                 </div>
 
@@ -1525,11 +1675,14 @@
 
                                     </label>
 
+
                                     <textarea id="description"
                                               name="description"
                                               class="form-control"
                                               placeholder="Enter training type description"
-                                              required></textarea>
+                                              required><%= trainingType.getDescription() == null
+                                            ? ""
+                                            : trainingType.getDescription() %></textarea>
 
                                 </div>
 
@@ -1539,7 +1692,66 @@
 
 
                         <!-- =================================================
-                             ACTIONS
+                             STATUS
+                             ================================================= -->
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+
+                                    <label for="status"
+                                           class="form-label">
+
+                                        Status
+
+                                        <span class="required">
+                                            *
+                                        </span>
+
+                                    </label>
+
+
+                                    <select id="status"
+                                            name="status"
+                                            class="form-select"
+                                            required>
+
+
+                                        <option value="Active"
+                                                <%= "Active".equalsIgnoreCase(
+                                                        trainingType.getStatus())
+                                                        ? "selected"
+                                                        : "" %>>
+
+                                            Active
+
+                                        </option>
+
+
+                                        <option value="InActive"
+                                                <%= "InActive".equalsIgnoreCase(
+                                                        trainingType.getStatus())
+                                                        ? "selected"
+                                                        : "" %>>
+
+                                            InActive
+
+                                        </option>
+
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             FORM ACTIONS
                              ================================================= -->
 
                         <div class="form-actions">
@@ -1557,16 +1769,17 @@
                             </a>
 
 
-                            <!-- SAVE -->
+                            <!-- UPDATE -->
 
                             <button type="submit"
-                                    class="btn-training-save">
+                                    class="btn-training-update">
 
-                                <i class="ti ti-plus"></i>
+                                <i class="ti ti-check"></i>
 
-                                Add Training Type
+                                Update Training Type
 
                             </button>
+
 
                         </div>
 
@@ -1621,7 +1834,7 @@
 
 
 <!-- =========================================================
-     SIDEBAR JAVASCRIPT
+     HRMS SIDEBAR JAVASCRIPT
      ========================================================= -->
 
 <script>
@@ -1637,14 +1850,17 @@
                 return;
             }
 
+
             sidebar.addEventListener(
                 'click',
                 function (event) {
+
 
                     var link =
                         event.target.closest(
                             'li.submenu > a'
                         );
+
 
                     if (!link ||
                         !sidebar.contains(link)) {
@@ -1653,20 +1869,25 @@
 
                     }
 
+
                     event.preventDefault();
 
                     event.stopPropagation();
 
+
                     var currentItem =
                         link.parentElement;
 
+
                     var parentList =
                         currentItem.parentElement;
+
 
                     var isOpen =
                         currentItem.classList.contains(
                             'active'
                         );
+
 
                     Array.prototype.forEach.call(
                         parentList.children,
@@ -1687,6 +1908,7 @@
 
                         }
                     );
+
 
                     currentItem.classList.toggle(
                         'active',
