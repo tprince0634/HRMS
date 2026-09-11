@@ -72,7 +72,6 @@ public class LoginServlet extends HttpServlet {
         // MANAGER
         // ==========================
         else if ("Manager".equalsIgnoreCase(role)) {
-
             response.sendRedirect(
                     request.getContextPath() +
                             "/Manager/dashboard"
