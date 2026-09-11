@@ -13,4 +13,5 @@ public interface TrainerDao {
     List<Trainer> getUsersByPage(int pageNo,int pageSize, String sortDirection);
     List<Trainer> searchTrainerByNameOrEmail(String name, String email);
     void deleteTrainerById(int trainerId);
+    Trainer changeTrainerStatus(int trainerId,String status);
 }

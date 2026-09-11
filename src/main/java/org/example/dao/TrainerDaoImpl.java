@@ -4,18 +4,16 @@ import org.example.interfaces.TrainerDao;
 import org.example.model.Trainer;
 import org.example.util.DBConnection;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrainerDaoImpl  implements TrainerDao {
+
     @Override
     public Trainer addTrainer(Trainer trainer) {
 
-        String sql = "call add_trainer(?,?,?,?,?,?,?,?)";
+        String sql = "CALL add_trainer(?,?,?,?,?,?,?,?)";
 
         try (Connection connection = DBConnection.getConnection();
              CallableStatement callableStatement = connection.prepareCall(sql)) {
@@ -25,20 +23,30 @@ public class TrainerDaoImpl  implements TrainerDao {
             callableStatement.setString(3, trainer.getRole());
             callableStatement.setString(4, trainer.getEmail());
             callableStatement.setString(5, trainer.getDescription());
-            callableStatement.setString(6, trainer.getStatus());
-            callableStatement.setLong(7, trainer.getPhone());
+            callableStatement.setString(6, "Active");
+
+            if (trainer.getPhone() != null) {
+                callableStatement.setLong(7, trainer.getPhone());
+            } else {
+                callableStatement.setNull(7, Types.BIGINT);
+            }
+
             callableStatement.setString(8, trainer.getProfilePicture());
 
             try (ResultSet resultSet = callableStatement.executeQuery()) {
 
-                return resultSet.next() ? map(resultSet) : null;
+                if (resultSet.next()) {
+                    return map(resultSet);
+                }
+
+                return null;
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException("Error while adding trainer", e);
         }
     }
-
     @Override
     public Trainer updateTrainer( int id ,Trainer trainer) {
         String sql = "call update_trainer(?,?,?,?,?,?,?,?,?)";
@@ -170,6 +178,32 @@ public class TrainerDaoImpl  implements TrainerDao {
             callableStatement.setInt(1, trainerId);
 
             callableStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Override
+    public Trainer changeTrainerStatus(int trainerId, String status) {
+
+        String sql = "UPDATE Trainer SET Status = ? WHERE TrainerId = ?";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, status);
+            preparedStatement.setInt(2, trainerId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                return null;
+            }
+
+            return getTrainerById(trainerId);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
