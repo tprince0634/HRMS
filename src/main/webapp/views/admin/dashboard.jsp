@@ -442,7 +442,7 @@
 
                 <!-- DASHBOARD -->
                 <li class="active">
-                    <a href="${pageContext.request.contextPath}/admin/dashboard">
+                    <a href="${pageContext.request.contextPath}/Admin/dashboard">
                         <i class="ti ti-smart-home"></i>
                         <span>Dashboard</span>
                     </a>
@@ -479,11 +479,13 @@
                         </li>
 
 
+
                         <li>
                             <a href="${pageContext.request.contextPath}/Employee/EmployeeList">
                                 <span>Employee List</span>
                             </a>
                         </li>
+
 
                         <li>
                             <a href="${pageContext.request.contextPath}/Employee/EmployeeGrid">

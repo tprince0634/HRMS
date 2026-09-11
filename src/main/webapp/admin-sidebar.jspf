@@ -17,6 +17,7 @@
             <img src="${pageContext.request.contextPath}/assets/img/logo-white.svg" alt="HRMS Logo">
         </a>
     </div>
+
     <div class="sidebar-menu" id="admin-sidebar-menu">
         <ul>
             <li class="menu-title"><span>MAIN MENU</span></li>

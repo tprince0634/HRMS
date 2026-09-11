@@ -618,7 +618,7 @@
 
                 <!-- DASHBOARD -->
                 <li>
-                    <a href="${pageContext.request.contextPath}/admin/dashboard">
+                    <a href="${pageContext.request.contextPath}/Admin/dashboard">
                         <i class="ti ti-smart-home"></i>
                         <span>Dashboard</span>
                     </a>
