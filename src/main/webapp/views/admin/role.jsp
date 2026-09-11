@@ -22,18 +22,27 @@
     <title>Roles</title>
 
 
+    <link rel="shortcut icon"
+          type="image/x-icon"
+          href="${pageContext.request.contextPath}/assets/img/favicon.png">
+
+    <script src="${pageContext.request.contextPath}/assets/js/theme-script.js"></script>
+
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/icons/feather/feather.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/tabler-icons/tabler-icons.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/css/style.css">
     <!-- =====================================================
-         BOOTSTRAP
-         ===================================================== -->
-
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet">
-
-
-    <!-- =====================================================
-         BOOTSTRAP ICONS
-         ===================================================== -->
+             BOOTSTRAP ICONS
+             ===================================================== -->
 
     <link
             rel="stylesheet"
@@ -45,6 +54,49 @@
          ===================================================== -->
 
     <style>
+
+        /* Same sidebar behaviour as Admin Dashboard */
+        .sidebar {
+            height: 100vh !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+        }
+
+        .sidebar-menu {
+            height: auto !important;
+            overflow: visible !important;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+
+        .sidebar-menu li.submenu > ul {
+            display: none !important;
+        }
+
+        .sidebar-menu li.submenu.active > ul {
+            display: block !important;
+        }
+
+        .sidebar-menu li.submenu > a .menu-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .sidebar-menu li.submenu.active > a .menu-arrow {
+            transform: rotate(90deg);
+        }
+
+        .sidebar-menu li.submenu > ul > li > a {
+            display: flex;
+            align-items: center;
+        }
+
 
         body {
             margin: 0;
@@ -413,6 +465,13 @@
 
         }
 
+        /* Keep sidebar appearance identical to Department page */
+        .sidebar-menu a,
+        .sidebar-menu a:hover,
+        .sidebar-menu a:focus {
+            text-decoration: none !important;
+        }
+
     </style>
 
 </head>
@@ -425,486 +484,1076 @@
      MAIN
      ===================================================== -->
 
-<div class="main">
+<div class="main-wrapper role-page">
 
 
-    <!-- =====================================================
-         TOP BAR
-         ===================================================== -->
+    <!-- HEADER - SAME AS ADMIN DASHBOARD -->
+    <div class="header">
+        <div class="main-header">
 
-    <div class="topbar">
+            <div class="header-left">
+                <a href="${pageContext.request.contextPath}/admin/dashboard"
+                   class="logo">
+                    <img src="${pageContext.request.contextPath}/assets/img/logo.svg"
+                         alt="HRMS Logo">
+                </a>
 
-        <input
-                type="text"
-                class="search-box"
-                placeholder="Search in Pulse360">
+                <a href="${pageContext.request.contextPath}/admin/dashboard"
+                   class="dark-logo">
+                    <img src="${pageContext.request.contextPath}/assets/img/logo-white.svg"
+                         alt="HRMS Logo">
+                </a>
+            </div>
+
+            <a id="mobile_btn"
+               class="mobile_btn"
+               href="#sidebar">
+                <span class="bar-icon"><span></span><span></span><span></span></span>
+            </a>
+
+            <div class="header-user">
+                <div class="nav user-menu nav-list">
+                    <div class="me-auto d-flex align-items-center" id="header-search">
+
+                        <a id="toggle_btn"
+                           href="javascript:void(0);"
+                           class="btn btn-menubar me-1">
+                            <i class="ti ti-arrow-bar-to-left"></i>
+                        </a>
+
+                        <div class="input-group input-group-flat d-inline-flex me-1">
+                            <span class="input-icon-addon">
+                                <i class="ti ti-search"></i>
+                            </span>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Search in HRMS">
+                            <span class="input-group-text">
+                                <kbd>CTRL + /</kbd>
+                            </span>
+                        </div>
+
+                        <a href="javascript:void(0);"
+                           class="btn btn-menubar">
+                            <i class="ti ti-settings-cog"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown mobile-user-menu">
+                <a href="javascript:void(0);"
+                   class="nav-link dropdown-toggle"
+                   data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item" href="javascript:void(0);">Profile</a>
+                    <a class="dropdown-item" href="javascript:void(0);">Settings</a>
+                    <a class="dropdown-item" href="javascript:void(0);">Logout</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+
+            <a href="${pageContext.request.contextPath}/admin/dashboard"
+               class="logo logo-normal">
+                <img src="${pageContext.request.contextPath}/assets/img/logo.svg"
+                     alt="HRMS Logo">
+            </a>
+
+            <a href="${pageContext.request.contextPath}/admin/dashboard"
+               class="logo-small">
+                <img src="${pageContext.request.contextPath}/assets/img/logo-small.svg"
+                     alt="HRMS Logo">
+            </a>
+
+            <a href="${pageContext.request.contextPath}/admin/dashboard"
+               class="dark-logo">
+                <img src="${pageContext.request.contextPath}/assets/img/logo-white.svg"
+                     alt="HRMS Logo">
+            </a>
+
+        </div>
+
+        <!-- ADMIN PROFILE -->
+        <div class="modern-profile p-3 pb-0">
+
+            <div class="text-center rounded bg-light p-3 mb-4 user-profile">
+
+                <div class="avatar avatar-lg online mb-3">
+                    <img src="${pageContext.request.contextPath}/assets/img/profiles/avatar-02.jpg"
+                         alt="Admin Profile"
+                         class="img-fluid rounded-circle">
+                </div>
+
+                <h6 class="fs-12 fw-normal mb-1">
+                    Admin
+                </h6>
+
+                <p class="fs-10 mb-0">
+                    Administrator
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- SIDEBAR MENU -->
+        <div class="sidebar-menu">
+
+            <ul>
+
+                <li class="menu-title">
+                    <span>MAIN MENU</span>
+                </li>
+
+                <!-- DASHBOARD -->
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/dashboard">
+                        <i class="ti ti-smart-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- EMPLOYEES -->
+                <li class="submenu active">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-users"></i>
+                        <span>Employees</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/Employee/AddDepartment">
+                                <span>Add Department</span>
+                            </a>
+                        </li>
+
+
+                        <li class="active">
+                            <a href="${pageContext.request.contextPath}/Employee/Role">
+                                <span>Add Role</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/Employee/AddDesignation">
+                                <span>Add Designation</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/Employee/EmployeeList">
+                                <span>Employee List</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/Employee/EmployeeGrid">
+                                <span>Employee Grid</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/Employee/EmployeeDetails">
+                                <span>Employee Details</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- ATTENDANCE -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-calendar-check"></i>
+                        <span>Attendance</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li class="submenu">
+                            <a href="javascript:void(0);">
+                                <span>Leaves</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span>Apply Leave</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span>Leave Details</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span>Leave Approval</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Attendance (Admin)</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Timesheet</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- EVENTS -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-calendar-event"></i>
+                        <span>Events</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Add Event</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Add Master Event</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Event List</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- PAYROLL -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-cash"></i>
+                        <span>Payroll</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Add Employee Salary</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Master Payroll</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Employee Salary List</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Generate Payslips Monthly</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Transaction History</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- TRAINING -->
+                <!-- TRAINING -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-school"></i>
+                        <span>Training</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Trainer List</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Trainers</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/training-type">
+                                <span>Training Type</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+                <!-- DOCUMENTS -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-file-description"></i>
+                        <span>Documents</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li class="submenu">
+
+                            <a href="javascript:void(0);">
+                                <span>Upload Documents</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+
+                            <ul>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span>Upload Document</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span>Document List</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Generate Letter</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- MASTER DOCUMENT -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-files"></i>
+                        <span>Master Document</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Master Document</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Master Document List</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- PERFORMANCE & GOAL -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-chart-line"></i>
+                        <span>Performance &amp; Goal</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Performance</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Goals</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Appraisal</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Performance Report</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- PROJECTS -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-briefcase"></i>
+                        <span>Projects</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Project</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Tasks</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Task Board</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- REPORTS -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-report-analytics"></i>
+                        <span>Reports</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/employee-report">
+                                <span>Employee Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/attendance-report">
+                                <span>Attendance Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Leave Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Payslip Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Task Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Daily Report</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- PROMOTIONS -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-trending-up"></i>
+                        <span>Promotions</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Add Promotion</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Promotion List</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Promotion History</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- RESIGNATION -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-logout-2"></i>
+                        <span>Resignation</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Resignation Request</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Resignation List</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Exit Details</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- TERMINATION -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-user-x"></i>
+                        <span>Termination</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Add Termination</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Termination List</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Termination History</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- HELP & SUPPORT -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-headset"></i>
+                        <span>Help &amp; Supports</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Help Center</span></a></li>
+                        <li><a href="javascript:void(0);"><span>FAQs</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Contact Support</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- TICKETS -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-ticket"></i>
+                        <span>Tickets</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Create Ticket</span></a></li>
+                        <li><a href="javascript:void(0);"><span>My Tickets</span></a></li>
+                        <li><a href="javascript:void(0);"><span>All Tickets</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- LOGOUT -->
+                <li class="mt-2">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-logout"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
 
     </div>
 
-
-    <!-- =====================================================
-         CONTENT
-         ===================================================== -->
-
-    <div class="content">
+    <!-- PAGE WRAPPER -->
+    <div class="page-wrapper">
+        <div class="content">
 
 
-        <!-- =================================================
-             PAGE HEADER
-             ================================================= -->
+            <!-- =================================================
+                 PAGE HEADER
+                 ================================================= -->
 
-        <div class="page-header">
-
-
-            <!-- PAGE TITLE -->
-
-            <div>
-
-                <h1>
-                    Roles
-                </h1>
+            <div class="page-header">
 
 
-                <div class="breadcrumb">
+                <!-- PAGE TITLE -->
+
+                <div>
+
+                    <h1>
+                        Roles
+                    </h1>
+
+
+                    <div class="breadcrumb">
 
                     <span>
                         <i class="bi bi-house"></i>
                     </span>
 
-                    <span class="mx-2">
+                        <span class="mx-2">
                         /
                     </span>
 
-                    <span>
+                        <span>
                         Employee
                     </span>
 
-                    <span class="mx-2">
+                        <span class="mx-2">
                         /
                     </span>
 
-                    <span>
+                        <span>
                         Role
                     </span>
 
+                    </div>
+
                 </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 RIGHT BUTTONS
-                 ================================================= -->
-
-            <div class="d-flex align-items-center gap-2">
 
 
                 <!-- =================================================
-                     EXPORT DROPDOWN
+                     RIGHT BUTTONS
                      ================================================= -->
 
-                <div class="dropdown">
+                <div class="d-flex align-items-center gap-2">
 
+
+                    <!-- =================================================
+                         EXPORT DROPDOWN
+                         ================================================= -->
+
+                    <div class="dropdown">
+
+
+                        <button
+                                type="button"
+                                class="btn btn-light border dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+
+                            <i class="bi bi-file-earmark-arrow-down me-1"></i>
+
+                            Export
+
+                        </button>
+
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+
+                            <!-- CSV -->
+
+                            <li>
+
+                                <button
+                                        type="button"
+                                        class="dropdown-item"
+                                        onclick="exportRoleCSV()">
+
+                                    <i class="bi bi-filetype-csv me-2"></i>
+
+                                    Export CSV
+
+                                </button>
+
+                            </li>
+
+
+                            <!-- PRINT -->
+
+                            <li>
+
+                                <button
+                                        type="button"
+                                        class="dropdown-item"
+                                        onclick="printRoles()">
+
+                                    <i class="bi bi-printer me-2"></i>
+
+                                    Print
+
+                                </button>
+
+                            </li>
+
+
+                        </ul>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ADD ROLE
+                         ================================================= -->
 
                     <button
                             type="button"
-                            class="btn btn-light border dropdown-toggle"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                            class="btn btn-orange"
+                            data-bs-toggle="modal"
+                            data-bs-target="#add_role">
 
-                        <i class="bi bi-file-earmark-arrow-down me-1"></i>
+                        <i class="bi bi-plus-circle me-1"></i>
 
-                        Export
+                        Add Role
 
                     </button>
 
 
-                    <ul class="dropdown-menu dropdown-menu-end">
+                </div>
+
+            </div>
+            <!-- END PAGE HEADER -->
 
 
-                        <!-- CSV -->
+            <!-- =====================================================
+                 ROLE LIST CARD
+                 ===================================================== -->
 
-                        <li>
-
-                            <button
-                                    type="button"
-                                    class="dropdown-item"
-                                    onclick="exportRoleCSV()">
-
-                                <i class="bi bi-filetype-csv me-2"></i>
-
-                                Export CSV
-
-                            </button>
-
-                        </li>
+            <div class="card-custom">
 
 
-                        <!-- PRINT -->
+                <!-- CARD TITLE -->
 
-                        <li>
+                <div class="card-title">
 
-                            <button
-                                    type="button"
-                                    class="dropdown-item"
-                                    onclick="printRoles()">
-
-                                <i class="bi bi-printer me-2"></i>
-
-                                Print
-
-                            </button>
-
-                        </li>
-
-
-                    </ul>
+                    Role List
 
                 </div>
 
 
                 <!-- =================================================
-                     ADD ROLE
+                     FILTERS
                      ================================================= -->
 
-                <button
-                        type="button"
-                        class="btn btn-orange"
-                        data-bs-toggle="modal"
-                        data-bs-target="#add_role">
-
-                    <i class="bi bi-plus-circle me-1"></i>
-
-                    Add Role
-
-                </button>
+                <div class="filters">
 
 
-            </div>
+                    <!-- PAGE SIZE -->
 
-        </div>
-        <!-- END PAGE HEADER -->
+                    <div class="d-flex align-items-center gap-2">
 
-
-        <!-- =====================================================
-             ROLE LIST CARD
-             ===================================================== -->
-
-        <div class="card-custom">
+                        <label class="mb-0 fw-semibold">
+                            Show
+                        </label>
 
 
-            <!-- CARD TITLE -->
+                        <select
+                                id="pageSize"
+                                class="form-select"
+                                style="width: 90px;"
+                                onchange="changePageSize()">
 
-            <div class="card-title">
+                            <option value="5" selected>
+                                5
+                            </option>
 
-                Role List
+                            <option value="10">
+                                10
+                            </option>
 
-            </div>
+                            <option value="25">
+                                25
+                            </option>
 
+                            <option value="50">
+                                50
+                            </option>
 
-            <!-- =================================================
-                 FILTERS
-                 ================================================= -->
-
-            <div class="filters">
-
-
-                <!-- PAGE SIZE -->
-
-                <div class="d-flex align-items-center gap-2">
-
-                    <label class="mb-0 fw-semibold">
-                        Show
-                    </label>
-
-
-                    <select
-                            id="pageSize"
-                            class="form-select"
-                            style="width: 90px;"
-                            onchange="changePageSize()">
-
-                        <option value="5" selected>
-                            5
-                        </option>
-
-                        <option value="10">
-                            10
-                        </option>
-
-                        <option value="25">
-                            25
-                        </option>
-
-                        <option value="50">
-                            50
-                        </option>
-
-                    </select>
+                        </select>
 
 
-                    <span class="text-muted">
+                        <span class="text-muted">
                         entries
                     </span>
 
+                    </div>
+
+
+                    <!-- SEARCH -->
+
+                    <div class="d-flex align-items-center">
+
+                        <label class="me-2 mb-0">
+                            Search:
+                        </label>
+
+
+                        <input
+                                type="text"
+                                id="roleSearch"
+                                class="form-control"
+                                style="width: 220px;"
+                                placeholder="Search roles..."
+                                onkeyup="searchRoles()">
+
+                    </div>
+
+
                 </div>
 
 
-                <!-- SEARCH -->
+                <!-- =================================================
+                     TABLE
+                     ================================================= -->
 
-                <div class="d-flex align-items-center">
-
-                    <label class="me-2 mb-0">
-                        Search:
-                    </label>
+                <div class="table-responsive">
 
 
-                    <input
-                            type="text"
-                            id="roleSearch"
-                            class="form-control"
-                            style="width: 220px;"
-                            placeholder="Search roles..."
-                            onkeyup="searchRoles()">
-
-                </div>
+                    <table class="table mb-0">
 
 
-            </div>
+                        <!-- TABLE HEADER -->
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                Id
+                            </th>
+
+                            <th>
+                                Role Name
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                CreatedBy
+                            </th>
+
+                            <th>
+                                ModifiedBy
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                        </thead>
 
 
-            <!-- =================================================
-                 TABLE
-                 ================================================= -->
+                        <!-- =================================================
+                             TABLE BODY
+                             ================================================= -->
 
-            <div class="table-responsive">
-
-
-                <table class="table mb-0">
+                        <tbody id="roleTable">
 
 
-                    <!-- TABLE HEADER -->
+                        <%
+                            if (roles != null && !roles.isEmpty()) {
 
-                    <thead>
-
-                    <tr>
-
-                        <th>
-                            Id
-                        </th>
-
-                        <th>
-                            Role Name
-                        </th>
-
-                        <th>
-                            Status
-                        </th>
-
-                        <th>
-                            CreatedBy
-                        </th>
-
-                        <th>
-                            ModifiedBy
-                        </th>
-
-                        <th>
-                            Action
-                        </th>
-
-                    </tr>
-
-                    </thead>
+                                for (Role role : roles) {
+                        %>
 
 
-                    <!-- =================================================
-                         TABLE BODY
-                         ================================================= -->
-
-                    <tbody id="roleTable">
+                        <tr>
 
 
-                    <%
-                        if (roles != null && !roles.isEmpty()) {
+                            <!-- ID -->
 
-                            for (Role role : roles) {
-                    %>
-
-
-                    <tr>
+                            <td>
+                                <%= role.getRoleId() %>
+                            </td>
 
 
-                        <!-- ID -->
+                            <!-- ROLE NAME -->
 
-                        <td>
-                            <%= role.getRoleId() %>
-                        </td>
-
-
-                        <!-- ROLE NAME -->
-
-                        <td>
-                            <%= role.getRoleName() %>
-                        </td>
+                            <td>
+                                <%= role.getRoleName() %>
+                            </td>
 
 
-                        <!-- STATUS -->
+                            <!-- STATUS -->
 
-                        <td>
+                            <td>
 
-                            <%
-                                if ("Active".equalsIgnoreCase(role.getStatus())) {
-                            %>
+                                <%
+                                    if ("Active".equalsIgnoreCase(role.getStatus())) {
+                                %>
 
-                            <span class="status status-active">
+                                <span class="status status-active">
                                 ● Active
                             </span>
 
-                            <%
-                            } else {
-                            %>
+                                <%
+                                } else {
+                                %>
 
-                            <span class="status status-inactive">
+                                <span class="status status-inactive">
                                 ● Inactive
                             </span>
 
-                            <%
-                                }
-                            %>
+                                <%
+                                    }
+                                %>
 
-                        </td>
-
-
-                        <!-- CREATED BY -->
-
-                        <td>
-
-                            <%= role.getCreatedBy() != null
-                                    ? role.getCreatedBy()
-                                    : "null" %>
-
-                        </td>
+                            </td>
 
 
-                        <!-- MODIFIED BY -->
+                            <!-- CREATED BY -->
 
-                        <td>
+                            <td>
 
-                            <%= role.getModifiedBy() != null
-                                    ? role.getModifiedBy()
-                                    : "null" %>
+                                <%= role.getCreatedBy() != null
+                                        ? role.getCreatedBy()
+                                        : "null" %>
 
-                        </td>
-
-
-                        <!-- ACTION -->
-
-                        <td>
+                            </td>
 
 
-                            <!-- EDIT -->
+                            <!-- MODIFIED BY -->
 
-                            <button
-                                    type="button"
-                                    class="btn btn-sm btn-light me-1"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#edit_role"
+                            <td>
 
-                                    data-id="<%= role.getRoleId() %>"
+                                <%= role.getModifiedBy() != null
+                                        ? role.getModifiedBy()
+                                        : "null" %>
 
-                                    data-name="<%= role.getRoleName() %>"
-
-                                    data-status="<%= role.getStatus() %>"
-
-                                    onclick="editRole(this)">
-
-                                <i class="bi bi-pencil"></i>
-
-                            </button>
+                            </td>
 
 
-                            <!-- DELETE -->
+                            <!-- ACTION -->
 
-                            <form
-                                    action="<%= contextPath %>/Employee/Role"
-                                    method="post"
-                                    style="display:inline;">
+                            <td>
 
 
-                                <input
-                                        type="hidden"
-                                        name="action"
-                                        value="delete">
-
-
-                                <input
-                                        type="hidden"
-                                        name="roleId"
-                                        value="<%= role.getRoleId() %>">
-
+                                <!-- EDIT -->
 
                                 <button
-                                        type="submit"
-                                        class="action-btn delete-btn"
+                                        type="button"
+                                        class="btn btn-sm btn-light me-1"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#edit_role"
 
-                                        onclick="return confirm('Are you sure you want to delete this role?');">
+                                        data-id="<%= role.getRoleId() %>"
 
-                                    <i class="bi bi-trash"></i>
+                                        data-name="<%= role.getRoleName() %>"
+
+                                        data-status="<%= role.getStatus() %>"
+
+                                        onclick="editRole(this)">
+
+                                    <i class="bi bi-pencil"></i>
 
                                 </button>
 
 
-                            </form>
+                                <!-- DELETE -->
+
+                                <form
+                                        action="<%= contextPath %>/Employee/Role"
+                                        method="post"
+                                        style="display:inline;">
 
 
-                        </td>
+                                    <input
+                                            type="hidden"
+                                            name="action"
+                                            value="delete">
 
 
-                    </tr>
+                                    <input
+                                            type="hidden"
+                                            name="roleId"
+                                            value="<%= role.getRoleId() %>">
 
 
-                    <%
-                        }
+                                    <button
+                                            type="submit"
+                                            class="action-btn delete-btn"
 
-                    } else {
-                    %>
+                                            onclick="return confirm('Are you sure you want to delete this role?');">
 
+                                        <i class="bi bi-trash"></i>
 
-                    <!-- EMPTY -->
-
-                    <tr>
-
-                        <td
-                                colspan="6"
-                                class="empty-row">
-
-                            No roles found.
-
-                        </td>
-
-                    </tr>
+                                    </button>
 
 
-                    <%
-                        }
-                    %>
+                                </form>
 
 
-                    </tbody>
-
-                </table>
+                            </td>
 
 
-            </div>
+                        </tr>
 
 
-            <!-- =================================================
-                 FOOTER
-                 ================================================= -->
+                        <%
+                            }
 
-            <div
-                    class="p-3 border-top d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        } else {
+                        %>
+
+
+                        <!-- EMPTY -->
+
+                        <tr>
+
+                            <td
+                                    colspan="6"
+                                    class="empty-row">
+
+                                No roles found.
+
+                            </td>
+
+                        </tr>
+
+
+                        <%
+                            }
+                        %>
+
+
+                        </tbody>
+
+                    </table>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     FOOTER
+                     ================================================= -->
+
+                <div
+                        class="p-3 border-top d-flex justify-content-between align-items-center flex-wrap gap-3">
 
 
                 <span id="paginationInfo">
@@ -914,914 +1563,943 @@
                 </span>
 
 
-                <div
-                        class="d-flex pagination-wrap"
-                        id="paginationButtons">
+                    <div
+                            class="d-flex pagination-wrap"
+                            id="paginationButtons">
 
-                    <!-- Generated by JavaScript -->
-
+                        <!-- Generated by JavaScript -->
+                    </div>
                 </div>
-
-
             </div>
-
-
         </div>
 
 
-    </div>
+        <!-- =====================================================
+             ADD ROLE MODAL
+             ===================================================== -->
+
+        <div
+                class="modal fade"
+                id="add_role"
+                tabindex="-1"
+                aria-hidden="true">
 
 
-</div>
+            <div class="modal-dialog modal-dialog-centered">
 
 
-
-<!-- =====================================================
-     ADD ROLE MODAL
-     ===================================================== -->
-
-<div
-        class="modal fade"
-        id="add_role"
-        tabindex="-1"
-        aria-hidden="true">
+                <div class="modal-content">
 
 
-    <div class="modal-dialog modal-dialog-centered">
+                    <!-- HEADER -->
+
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">
+                            Add Role
+                        </h4>
 
 
-        <div class="modal-content">
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal">
+
+                        </button>
+
+                    </div>
 
 
-            <!-- HEADER -->
+                    <!-- FORM -->
 
-            <div class="modal-header">
-
-                <h4 class="modal-title">
-                    Add Role
-                </h4>
-
-
-                <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal">
-
-                </button>
-
-            </div>
-
-
-            <!-- FORM -->
-
-            <form
-                    action="<%= contextPath %>/Employee/Role"
-                    method="post">
-
-
-                <input
-                        type="hidden"
-                        name="action"
-                        value="add">
-
-
-                <!-- BODY -->
-
-                <div class="modal-body pb-0">
-
-
-                    <!-- ROLE NAME -->
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Role Name
-                        </label>
+                    <form
+                            action="<%= contextPath %>/Employee/Role"
+                            method="post">
 
 
                         <input
-                                type="text"
-                                name="roleName"
-                                class="form-control"
-                                placeholder="Enter role name"
-                                required>
-
-                    </div>
+                                type="hidden"
+                                name="action"
+                                value="add">
 
 
-                    <!-- STATUS -->
+                        <!-- BODY -->
 
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Status
-                        </label>
+                        <div class="modal-body pb-0">
 
 
-                        <select
-                                name="status"
-                                class="form-select"
-                                required>
+                            <!-- ROLE NAME -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Role Name
+                                </label>
 
 
-                            <option value="">
-                                Select
-                            </option>
+                                <input
+                                        type="text"
+                                        name="roleName"
+                                        class="form-control"
+                                        placeholder="Enter role name"
+                                        required>
+
+                            </div>
 
 
-                            <option value="Active">
-                                Active
-                            </option>
+                            <!-- STATUS -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Status
+                                </label>
 
 
-                            <option value="Inactive">
-                                Inactive
-                            </option>
+                                <select
+                                        name="status"
+                                        class="form-select"
+                                        required>
 
 
-                        </select>
+                                    <option value="">
+                                        Select
+                                    </option>
 
-                    </div>
+
+                                    <option value="Active">
+                                        Active
+                                    </option>
+
+
+                                    <option value="Inactive">
+                                        Inactive
+                                    </option>
+
+
+                                </select>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- FOOTER -->
+
+                        <div class="modal-footer">
+
+
+                            <button
+                                    type="button"
+                                    class="btn btn-light me-2"
+                                    data-bs-dismiss="modal">
+
+                                Cancel
+
+                            </button>
+
+
+                            <button
+                                    type="submit"
+                                    class="btn btn-primary">
+
+                                Add Role
+
+                            </button>
+
+
+                        </div>
+
+
+                    </form>
 
 
                 </div>
-
-
-                <!-- FOOTER -->
-
-                <div class="modal-footer">
-
-
-                    <button
-                            type="button"
-                            class="btn btn-light me-2"
-                            data-bs-dismiss="modal">
-
-                        Cancel
-
-                    </button>
-
-
-                    <button
-                            type="submit"
-                            class="btn btn-primary">
-
-                        Add Role
-
-                    </button>
-
-
-                </div>
-
-
-            </form>
-
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     EDIT ROLE MODAL
-     ===================================================== -->
-
-<div
-        class="modal fade"
-        id="edit_role"
-        tabindex="-1"
-        aria-hidden="true">
-
-
-    <div class="modal-dialog modal-dialog-centered">
-
-
-        <div class="modal-content">
-
-
-            <!-- HEADER -->
-
-            <div class="modal-header">
-
-                <h4 class="modal-title">
-                    Edit Role
-                </h4>
-
-
-                <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal">
-
-                </button>
 
             </div>
 
-
-            <!-- FORM -->
-
-            <form
-                    action="<%= contextPath %>/Employee/Role"
-                    method="post">
+        </div>
 
 
-                <!-- ACTION -->
 
-                <input
-                        type="hidden"
-                        name="action"
-                        value="edit">
+        <!-- =====================================================
+             EDIT ROLE MODAL
+             ===================================================== -->
 
-
-                <!-- ROLE ID -->
-
-                <input
-                        type="hidden"
-                        name="roleId"
-                        id="editRoleId">
+        <div
+                class="modal fade"
+                id="edit_role"
+                tabindex="-1"
+                aria-hidden="true">
 
 
-                <!-- BODY -->
-
-                <div class="modal-body pb-0">
+            <div class="modal-dialog modal-dialog-centered">
 
 
-                    <!-- ROLE NAME -->
+                <div class="modal-content">
 
-                    <div class="mb-3">
 
-                        <label class="form-label">
-                            Role Name
-                        </label>
+                    <!-- HEADER -->
 
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">
+                            Edit Role
+                        </h4>
+
+
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal">
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- FORM -->
+
+                    <form
+                            action="<%= contextPath %>/Employee/Role"
+                            method="post">
+
+
+                        <!-- ACTION -->
 
                         <input
-                                type="text"
-                                name="roleName"
-                                id="editRoleName"
-                                class="form-control"
-                                required>
-
-                    </div>
+                                type="hidden"
+                                name="action"
+                                value="edit">
 
 
-                    <!-- STATUS -->
+                        <!-- ROLE ID -->
 
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Status
-                        </label>
-
-
-                        <select
-                                name="status"
-                                id="editRoleStatus"
-                                class="form-select"
-                                required>
+                        <input
+                                type="hidden"
+                                name="roleId"
+                                id="editRoleId">
 
 
-                            <option value="Active">
-                                Active
-                            </option>
+                        <!-- BODY -->
+
+                        <div class="modal-body pb-0">
 
 
-                            <option value="Inactive">
-                                Inactive
-                            </option>
+                            <!-- ROLE NAME -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Role Name
+                                </label>
 
 
-                        </select>
+                                <input
+                                        type="text"
+                                        name="roleName"
+                                        id="editRoleName"
+                                        class="form-control"
+                                        required>
 
-                    </div>
+                            </div>
+
+
+                            <!-- STATUS -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Status
+                                </label>
+
+
+                                <select
+                                        name="status"
+                                        id="editRoleStatus"
+                                        class="form-select"
+                                        required>
+
+
+                                    <option value="Active">
+                                        Active
+                                    </option>
+
+
+                                    <option value="Inactive">
+                                        Inactive
+                                    </option>
+
+
+                                </select>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- FOOTER -->
+
+                        <div class="modal-footer">
+
+
+                            <button
+                                    type="button"
+                                    class="btn btn-light me-2"
+                                    data-bs-dismiss="modal">
+
+                                Cancel
+
+                            </button>
+
+
+                            <button
+                                    type="submit"
+                                    class="btn btn-primary">
+
+                                Save
+
+                            </button>
+
+
+                        </div>
+
+
+                    </form>
 
 
                 </div>
 
-
-                <!-- FOOTER -->
-
-                <div class="modal-footer">
-
-
-                    <button
-                            type="button"
-                            class="btn btn-light me-2"
-                            data-bs-dismiss="modal">
-
-                        Cancel
-
-                    </button>
-
-
-                    <button
-                            type="submit"
-                            class="btn btn-primary">
-
-                        Save
-
-                    </button>
-
-
-                </div>
-
-
-            </form>
-
+            </div>
 
         </div>
 
-    </div>
 
-</div>
 
+        <!-- =====================================================
+             BOOTSTRAP JS
+             ===================================================== -->
 
 
-<!-- =====================================================
-     BOOTSTRAP JS
-     ===================================================== -->
+        <script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/feather.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/theme-colorpicker.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 
-<script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
+        <script src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
 
 
 
-<!-- =====================================================
-     JAVASCRIPT
-     ===================================================== -->
 
-<script>
+        <script>
+            (function () {
+                function initHRMSSidebar() {
+                    var sidebar = document.querySelector('.sidebar-menu');
+                    if (!sidebar) return;
 
+                    sidebar.addEventListener('click', function (event) {
+                        var link = event.target.closest('li.submenu > a');
+                        if (!link || !sidebar.contains(link)) return;
 
-    /* =====================================================
-       EDIT ROLE
-       ===================================================== */
+                        event.preventDefault();
+                        event.stopPropagation();
 
-    function editRole(button) {
+                        var currentItem = link.parentElement;
+                        var parentList = currentItem.parentElement;
+                        var isOpen = currentItem.classList.contains('active');
 
-        const roleId =
-            button.getAttribute("data-id");
+                        Array.prototype.forEach.call(parentList.children, function (item) {
+                            if (item !== currentItem && item.classList.contains('submenu')) {
+                                item.classList.remove('active');
+                            }
+                        });
 
-        const roleName =
-            button.getAttribute("data-name");
+                        currentItem.classList.toggle('active', !isOpen);
+                    });
+                }
 
-        const status =
-            button.getAttribute("data-status");
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initHRMSSidebar);
+                } else {
+                    initHRMSSidebar();
+                }
+            })();
+        </script>
 
+        <!-- =====================================================
+             JAVASCRIPT
+             ===================================================== -->
 
-        document.getElementById("editRoleId").value =
-            roleId;
+        <script>
 
 
-        document.getElementById("editRoleName").value =
-            roleName;
+            /* =====================================================
+               EDIT ROLE
+               ===================================================== */
 
+            function editRole(button) {
 
-        document.getElementById("editRoleStatus").value =
-            status;
+                const roleId =
+                    button.getAttribute("data-id");
 
-    }
+                const roleName =
+                    button.getAttribute("data-name");
 
+                const status =
+                    button.getAttribute("data-status");
 
 
-    /* =====================================================
-       SEARCH + PAGINATION
-       ===================================================== */
+                document.getElementById("editRoleId").value =
+                    roleId;
 
-    let currentPage = 1;
 
-    let rowsPerPage = 5;
+                document.getElementById("editRoleName").value =
+                    roleName;
 
 
-
-    /* =====================================================
-       GET ROLE ROWS
-       ===================================================== */
-
-    function getRoleRows() {
-
-        return Array.from(
-            document.querySelectorAll("#roleTable tr")
-        ).filter(function(row) {
-
-            return !row.querySelector(".empty-row");
-
-        });
-
-    }
-
-
-
-    /* =====================================================
-       GET FILTERED ROWS
-       ===================================================== */
-
-    function getFilteredRows() {
-
-        const searchInput =
-            document.getElementById("roleSearch");
-
-
-        const filter =
-            searchInput.value
-                .toLowerCase()
-                .trim();
-
-
-        return getRoleRows().filter(function(row) {
-
-            return row.innerText
-                .toLowerCase()
-                .includes(filter);
-
-        });
-
-    }
-
-
-
-    /* =====================================================
-       RENDER TABLE
-       ===================================================== */
-
-    function renderTable() {
-
-
-        rowsPerPage =
-            parseInt(
-                document.getElementById("pageSize").value
-            );
-
-
-        const allRows =
-            getRoleRows();
-
-
-        const filteredRows =
-            getFilteredRows();
-
-
-        /* HIDE ALL ROWS */
-
-        allRows.forEach(function(row) {
-
-            row.style.display = "none";
-
-        });
-
-
-        const total =
-            filteredRows.length;
-
-
-        const totalPages =
-            Math.max(
-                1,
-                Math.ceil(total / rowsPerPage)
-            );
-
-
-        /* FIX CURRENT PAGE */
-
-        if (currentPage > totalPages) {
-
-            currentPage = totalPages;
-
-        }
-
-
-        const start =
-            (currentPage - 1) * rowsPerPage;
-
-
-        const end =
-            Math.min(
-                start + rowsPerPage,
-                total
-            );
-
-
-        /* SHOW CURRENT PAGE */
-
-        filteredRows
-            .slice(start, end)
-            .forEach(function(row) {
-
-                row.style.display = "";
-
-            });
-
-
-        /* PAGINATION INFO */
-
-        const info =
-            document.getElementById(
-                "paginationInfo"
-            );
-
-
-        if (total === 0) {
-
-            info.innerText =
-                "Showing 0 to 0 of 0 entries";
-
-        } else {
-
-            info.innerText =
-                "Showing "
-                + (start + 1)
-                + " to "
-                + end
-                + " of "
-                + total
-                + " entries";
-
-        }
-
-
-        /* PAGINATION BUTTONS */
-
-        renderPagination(totalPages);
-
-    }
-
-
-
-    /* =====================================================
-       RENDER PAGINATION
-       ===================================================== */
-
-    function renderPagination(totalPages) {
-
-
-        const container =
-            document.getElementById(
-                "paginationButtons"
-            );
-
-
-        container.innerHTML = "";
-
-
-        /* FIRST */
-
-        const first =
-            createPageButton(
-                "«",
-                1,
-                currentPage === 1
-            );
-
-
-        /* PREVIOUS */
-
-        const prev =
-            createPageButton(
-                "‹",
-                currentPage - 1,
-                currentPage === 1
-            );
-
-
-        container.appendChild(first);
-
-        container.appendChild(prev);
-
-
-        /* PAGE NUMBERS */
-
-        let startPage =
-            Math.max(
-                1,
-                currentPage - 2
-            );
-
-
-        let endPage =
-            Math.min(
-                totalPages,
-                startPage + 4
-            );
-
-
-        if (endPage - startPage < 4) {
-
-            startPage =
-                Math.max(
-                    1,
-                    endPage - 4
-                );
-
-        }
-
-
-        for (
-            let i = startPage;
-            i <= endPage;
-            i++
-        ) {
-
-
-            const btn =
-                createPageButton(
-                    i,
-                    i,
-                    false
-                );
-
-
-            if (i === currentPage) {
-
-                btn.classList.add(
-                    "active-page"
-                );
+                document.getElementById("editRoleStatus").value =
+                    status;
 
             }
 
 
-            container.appendChild(btn);
 
-        }
+            /* =====================================================
+               SEARCH + PAGINATION
+               ===================================================== */
 
+            let currentPage = 1;
 
-        /* NEXT */
+            let rowsPerPage = 5;
 
-        const next =
-            createPageButton(
-                "›",
-                currentPage + 1,
-                currentPage === totalPages
-            );
 
 
-        /* LAST */
+            /* =====================================================
+               GET ROLE ROWS
+               ===================================================== */
 
-        const last =
-            createPageButton(
-                "»",
-                totalPages,
-                currentPage === totalPages
-            );
+            function getRoleRows() {
 
+                return Array.from(
+                    document.querySelectorAll("#roleTable tr")
+                ).filter(function(row) {
 
-        container.appendChild(next);
+                    return !row.querySelector(".empty-row");
 
-        container.appendChild(last);
+                });
 
-    }
+            }
 
 
 
-    /* =====================================================
-       CREATE PAGINATION BUTTON
-       ===================================================== */
+            /* =====================================================
+               GET FILTERED ROWS
+               ===================================================== */
 
-    function createPageButton(
-        label,
-        page,
-        disabled
-    ) {
+            function getFilteredRows() {
 
+                const searchInput =
+                    document.getElementById("roleSearch");
 
-        const btn =
-            document.createElement(
-                "button"
-            );
 
+                const filter =
+                    searchInput.value
+                        .toLowerCase()
+                        .trim();
 
-        btn.type = "button";
 
+                return getRoleRows().filter(function(row) {
 
-        btn.className =
-            "btn btn-sm btn-light border";
+                    return row.innerText
+                        .toLowerCase()
+                        .includes(filter);
 
+                });
 
-        btn.innerText =
-            label;
+            }
 
 
-        btn.disabled =
-            disabled;
 
+            /* =====================================================
+               RENDER TABLE
+               ===================================================== */
 
-        btn.onclick =
-            function() {
+            function renderTable() {
 
-                currentPage = page;
 
-                renderTable();
+                rowsPerPage =
+                    parseInt(
+                        document.getElementById("pageSize").value
+                    );
 
-            };
 
+                const allRows =
+                    getRoleRows();
 
-        return btn;
 
-    }
+                const filteredRows =
+                    getFilteredRows();
 
 
+                /* HIDE ALL ROWS */
 
-    /* =====================================================
-       SEARCH ROLES
-       ===================================================== */
+                allRows.forEach(function(row) {
 
-    function searchRoles() {
+                    row.style.display = "none";
 
-        currentPage = 1;
+                });
 
-        renderTable();
 
-    }
+                const total =
+                    filteredRows.length;
 
 
+                const totalPages =
+                    Math.max(
+                        1,
+                        Math.ceil(total / rowsPerPage)
+                    );
 
-    /* =====================================================
-       CHANGE PAGE SIZE
-       ===================================================== */
 
-    function changePageSize() {
+                /* FIX CURRENT PAGE */
 
-        currentPage = 1;
+                if (currentPage > totalPages) {
 
-        renderTable();
+                    currentPage = totalPages;
 
-    }
+                }
 
 
+                const start =
+                    (currentPage - 1) * rowsPerPage;
 
-    /* =====================================================
-       EXPORT ROLE CSV
-       ===================================================== */
 
-    function exportRoleCSV() {
+                const end =
+                    Math.min(
+                        start + rowsPerPage,
+                        total
+                    );
 
 
-        const rows =
-            getFilteredRows();
+                /* SHOW CURRENT PAGE */
 
+                filteredRows
+                    .slice(start, end)
+                    .forEach(function(row) {
 
-        if (rows.length === 0) {
+                        row.style.display = "";
 
-            alert(
-                "No roles available to export."
-            );
+                    });
 
-            return;
 
-        }
+                /* PAGINATION INFO */
 
+                const info =
+                    document.getElementById(
+                        "paginationInfo"
+                    );
 
-        let csv = [];
 
+                if (total === 0) {
 
-        /* CSV HEADER */
+                    info.innerText =
+                        "Showing 0 to 0 of 0 entries";
 
-        csv.push(
-            [
-                "Id",
-                "Role Name",
-                "Status",
-                "CreatedBy",
-                "ModifiedBy"
-            ].join(",")
-        );
+                } else {
 
+                    info.innerText =
+                        "Showing "
+                        + (start + 1)
+                        + " to "
+                        + end
+                        + " of "
+                        + total
+                        + " entries";
 
-        /* CSV DATA */
+                }
 
-        rows.forEach(function(row) {
 
+                /* PAGINATION BUTTONS */
 
-            const cells =
-                row.querySelectorAll("td");
+                renderPagination(totalPages);
 
+            }
 
-            let data = [];
 
 
-            for (
-                let i = 0;
-                i < 5;
-                i++
-            ) {
+            /* =====================================================
+               RENDER PAGINATION
+               ===================================================== */
 
+            function renderPagination(totalPages) {
 
-                let value =
-                    cells[i].innerText
-                        .trim()
-                        .replace(
-                            /"/g,
-                            '""'
+
+                const container =
+                    document.getElementById(
+                        "paginationButtons"
+                    );
+
+
+                container.innerHTML = "";
+
+
+                /* FIRST */
+
+                const first =
+                    createPageButton(
+                        "«",
+                        1,
+                        currentPage === 1
+                    );
+
+
+                /* PREVIOUS */
+
+                const prev =
+                    createPageButton(
+                        "‹",
+                        currentPage - 1,
+                        currentPage === 1
+                    );
+
+
+                container.appendChild(first);
+
+                container.appendChild(prev);
+
+
+                /* PAGE NUMBERS */
+
+                let startPage =
+                    Math.max(
+                        1,
+                        currentPage - 2
+                    );
+
+
+                let endPage =
+                    Math.min(
+                        totalPages,
+                        startPage + 4
+                    );
+
+
+                if (endPage - startPage < 4) {
+
+                    startPage =
+                        Math.max(
+                            1,
+                            endPage - 4
+                        );
+
+                }
+
+
+                for (
+                    let i = startPage;
+                    i <= endPage;
+                    i++
+                ) {
+
+
+                    const btn =
+                        createPageButton(
+                            i,
+                            i,
+                            false
                         );
 
 
-                data.push(
-                    '"' + value + '"'
+                    if (i === currentPage) {
+
+                        btn.classList.add(
+                            "active-page"
+                        );
+
+                    }
+
+
+                    container.appendChild(btn);
+
+                }
+
+
+                /* NEXT */
+
+                const next =
+                    createPageButton(
+                        "›",
+                        currentPage + 1,
+                        currentPage === totalPages
+                    );
+
+
+                /* LAST */
+
+                const last =
+                    createPageButton(
+                        "»",
+                        totalPages,
+                        currentPage === totalPages
+                    );
+
+
+                container.appendChild(next);
+
+                container.appendChild(last);
+
+            }
+
+
+
+            /* =====================================================
+               CREATE PAGINATION BUTTON
+               ===================================================== */
+
+            function createPageButton(
+                label,
+                page,
+                disabled
+            ) {
+
+
+                const btn =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                btn.type = "button";
+
+
+                btn.className =
+                    "btn btn-sm btn-light border";
+
+
+                btn.innerText =
+                    label;
+
+
+                btn.disabled =
+                    disabled;
+
+
+                btn.onclick =
+                    function() {
+
+                        currentPage = page;
+
+                        renderTable();
+
+                    };
+
+
+                return btn;
+
+            }
+
+
+
+            /* =====================================================
+               SEARCH ROLES
+               ===================================================== */
+
+            function searchRoles() {
+
+                currentPage = 1;
+
+                renderTable();
+
+            }
+
+
+
+            /* =====================================================
+               CHANGE PAGE SIZE
+               ===================================================== */
+
+            function changePageSize() {
+
+                currentPage = 1;
+
+                renderTable();
+
+            }
+
+
+
+            /* =====================================================
+               EXPORT ROLE CSV
+               ===================================================== */
+
+            function exportRoleCSV() {
+
+
+                const rows =
+                    getFilteredRows();
+
+
+                if (rows.length === 0) {
+
+                    alert(
+                        "No roles available to export."
+                    );
+
+                    return;
+
+                }
+
+
+                let csv = [];
+
+
+                /* CSV HEADER */
+
+                csv.push(
+                    [
+                        "Id",
+                        "Role Name",
+                        "Status",
+                        "CreatedBy",
+                        "ModifiedBy"
+                    ].join(",")
+                );
+
+
+                /* CSV DATA */
+
+                rows.forEach(function(row) {
+
+
+                    const cells =
+                        row.querySelectorAll("td");
+
+
+                    let data = [];
+
+
+                    for (
+                        let i = 0;
+                        i < 5;
+                        i++
+                    ) {
+
+
+                        let value =
+                            cells[i].innerText
+                                .trim()
+                                .replace(
+                                    /"/g,
+                                    '""'
+                                );
+
+
+                        data.push(
+                            '"' + value + '"'
+                        );
+
+                    }
+
+
+                    csv.push(
+                        data.join(",")
+                    );
+
+                });
+
+
+                /* CREATE CSV FILE */
+
+                const blob =
+                    new Blob(
+                        [csv.join("\n")],
+                        {
+                            type:
+                                "text/csv;charset=utf-8;"
+                        }
+                    );
+
+
+                const url =
+                    URL.createObjectURL(blob);
+
+
+                const link =
+                    document.createElement("a");
+
+
+                link.href =
+                    url;
+
+
+                link.download =
+                    "roles.csv";
+
+
+                document.body.appendChild(
+                    link
+                );
+
+
+                link.click();
+
+
+                document.body.removeChild(
+                    link
+                );
+
+
+                URL.revokeObjectURL(
+                    url
                 );
 
             }
 
 
-            csv.push(
-                data.join(",")
-            );
 
-        });
+            /* =====================================================
+               PRINT ROLES
+               ===================================================== */
+
+            function printRoles() {
 
 
-        /* CREATE CSV FILE */
+                const rows =
+                    getFilteredRows();
 
-        const blob =
-            new Blob(
-                [csv.join("\n")],
-                {
-                    type:
-                        "text/csv;charset=utf-8;"
+
+                if (rows.length === 0) {
+
+                    alert(
+                        "No roles available to print."
+                    );
+
+                    return;
+
                 }
-            );
 
 
-        const url =
-            URL.createObjectURL(blob);
+                let printWindow =
+                    window.open(
+                        "",
+                        "_blank"
+                    );
 
 
-        const link =
-            document.createElement("a");
+                if (!printWindow) {
+
+                    alert(
+                        "Please allow pop-ups to print."
+                    );
+
+                    return;
+
+                }
 
 
-        link.href =
-            url;
-
-
-        link.download =
-            "roles.csv";
-
-
-        document.body.appendChild(
-            link
-        );
-
-
-        link.click();
-
-
-        document.body.removeChild(
-            link
-        );
-
-
-        URL.revokeObjectURL(
-            url
-        );
-
-    }
-
-
-
-    /* =====================================================
-       PRINT ROLES
-       ===================================================== */
-
-    function printRoles() {
-
-
-        const rows =
-            getFilteredRows();
-
-
-        if (rows.length === 0) {
-
-            alert(
-                "No roles available to print."
-            );
-
-            return;
-
-        }
-
-
-        let printWindow =
-            window.open(
-                "",
-                "_blank"
-            );
-
-
-        if (!printWindow) {
-
-            alert(
-                "Please allow pop-ups to print."
-            );
-
-            return;
-
-        }
-
-
-        let html = `
+                let html = `
 
             <!DOCTYPE html>
 
@@ -1920,14 +2598,14 @@
         `;
 
 
-        rows.forEach(function(row) {
+                rows.forEach(function(row) {
 
 
-            const cells =
-                row.querySelectorAll("td");
+                    const cells =
+                        row.querySelectorAll("td");
 
 
-            html += `
+                    html += `
 
                 <tr>
 
@@ -1955,10 +2633,10 @@
 
             `;
 
-        });
+                });
 
 
-        html += `
+                html += `
 
                     </tbody>
 
@@ -1971,42 +2649,44 @@
         `;
 
 
-        printWindow.document.write(
-            html
-        );
+                printWindow.document.write(
+                    html
+                );
 
 
-        printWindow.document.close();
+                printWindow.document.close();
 
 
-        printWindow.focus();
+                printWindow.focus();
 
 
-        printWindow.print();
+                printWindow.print();
 
 
-        printWindow.close();
+                printWindow.close();
 
-    }
+            }
 
 
 
-    /* =====================================================
-       PAGE LOAD
-       ===================================================== */
+            /* =====================================================
+               PAGE LOAD
+               ===================================================== */
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        function() {
+            document.addEventListener(
+                "DOMContentLoaded",
+                function() {
 
-            renderTable();
+                    renderTable();
 
-        }
-    );
+                }
+            );
 
-</script>
+        </script>
 
 
 </body>
 
 </html>
+
+

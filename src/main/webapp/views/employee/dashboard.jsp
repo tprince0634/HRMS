@@ -388,7 +388,7 @@
                         <span>Documents</span>
 
                     </a>
-  <ul>
+                    <ul>
 
                         <!-- Documents -->
                         <li>
@@ -400,24 +400,24 @@
                             </a>
 
                         </li>
-                          <li>
+                        <li>
 
-                                                    <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/documentList">
 
-                                                        <span>My Documents</span>
+                                <span>My Documents</span>
 
-                                                    </a>
+                            </a>
 
-                          </li>
-                            <li>
+                        </li>
+                        <li>
 
-                                                      <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/uploadFile">
 
-                                                          <span>Upload Documents</span>
+                                <span>Upload Documents</span>
 
-                                                      </a>
+                            </a>
 
-                             </li>
+                        </li>
 
 
 
@@ -487,7 +487,7 @@
                 <div class="my-auto mb-2">
 
                     <h2 class="mb-1">
-                     Employee Dashboard
+                        Employee Dashboard
                     </h2>
 
                     <nav>

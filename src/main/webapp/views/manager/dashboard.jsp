@@ -6,15 +6,23 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=0">
+
     <meta name="description" content="HRMS Manager Dashboard">
+
     <meta name="keywords"
           content="HRMS, Human Resource Management System, Manager Dashboard">
+
     <meta name="author" content="HRMS Team">
+
     <meta name="robots" content="noindex, nofollow">
+
     <title>HRMS Manager Dashboard</title>
+
 
     <!-- Favicon -->
     <link rel="shortcut icon"
@@ -487,7 +495,7 @@
 
                     <h2 class="mb-1">
 
-                         Manager Dashboard
+                        Manager Dashboard
 
                     </h2>
 
@@ -1041,7 +1049,6 @@
 <script src="${pageContext.request.contextPath}/assets/js/theme-colorpicker.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
-
 
 </body>
 

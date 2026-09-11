@@ -22,11 +22,28 @@
     <title>Designations - Pulse360</title>
 
 
-    <!-- Bootstrap -->
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet">
 
+
+
+
+    <link rel="shortcut icon"
+          type="image/x-icon"
+          href="${pageContext.request.contextPath}/assets/img/favicon.png">
+
+    <script src="${pageContext.request.contextPath}/assets/js/theme-script.js"></script>
+
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/icons/feather/feather.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/tabler-icons/tabler-icons.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/fontawesome/css/all.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/css/style.css">
 
     <!-- Bootstrap Icons -->
     <link
@@ -738,468 +755,1091 @@
             }
         }
 
+
+        /* =====================================================
+           DASHBOARD SHELL / SIDEBAR - SAME AS ADMIN DASHBOARD
+           ===================================================== */
+        .designation-page {
+            min-height: 100vh;
+        }
+
+        .designation-page .sidebar {
+            height: 100vh !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+        }
+
+        .designation-page .sidebar-menu {
+            height: auto !important;
+            overflow: visible !important;
+        }
+
+        .designation-page .sidebar-menu li.submenu > ul {
+            display: none !important;
+        }
+
+        .designation-page .sidebar-menu li.submenu.active > ul {
+            display: block !important;
+        }
+
+        .designation-page .sidebar-menu li.submenu > a .menu-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .designation-page .sidebar-menu li.submenu.active > a .menu-arrow {
+            transform: rotate(90deg);
+        }
+
+        .designation-page .sidebar-menu li.submenu > ul > li > a {
+            display: flex;
+            align-items: center;
+        }
+
+        .designation-page .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .designation-page .sidebar::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+
+        .designation-page .content {
+            padding: 24px 30px !important;
+        }
+
+        .designation-page .sidebar-menu a {
+            text-decoration: none !important;
+        }
+
     </style>
 
 </head>
 
 
+
 <body>
 
-
-<div class="main">
-
-
-    <!-- =====================================================
-         TOP BAR
-         ===================================================== -->
-
-    <div class="topbar">
-
-        <input
-                type="text"
-                class="search-box"
-                placeholder="Search in Pulse360">
-
-    </div>
+<div class="main-wrapper designation-page">
 
 
-    <!-- =====================================================
-         CONTENT
-         ===================================================== -->
+    <!-- HEADER - SAME AS ADMIN DASHBOARD -->
+    <div class="header">
+        <div class="main-header">
 
-    <div class="content">
+            <div class="header-left">
+                <a href="${pageContext.request.contextPath}/admin/dashboard"
+                   class="logo">
+                    <img src="${pageContext.request.contextPath}/assets/img/logo.svg"
+                         alt="HRMS Logo">
+                </a>
 
-
-        <!-- =================================================
-             PAGE HEADER
-             ================================================= -->
-
-        <div class="page-header">
-
-
-            <div>
-
-                <h1 class="page-title">
-                    Designations
-                </h1>
-
-
-                <div class="breadcrumb">
-
-                    <i class="bi bi-house"></i>
-
-                    <span class="mx-2">/</span>
-
-                    Employee
-
-                    <span class="mx-2">/</span>
-
-                    Designations
-
-                </div>
-
+                <a href="${pageContext.request.contextPath}/admin/dashboard"
+                   class="dark-logo">
+                    <img src="${pageContext.request.contextPath}/assets/img/logo-white.svg"
+                         alt="HRMS Logo">
+                </a>
             </div>
 
+            <a id="mobile_btn"
+               class="mobile_btn"
+               href="#sidebar">
+                <span class="bar-icon"><span></span><span></span><span></span></span>
+            </a>
 
-            <div class="d-flex gap-2">
+            <div class="header-user">
+                <div class="nav user-menu nav-list">
+                    <div class="me-auto d-flex align-items-center" id="header-search">
 
+                        <a id="toggle_btn"
+                           href="javascript:void(0);"
+                           class="btn btn-menubar me-1">
+                            <i class="ti ti-arrow-bar-to-left"></i>
+                        </a>
 
-                <!-- EXPORT -->
+                        <div class="input-group input-group-flat d-inline-flex me-1">
+                            <span class="input-icon-addon">
+                                <i class="ti ti-search"></i>
+                            </span>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Search in HRMS">
+                            <span class="input-group-text">
+                                <kbd>CTRL + /</kbd>
+                            </span>
+                        </div>
 
-                <div class="dropdown">
+                        <a href="javascript:void(0);"
+                           class="btn btn-menubar">
+                            <i class="ti ti-settings-cog"></i>
+                        </a>
 
-                    <button
-                            type="button"
-                            class="export-btn dropdown-toggle"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                    </div>
+                </div>
+            </div>
 
-                        <i class="bi bi-file-earmark-arrow-down"></i>
-                        Export
+            <div class="dropdown mobile-user-menu">
+                <a href="javascript:void(0);"
+                   class="nav-link dropdown-toggle"
+                   data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="fa fa-ellipsis-v"></i>
+                </a>
 
-                    </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item" href="javascript:void(0);">Profile</a>
+                    <a class="dropdown-item" href="javascript:void(0);">Settings</a>
+                    <a class="dropdown-item" href="javascript:void(0);">Logout</a>
+                </div>
+            </div>
 
-                    <ul class="dropdown-menu">
+        </div>
+    </div>
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+
+            <a href="${pageContext.request.contextPath}/admin/dashboard"
+               class="logo logo-normal">
+                <img src="${pageContext.request.contextPath}/assets/img/logo.svg"
+                     alt="HRMS Logo">
+            </a>
+
+            <a href="${pageContext.request.contextPath}/admin/dashboard"
+               class="logo-small">
+                <img src="${pageContext.request.contextPath}/assets/img/logo-small.svg"
+                     alt="HRMS Logo">
+            </a>
+
+            <a href="${pageContext.request.contextPath}/admin/dashboard"
+               class="dark-logo">
+                <img src="${pageContext.request.contextPath}/assets/img/logo-white.svg"
+                     alt="HRMS Logo">
+            </a>
+
+        </div>
+
+        <!-- SIDEBAR MENU -->
+        <div class="sidebar-menu">
+
+            <ul>
+
+                <li class="menu-title">
+                    <span>MAIN MENU</span>
+                </li>
+
+                <!-- DASHBOARD -->
+                <li>
+                    <a href="${pageContext.request.contextPath}/admin/dashboard">
+                        <i class="ti ti-smart-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- EMPLOYEES -->
+                <li class="submenu active">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-users"></i>
+                        <span>Employees</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
 
                         <li>
-                            <a class="dropdown-item"
-                               href="javascript:void(0)"
-                               onclick="exportDesignationCSV()">
+                            <a href="${pageContext.request.contextPath}/Employee/AddDepartment">
+                                <span>Add Department</span>
+                            </a>
+                        </li>
 
-                                <i class="bi bi-filetype-csv me-2"></i>
-                                Export CSV
 
+                        <li class="active">
+                            <a href="${pageContext.request.contextPath}/Employee/Role">
+                                <span>Add Role</span>
+                            </a>
+                        </li>
+
+
+                        <li class="active">
+                            <a href="${pageContext.request.contextPath}/Employee/AddDesignation">
+                                <span>Add Designation</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/Employee/EmployeeList">
+                                <span>Employee List</span>
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item"
-                               href="javascript:void(0)"
-                               onclick="window.print()">
+                            <a href="${pageContext.request.contextPath}/Employee/EmployeeGrid">
+                                <span>Employee Grid</span>
+                            </a>
+                        </li>
 
-                                <i class="bi bi-file-earmark-pdf me-2"></i>
-                                Print / PDF
+                        <li>
+                            <a href="${pageContext.request.contextPath}/Employee/EmployeeDetails">
+                                <span>Employee Details</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
+                <!-- ATTENDANCE -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-calendar-check"></i>
+                        <span>Attendance</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li class="submenu">
+                            <a href="javascript:void(0);">
+                                <span>Leaves</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span>Apply Leave</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span>Leave Details</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span>Leave Approval</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Attendance (Admin)</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Timesheet</span>
                             </a>
                         </li>
 
                     </ul>
 
-                </div>
+                </li>
 
+                <!-- EVENTS -->
+                <li class="submenu">
 
-                <!-- ADD -->
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-calendar-event"></i>
+                        <span>Events</span>
+                        <span class="menu-arrow"></span>
+                    </a>
 
-                <button
-                        type="button"
-                        class="btn-orange"
+                    <ul>
 
-                        data-bs-toggle="modal"
-                        data-bs-target="#add_designation">
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Add Event</span>
+                            </a>
+                        </li>
 
-                    <i class="bi bi-plus-circle me-1"></i>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Add Master Event</span>
+                            </a>
+                        </li>
 
-                    Add Designation
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Event List</span>
+                            </a>
+                        </li>
 
-                </button>
+                    </ul>
 
-            </div>
+                </li>
+
+                <!-- PAYROLL -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-cash"></i>
+                        <span>Payroll</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Add Employee Salary</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Master Payroll</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Employee Salary List</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Generate Payslips Monthly</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Transaction History</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- TRAINING -->
+                <!-- TRAINING -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-school"></i>
+                        <span>Training</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Trainer List</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Trainers</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/training-type">
+                                <span>Training Type</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+                <!-- DOCUMENTS -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-file-description"></i>
+                        <span>Documents</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li class="submenu">
+
+                            <a href="javascript:void(0);">
+                                <span>Upload Documents</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+
+                            <ul>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span>Upload Document</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span>Document List</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Generate Letter</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- MASTER DOCUMENT -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-files"></i>
+                        <span>Master Document</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Master Document</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Master Document List</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- PERFORMANCE & GOAL -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-chart-line"></i>
+                        <span>Performance &amp; Goal</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Performance</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Goals</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Appraisal</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Performance Report</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- PROJECTS -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-briefcase"></i>
+                        <span>Projects</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Project</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Tasks</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Task Board</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- REPORTS -->
+                <li class="submenu">
+
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-report-analytics"></i>
+                        <span>Reports</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/employee-report">
+                                <span>Employee Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/attendance-report">
+                                <span>Attendance Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Leave Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Payslip Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Task Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Daily Report</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <!-- PROMOTIONS -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-trending-up"></i>
+                        <span>Promotions</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Add Promotion</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Promotion List</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Promotion History</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- RESIGNATION -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-logout-2"></i>
+                        <span>Resignation</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Resignation Request</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Resignation List</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Exit Details</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- TERMINATION -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-user-x"></i>
+                        <span>Termination</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Add Termination</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Termination List</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Termination History</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- HELP & SUPPORT -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-headset"></i>
+                        <span>Help &amp; Supports</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Help Center</span></a></li>
+                        <li><a href="javascript:void(0);"><span>FAQs</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Contact Support</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- TICKETS -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-ticket"></i>
+                        <span>Tickets</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Create Ticket</span></a></li>
+                        <li><a href="javascript:void(0);"><span>My Tickets</span></a></li>
+                        <li><a href="javascript:void(0);"><span>All Tickets</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- LOGOUT -->
+                <li class="mt-2">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-logout"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+
+            </ul>
 
         </div>
 
+    </div>
 
-        <!-- =================================================
-             DESIGNATION CARD
-             ================================================= -->
+    <!-- PAGE WRAPPER -->
+    <div class="page-wrapper">
+        <div class="content">
 
-        <div class="card-custom">
+            <!-- =================================================
+                 PAGE HEADER
+                 ================================================= -->
+
+            <div class="page-header">
 
 
-            <!-- CARD TITLE -->
+                <div>
 
-            <div class="card-title">
+                    <h1 class="page-title">
+                        Designations
+                    </h1>
 
-                Designation List
+
+                    <div class="breadcrumb">
+
+                        <i class="bi bi-house"></i>
+
+                        <span class="mx-2">/</span>
+
+                        Employee
+
+                        <span class="mx-2">/</span>
+
+                        Designations
+
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex gap-2">
+
+
+                    <!-- EXPORT -->
+
+                    <div class="dropdown">
+
+                        <button
+                                type="button"
+                                class="export-btn dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+
+                            <i class="bi bi-file-earmark-arrow-down"></i>
+                            Export
+
+                        </button>
+
+                        <ul class="dropdown-menu">
+
+                            <li>
+                                <a class="dropdown-item"
+                                   href="javascript:void(0)"
+                                   onclick="exportDesignationCSV()">
+
+                                    <i class="bi bi-filetype-csv me-2"></i>
+                                    Export CSV
+
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item"
+                                   href="javascript:void(0)"
+                                   onclick="window.print()">
+
+                                    <i class="bi bi-file-earmark-pdf me-2"></i>
+                                    Print / PDF
+
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <!-- ADD -->
+
+                    <button
+                            type="button"
+                            class="btn-orange"
+
+                            data-bs-toggle="modal"
+                            data-bs-target="#add_designation">
+
+                        <i class="bi bi-plus-circle me-1"></i>
+
+                        Add Designation
+
+                    </button>
+
+                </div>
 
             </div>
 
 
             <!-- =================================================
-                 FILTERS
+                 DESIGNATION CARD
                  ================================================= -->
 
-            <div class="filters">
+            <div class="card-custom">
 
 
-                <div class="entries-area">
+                <!-- CARD TITLE -->
 
-                    <strong>
-                        Show
-                    </strong>
+                <div class="card-title">
 
+                    Designation List
 
-                    <select
-                            id="pageSize"
-                            class="form-select page-size"
-                            onchange="changePageSize()">
-
-                        <option value="5">
-                            5
-                        </option>
-
-                        <option value="10">
-                            10
-                        </option>
-
-                        <option value="25">
-                            25
-                        </option>
-
-                        <option value="50">
-                            50
-                        </option>
-
-                    </select>
+                </div>
 
 
-                    <span>
+                <!-- =================================================
+                     FILTERS
+                     ================================================= -->
+
+                <div class="filters">
+
+
+                    <div class="entries-area">
+
+                        <strong>
+                            Show
+                        </strong>
+
+
+                        <select
+                                id="pageSize"
+                                class="form-select page-size"
+                                onchange="changePageSize()">
+
+                            <option value="5">
+                                5
+                            </option>
+
+                            <option value="10">
+                                10
+                            </option>
+
+                            <option value="25">
+                                25
+                            </option>
+
+                            <option value="50">
+                                50
+                            </option>
+
+                        </select>
+
+
+                        <span>
                         entries
                     </span>
 
+                    </div>
+
+
+                    <div class="search-area">
+
+                        <label>
+                            Search:
+                        </label>
+
+
+                        <input
+                                type="text"
+                                id="designationSearch"
+                                class="table-search"
+                                placeholder="Search designations..."
+                                oninput="searchDesignations()">
+
+                    </div>
+
                 </div>
 
 
-                <div class="search-area">
+                <!-- =================================================
+                     TABLE
+                     ================================================= -->
 
-                    <label>
-                        Search:
-                    </label>
-
-
-                    <input
-                            type="text"
-                            id="designationSearch"
-                            class="table-search"
-                            placeholder="Search designations..."
-                            oninput="searchDesignations()">
-
-                </div>
-
-            </div>
+                <div class="table-container">
 
 
-            <!-- =================================================
-                 TABLE
-                 ================================================= -->
-
-            <div class="table-container">
+                    <table class="table designation-table">
 
 
-                <table class="table designation-table">
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                Id
+                            </th>
+
+                            <th>
+                                Designation Name
+                            </th>
+
+                            <th>
+                                Department Id
+                            </th>
+
+                            <th>
+                                NoOfEmployee
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                CreatedBy
+                            </th>
+
+                            <th>
+                                ModifiedBy
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                        </thead>
 
 
-                    <thead>
-
-                    <tr>
-
-                        <th>
-                            Id
-                        </th>
-
-                        <th>
-                            Designation Name
-                        </th>
-
-                        <th>
-                            Department Id
-                        </th>
-
-                        <th>
-                            NoOfEmployee
-                        </th>
-
-                        <th>
-                            Status
-                        </th>
-
-                        <th>
-                            CreatedBy
-                        </th>
-
-                        <th>
-                            ModifiedBy
-                        </th>
-
-                        <th>
-                            Action
-                        </th>
-
-                    </tr>
-
-                    </thead>
+                        <tbody id="designationTable">
 
 
-                    <tbody id="designationTable">
+                        <%
+                            if (designations != null &&
+                                    !designations.isEmpty()) {
+
+                                for (Designation designation :
+                                        designations) {
+                        %>
 
 
-                    <%
-                        if (designations != null &&
-                                !designations.isEmpty()) {
-
-                            for (Designation designation :
-                                    designations) {
-                    %>
+                        <tr>
 
 
-                    <tr>
+                            <!-- ID -->
+
+                            <td>
+                                <%= designation.getDesignationId() %>
+                            </td>
 
 
-                        <!-- ID -->
+                            <!-- NAME -->
 
-                        <td>
-                            <%= designation.getDesignationId() %>
-                        </td>
-
-
-                        <!-- NAME -->
-
-                        <td>
-                            <%= designation.getName() %>
-                        </td>
+                            <td>
+                                <%= designation.getName() %>
+                            </td>
 
 
-                        <!-- DEPARTMENT ID -->
+                            <!-- DEPARTMENT ID -->
 
-                        <td>
-                            <%= designation.getDepartmentId() %>
-                        </td>
-
-
-                        <!-- NO OF EMPLOYEE -->
-
-                        <td>
-
-                            <%= designation.getNoOfEmployee() != null
-                                    ? designation.getNoOfEmployee()
-                                    : 0 %>
-
-                        </td>
+                            <td>
+                                <%= designation.getDepartmentId() %>
+                            </td>
 
 
-                        <!-- STATUS -->
+                            <!-- NO OF EMPLOYEE -->
 
-                        <td>
+                            <td>
 
-                            <%
-                                if ("Active".equalsIgnoreCase(
-                                        designation.getStatus())) {
-                            %>
+                                <%= designation.getNoOfEmployee() != null
+                                        ? designation.getNoOfEmployee()
+                                        : 0 %>
 
-                            <span class="status status-active">
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <%
+                                    if ("Active".equalsIgnoreCase(
+                                            designation.getStatus())) {
+                                %>
+
+                                <span class="status status-active">
                                     ● Active
                                 </span>
 
-                            <%
-                            } else {
-                            %>
+                                <%
+                                } else {
+                                %>
 
-                            <span class="status status-inactive">
+                                <span class="status status-inactive">
                                     ● Inactive
                                 </span>
 
-                            <%
-                                }
-                            %>
+                                <%
+                                    }
+                                %>
 
-                        </td>
-
-
-                        <!-- CREATED BY -->
-
-                        <td>
-
-                            <%= designation.getCreatedBy() != null
-                                    ? designation.getCreatedBy()
-                                    : "null" %>
-
-                        </td>
+                            </td>
 
 
-                        <!-- MODIFIED BY -->
+                            <!-- CREATED BY -->
 
-                        <td>
+                            <td>
 
-                            <%= designation.getModifiedBy() != null
-                                    ? designation.getModifiedBy()
-                                    : "null" %>
+                                <%= designation.getCreatedBy() != null
+                                        ? designation.getCreatedBy()
+                                        : "null" %>
 
-                        </td>
-
-
-                        <!-- ACTION -->
-
-                        <td>
+                            </td>
 
 
-                            <!-- EDIT -->
+                            <!-- MODIFIED BY -->
 
-                            <button
-                                    type="button"
-                                    class="edit-btn"
+                            <td>
 
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#edit_designation"
+                                <%= designation.getModifiedBy() != null
+                                        ? designation.getModifiedBy()
+                                        : "null" %>
 
-                                    data-id="<%= designation.getDesignationId() %>"
-
-                                    data-name="<%= designation.getName() %>"
-
-                                    data-department="<%= designation.getDepartmentId() %>"
-
-                                    data-status="<%= designation.getStatus() %>"
-
-                                    onclick="editDesignation(this)">
-
-                                <i class="bi bi-pencil"></i>
-
-                            </button>
+                            </td>
 
 
-                            <!-- DELETE -->
+                            <!-- ACTION -->
 
-                            <form
-                                    action="<%= contextPath %>/Employee/AddDesignation"
-                                    method="post"
-                                    style="display:inline;">
-
-                                <input
-                                        type="hidden"
-                                        name="action"
-                                        value="delete">
+                            <td>
 
 
-                                <input
-                                        type="hidden"
-                                        name="designationId"
-                                        value="<%= designation.getDesignationId() %>">
-
+                                <!-- EDIT -->
 
                                 <button
-                                        type="submit"
-                                        class="delete-btn"
+                                        type="button"
+                                        class="edit-btn"
 
-                                        onclick="return confirm('Are you sure you want to delete this designation?');">
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#edit_designation"
 
-                                    <i class="bi bi-trash"></i>
+                                        data-id="<%= designation.getDesignationId() %>"
+
+                                        data-name="<%= designation.getName() %>"
+
+                                        data-department="<%= designation.getDepartmentId() %>"
+
+                                        data-status="<%= designation.getStatus() %>"
+
+                                        onclick="editDesignation(this)">
+
+                                    <i class="bi bi-pencil"></i>
 
                                 </button>
 
-                            </form>
+
+                                <!-- DELETE -->
+
+                                <form
+                                        action="<%= contextPath %>/Employee/AddDesignation"
+                                        method="post"
+                                        style="display:inline;">
+
+                                    <input
+                                            type="hidden"
+                                            name="action"
+                                            value="delete">
 
 
-                        </td>
+                                    <input
+                                            type="hidden"
+                                            name="designationId"
+                                            value="<%= designation.getDesignationId() %>">
 
 
-                    </tr>
+                                    <button
+                                            type="submit"
+                                            class="delete-btn"
+
+                                            onclick="return confirm('Are you sure you want to delete this designation?');">
+
+                                        <i class="bi bi-trash"></i>
+
+                                    </button>
+
+                                </form>
 
 
-                    <%
-                        }
-
-                    } else {
-                    %>
+                            </td>
 
 
-                    <tr>
-
-                        <td
-                                colspan="8"
-                                class="empty-row">
-
-                            No designations found.
-
-                        </td>
-
-                    </tr>
+                        </tr>
 
 
-                    <%
-                        }
-                    %>
+                        <%
+                            }
+
+                        } else {
+                        %>
 
 
-                    </tbody>
+                        <tr>
 
-                </table>
+                            <td
+                                    colspan="8"
+                                    class="empty-row">
 
-            </div>
+                                No designations found.
+
+                            </td>
+
+                        </tr>
 
 
-            <!-- =================================================
-                 PAGINATION
-                 ================================================= -->
+                        <%
+                            }
+                        %>
 
-            <div class="pagination-area">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- =================================================
+                     PAGINATION
+                     ================================================= -->
+
+                <div class="pagination-area">
 
 
                 <span id="paginationInfo">
@@ -1209,18 +1849,19 @@
                 </span>
 
 
-                <div
-                        id="paginationButtons"
-                        class="pagination-buttons">
+                    <div
+                            id="paginationButtons"
+                            class="pagination-buttons">
+                    </div>
+
                 </div>
+
 
             </div>
 
 
         </div>
-
     </div>
-
 </div>
 
 

@@ -24,17 +24,13 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/login.jsp")
                 .forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Get login details
@@ -46,21 +42,13 @@ public class LoginServlet extends HttpServlet {
 
         // Login failed
         if (user == null) {
-
-            request.setAttribute(
-                    "errorMessage",
-                    "Invalid email or password!"
-            );
-
-            request.getRequestDispatcher("/login.jsp")
-                    .forward(request, response);
-
+            request.setAttribute("errorMessage", "Invalid email or password!");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
 
         // Login successful
         HttpSession session = request.getSession();
-
         session.setAttribute("userId", user.getUserId());
         session.setAttribute("userEmail", user.getEmail());
         session.setAttribute("userRole", user.getRoleName());
@@ -78,31 +66,26 @@ public class LoginServlet extends HttpServlet {
                     request.getContextPath() +
                             "/Admin/dashboard"
             );
-
         }
 
         // ==========================
         // MANAGER
         // ==========================
         else if ("Manager".equalsIgnoreCase(role)) {
-
             response.sendRedirect(
                     request.getContextPath() +
                             "/Manager/dashboard"
             );
-
         }
 
         // ==========================
         // EMPLOYEE
         // ==========================
         else if ("Employee".equalsIgnoreCase(role)) {
-
             response.sendRedirect(
                     request.getContextPath() +
                             "/Employee/dashboard"
             );
-
         }
 
         // ==========================

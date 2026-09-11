@@ -41,6 +41,7 @@
 
                             <!-- FORM UPDATE: Changed action to route directly to LoginServlet using POST -->
                             <form action="${pageContext.request.contextPath}/login" method="POST" class="vh-100">
+
                                 <div class="vh-100 d-flex flex-column justify-content-between p-4 pb-0">
                                     <div class=" mx-auto mb-5 text-center">
                                         <img src="${pageContext.request.contextPath}/assets/img/logo.svg" class="img-fluid" alt="Logo">
@@ -66,6 +67,7 @@
                                             <%
                                                 }
                                             %>
+
 
                                         </div>
                                         <div class="mb-3">
@@ -94,10 +96,12 @@
                                                     <label for="remember_me" class="form-check-label mt-0">Remember Me</label>
                                                 </div>
                                             </div>
+
                                             <div class="text-end">
                                                 <a href="${pageContext.request.contextPath}/forgot-password.jsp" class="link-danger">Forgot Password?</a>
                                             </div>
                                         </div>
+
                                         <div class="mb-3">
                                             <button type="submit" class="btn btn-primary w-100">Sign In</button>
                                         </div>
