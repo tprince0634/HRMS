@@ -1581,6 +1581,191 @@ DELIMITER ;
 --  ====================================================================================================================
 --  ===================================================================================================================
 
+USE Pulse360_FinalDb;
+
+DROP PROCEDURE IF EXISTS get_all_employees;
+
+CREATE PROCEDURE get_all_employees()
+BEGIN
+
+    SELECT
+        u.UserId,
+        u.FirstName,
+        u.LastName,
+        u.Email,
+        u.PhoneNumber,
+        u.DateOfJoining,
+        u.DateOfBirth,
+        u.Gender,
+        u.Address,
+        u.AboutEmployee,
+        u.ProfilePicture,
+        u.ReportingManager,
+        u.Status,
+
+        d.DepartmentId,
+        d.Name AS DepartmentName,
+
+        des.DesignationId,
+        des.Name AS DesignationName,
+
+        r.RoleId,
+        r.RoleName
+
+    FROM User u
+
+    LEFT JOIN Departments d
+        ON u.DepartmentId = d.DepartmentId
+
+    LEFT JOIN Designations des
+        ON u.DesignationtId = des.DesignationId
+
+    LEFT JOIN Role r
+        ON u.RoleId = r.RoleId
+    ORDER BY u.UserId DESC;
+END$$
+DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE PROCEDURE add_employee(
+    IN p_FirstName VARCHAR(100),
+    IN p_LastName VARCHAR(100),
+    IN p_Email VARCHAR(150),
+    IN p_PasswordHash VARCHAR(255),
+    IN p_PhoneNumber VARCHAR(20),
+    IN p_RoleId INT,
+    IN p_DepartmentId INT,
+    IN p_DesignationtId INT,
+    IN p_DateOfJoining DATE,
+    IN p_DateOfBirth DATE,
+    IN p_Gender VARCHAR(20),
+    IN p_Address VARCHAR(500),
+    IN p_AboutEmployee TEXT,
+    IN p_ProfilePicture VARCHAR(500),
+    IN p_ReportingManager VARCHAR(100),
+    IN p_Status VARCHAR(20),
+    IN p_CreatedBy VARCHAR(100)
+)
+BEGIN
+
+    INSERT INTO `User`
+    (
+        FirstName,
+        LastName,
+        Email,
+        PasswordHash,
+        PhoneNumber,
+        RoleId,
+        DepartmentId,
+        DesignationtId,
+        DateOfJoining,
+        DateOfBirth,
+        Gender,
+        Address,
+        AboutEmployee,
+        ProfilePicture,
+        ReportingManager,
+        CreatedAt,
+        CreatedBy,
+        Status
+    )
+    VALUES
+    (
+        p_FirstName,
+        p_LastName,
+        p_Email,
+        p_PasswordHash,
+        p_PhoneNumber,
+        p_RoleId,
+        p_DepartmentId,
+        p_DesignationtId,
+        p_DateOfJoining,
+        p_DateOfBirth,
+        p_Gender,
+        p_Address,
+        p_AboutEmployee,
+        p_ProfilePicture,
+        p_ReportingManager,
+        NOW(),
+        p_CreatedBy,
+        p_Status
+    );
+
+END $$
+
+DELIMITER ;
+
+
+
+CREATE PROCEDURE get_all_roles()
+BEGIN
+
+    SELECT
+        RoleId,
+        RoleName
+    FROM `Role`
+    ORDER BY RoleName;
+
+END $$
+
+DELIMITER ;
+DELIMITER $$
+
+
+
+CREATE PROCEDURE get_all_departments()
+BEGIN
+
+    SELECT
+        DepartmentId,
+        Name
+    FROM Departments
+    ORDER BY Name;
+
+END $$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE PROCEDURE get_all_designations()
+BEGIN
+
+    SELECT
+        DesignationId,
+        Name
+    FROM Designations
+    ORDER BY Name;
+
+END $$
+DELIMITER ;
+
+
+CREATE PROCEDURE get_all_managers()
+BEGIN
+
+    SELECT
+        u.UserId,
+        u.FirstName,
+        u.LastName
+    FROM `User` u
+    INNER JOIN `Role` r
+        ON u.RoleId = r.RoleId
+    WHERE u.Status = 'Active'
+      AND r.RoleName = 'Manager'
+      AND r.Status = 'Active'
+    ORDER BY u.FirstName, u.LastName;
+
+END $$
+DELIMITER ;
+
+
+
+
+
 DELIMITER $$
 
 CREATE PROCEDURE get_all_users()

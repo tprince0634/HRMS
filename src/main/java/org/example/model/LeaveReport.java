@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -15,29 +15,22 @@ public class LeaveReport {
 
     private int leaveRequestId;
 
-    private int employeeId;
+    private int userId;
 
-    private String employeeName;
-
-    private String department;
-
-    private String designation;
+    private String firstName;
+    private String lastName;
+    private String email;
 
     private int leaveTypeId;
-
     private String leaveType;
 
-    private LocalDate startDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    private LocalDate endDate;
-
-    private double numberOfDays;
+    private int numberOfDays;
 
     private String reason;
-
     private String approvedBy;
-
     private String status;
-
     private String statusHistory;
 }

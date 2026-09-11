@@ -461,7 +461,8 @@
 
         <div class="sidebar-logo">
 
-            <a href="${pageContext.request.contextPath}/admin/dashboard"
+
+            <a href="${pageContext.request.contextPath}/Admin/dashboard"
                class="logo logo-normal">
                 <img src="${pageContext.request.contextPath}/assets/img/logo.svg"
                      alt="HRMS Logo">
@@ -515,7 +516,7 @@
 
                 <!-- DASHBOARD -->
                 <li>
-                    <a href="${pageContext.request.contextPath}/admin/dashboard">
+                    <a href="${pageContext.request.contextPath}/Admin/dashboard">
                         <i class="ti ti-smart-home"></i>
                         <span>Dashboard</span>
                     </a>
