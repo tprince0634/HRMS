@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -21,15 +21,19 @@ public class ProjectReport {
 
     private String description;
 
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
-    private LocalDate endDate;
+    private LocalDateTime endDate;
 
     private String priority;
 
     private double projectValue;
 
     private String priceType;
+
+    private String filePath;
+
+    private String logoPath;
 
     private String status;
 

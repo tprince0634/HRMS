@@ -2,8 +2,7 @@ package org.example.service;
 
 import org.example.dao.ReportDAOImpl;
 import org.example.interfaces.ReportDao;
-import org.example.model.AttendanceReport;
-import org.example.model.EmployeeReport;
+import org.example.model.*;
 
 import java.util.List;
 
@@ -21,5 +20,21 @@ public class ReportService {
 
     public List<AttendanceReport> getAllAttendance() {
         return reportDao.getAllAttendance();
+    }
+
+    public List<LeaveReport> getAllLeaves() {
+        return reportDao.getAllLeaves();
+    }
+
+    public List<PayslipReport> getAllPayslips() {
+        return reportDao.getAllPayslips();
+    }
+
+    public List<ProjectReport> getAllProjects() {
+        return reportDao.getAllProjects();
+    }
+
+    public List<TaskReport> getAllTasks() {
+        return reportDao.getAllTasks();
     }
 }
