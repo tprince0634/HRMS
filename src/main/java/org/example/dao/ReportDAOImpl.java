@@ -9,10 +9,7 @@ import org.example.model.ProjectReport;
 import org.example.model.TaskReport;
 import org.example.util.DBConnection;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -314,20 +311,205 @@ public class ReportDAOImpl implements ReportDao {
     @Override
     public List<PayslipReport> getAllPayslips() {
 
-        return new ArrayList<>();
+        List<PayslipReport> payslipList = new ArrayList<>();
+
+        String sql = "{CALL get_all_payslips()}";
+
+        try (
+                Connection connection = DBConnection.getConnection();
+                CallableStatement statement = connection.prepareCall(sql);
+                ResultSet resultSet = statement.executeQuery()
+        ) {
+
+            while (resultSet.next()) {
+
+                PayslipReport payslip = PayslipReport.builder()
+                        .payslipId(resultSet.getInt("PayslipId"))
+                        .employeeId(resultSet.getInt("EmployeeId"))
+                        .employeeName(resultSet.getString("EmployeeName"))
+                        .department(resultSet.getString("Department"))
+                        .designation(resultSet.getString("Designation"))
+                        .month(resultSet.getString("Month"))
+                        .year(resultSet.getInt("Year"))
+                        .totalSalary(resultSet.getDouble("TotalSalary"))
+                        .earnings(resultSet.getDouble("Earnings"))
+                        .deductions(resultSet.getDouble("Deductions"))
+                        .netPay(resultSet.getDouble("NetPay"))
+                        .payslipPath(resultSet.getString("PayslipPath"))
+                        .generatedOn(
+                                resultSet.getTimestamp("GeneratedOn") != null
+                                        ? resultSet.getTimestamp("GeneratedOn").toString()
+                                        : null
+                        )
+                        .build();
+
+                payslipList.add(payslip);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return payslipList;
     }
 
 
     @Override
     public List<ProjectReport> getAllProjects() {
 
-        return new ArrayList<>();
+        List<ProjectReport> projectList = new ArrayList<>();
+
+        String sql = "{CALL get_all_projects()}";
+
+        try (
+                Connection connection = DBConnection.getConnection();
+                CallableStatement statement = connection.prepareCall(sql);
+                ResultSet resultSet = statement.executeQuery()
+        ) {
+
+            while (resultSet.next()) {
+
+                ProjectReport project = ProjectReport.builder()
+
+                        .projectId(
+                                resultSet.getInt("ProjectId")
+                        )
+
+                        .projectName(
+                                resultSet.getString("ProjectName")
+                        )
+
+                        .clientName(
+                                resultSet.getString("ClientName")
+                        )
+
+                        .description(
+                                resultSet.getString("Description")
+                        )
+
+                        .startDate(
+                                resultSet.getTimestamp("StartDate") != null
+                                        ? resultSet.getTimestamp("StartDate").toLocalDateTime()
+                                        : null
+                        )
+
+                        .endDate(
+                                resultSet.getTimestamp("EndDate") != null
+                                        ? resultSet.getTimestamp("EndDate").toLocalDateTime()
+                                        : null
+                        )
+
+                        .priority(
+                                resultSet.getString("Priority")
+                        )
+
+                        .projectValue(
+                                resultSet.getDouble("ProjectValue")
+                        )
+
+                        .priceType(
+                                resultSet.getString("PriceType")
+                        )
+
+                        .filePath(
+                                resultSet.getString("FilePath")
+                        )
+
+                        .logoPath(
+                                resultSet.getString("LogoPath")
+                        )
+
+                        .status(
+                                resultSet.getString("Status")
+                        )
+
+                        .managerName(
+                                resultSet.getString("ManagerName")
+                        )
+
+                        .totalTasks(
+                                resultSet.getInt("TotalTasks")
+                        )
+
+                        .completedTasks(
+                                resultSet.getInt("CompletedTasks")
+                        )
+
+                        .pendingTasks(
+                                resultSet.getInt("PendingTasks")
+                        )
+
+                        .inProgressTasks(
+                                resultSet.getInt("InProgressTasks")
+                        )
+
+                        .onHoldTasks(
+                                resultSet.getInt("OnHoldTasks")
+                        )
+
+                        .overdueTasks(
+                                resultSet.getInt("OverdueTasks")
+                        )
+
+                        .build();
+
+                projectList.add(project);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return projectList;
     }
 
 
     @Override
     public List<TaskReport> getAllTasks() {
 
-        return new ArrayList<>();
+        List<TaskReport> taskList = new ArrayList<>();
+
+        try (
+                Connection connection = DBConnection.getConnection();
+
+                CallableStatement callableStatement =
+                        connection.prepareCall("{CALL get_all_tasks()}");
+
+                ResultSet resultSet =
+                        callableStatement.executeQuery()
+        ) {
+
+            while (resultSet.next()) {
+
+                TaskReport taskReport = TaskReport.builder()
+                        .taskId(resultSet.getInt("TaskId"))
+                        .projectId(resultSet.getInt("ProjectId"))
+                        .title(resultSet.getString("Title"))
+                        .description(resultSet.getString("Description"))
+                        .status(resultSet.getString("Status"))
+                        .priority(resultSet.getString("Priority"))
+                        .filePath(resultSet.getString("FilePath"))
+                        .deadline(
+                                resultSet.getTimestamp("Deadline") != null
+                                        ? resultSet.getTimestamp("Deadline").toLocalDateTime()
+                                        : null
+                        )
+                        .projectName(resultSet.getString("ProjectName"))
+                        .build();
+
+                taskList.add(taskReport);
+            }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+            throw new RuntimeException(
+                    "Error while fetching all tasks",
+                    e
+            );
+        }
+
+        return taskList;
     }
 }

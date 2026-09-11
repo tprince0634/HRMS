@@ -812,13 +812,21 @@
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/admin/payslip-report">
+                                <i class="ti ti-file-invoice"></i>
                                 <span>Payslip Report</span>
                             </a>
                         </li>
 
+
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/admin/project-report">
+                                <span>Project Report</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/task-report">
                                 <span>Task Report</span>
                             </a>
                         </li>

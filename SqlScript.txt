@@ -85,3 +85,585 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+
+
+/*
+                  DEPARTMENT MODULE
+*/
+
+
+
+DROP PROCEDURE IF EXISTS sp_get_all_departments;
+DROP PROCEDURE IF EXISTS sp_add_department;
+DROP PROCEDURE IF EXISTS sp_update_department;
+DROP PROCEDURE IF EXISTS sp_delete_department;
+
+DELIMITER $$
+CREATE PROCEDURE sp_get_all_departments()
+BEGIN
+    SELECT
+        DepartmentId,
+        Name,
+        NoOfEmployee,
+        status,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+
+    FROM departments
+
+    ORDER BY DepartmentId DESC;
+
+END $$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_add_department(
+    IN p_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_created_by VARCHAR(255)
+)
+BEGIN
+    INSERT INTO departments
+    (
+        Name,
+        NoOfEmployee,
+        status,
+        CreatedAt,
+        CreatedBy
+    )
+
+    VALUES
+    (
+        p_name,
+        0,
+        p_status,
+        NOW(),
+        p_created_by
+    );
+
+END $$
+
+DELIMITER ;
+
+
+
+-- UPDATE DEPARTMENT
+
+DELIMITER $$
+CREATE PROCEDURE sp_update_department(
+    IN p_department_id INT,
+    IN p_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_modified_by VARCHAR(255)
+)
+BEGIN
+
+    UPDATE departments
+
+    SET
+        Name = p_name,
+        status = p_status,
+        ModifiedBy = p_modified_by,
+        ModifiedAt = NOW()
+
+    WHERE DepartmentId = p_department_id;
+
+END $$
+
+DELIMITER ;
+
+
+-- DELETE DEPARTMENT
+
+DELIMITER $$
+CREATE PROCEDURE sp_delete_department(
+    IN p_department_id INT
+)
+BEGIN
+
+    DELETE FROM departments
+
+    WHERE DepartmentId = p_department_id;
+
+END $$
+
+DELIMITER ;
+
+
+
+/*
+=========================================================
+                  DESIGNATION MODULE
+=========================================================
+*/
+
+
+-- -------------------------------------------------------
+-- DROP OLD DESIGNATION PROCEDURES
+-- -------------------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_get_all_designations;
+DROP PROCEDURE IF EXISTS sp_add_designation;
+DROP PROCEDURE IF EXISTS sp_update_designation;
+DROP PROCEDURE IF EXISTS sp_delete_designation;
+
+
+-- -------------------------------------------------------
+-- GET ALL DESIGNATIONS
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_designations()
+BEGIN
+
+    SELECT
+        DesignationId,
+        DepartmentId,
+        Name,
+        NoOfEmployee,
+        status,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+
+    FROM designations
+
+    ORDER BY DesignationId DESC;
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- ADD DESIGNATION
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_designation(
+    IN p_department_id INT,
+    IN p_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_created_by VARCHAR(255)
+)
+BEGIN
+
+    INSERT INTO designations
+    (
+        DepartmentId,
+        Name,
+        NoOfEmployee,
+        status,
+        CreatedAt,
+        CreatedBy
+    )
+
+    VALUES
+    (
+        p_department_id,
+        p_name,
+        0,
+        p_status,
+        NOW(),
+        p_created_by
+    );
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- UPDATE DESIGNATION
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_designation(
+    IN p_designation_id INT,
+    IN p_department_id INT,
+    IN p_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_modified_by VARCHAR(255)
+)
+BEGIN
+
+    UPDATE designations
+
+    SET
+        DepartmentId = p_department_id,
+        Name = p_name,
+        status = p_status,
+        ModifiedBy = p_modified_by,
+        ModifiedAt = NOW()
+
+    WHERE DesignationId = p_designation_id;
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- DELETE DESIGNATION
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_designation(
+    IN p_designation_id INT
+)
+BEGIN
+
+    DELETE FROM designations
+
+    WHERE DesignationId = p_designation_id;
+
+END $$
+
+DELIMITER ;
+
+
+
+/*
+=========================================================
+                     ROLE MODULE
+=========================================================
+*/
+
+
+-- -------------------------------------------------------
+-- DROP OLD ROLE PROCEDURES
+-- -------------------------------------------------------
+
+DROP PROCEDURE IF EXISTS sp_get_all_roles;
+DROP PROCEDURE IF EXISTS sp_add_role;
+DROP PROCEDURE IF EXISTS sp_update_role;
+DROP PROCEDURE IF EXISTS sp_delete_role;
+
+
+-- -------------------------------------------------------
+-- GET ALL ROLES
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_roles()
+BEGIN
+
+    SELECT
+        RoleId,
+        RoleName,
+        Status,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+
+    FROM `role`
+
+    ORDER BY RoleId ASC;
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- ADD ROLE
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_role(
+    IN p_role_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_created_by VARCHAR(255)
+)
+BEGIN
+
+    INSERT INTO `role`
+    (
+        RoleName,
+        Status,
+        CreatedAt,
+        CreatedBy
+    )
+
+    VALUES
+    (
+        p_role_name,
+        p_status,
+        NOW(),
+        p_created_by
+    );
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- UPDATE ROLE
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_role(
+    IN p_role_id INT,
+    IN p_role_name VARCHAR(255),
+    IN p_status VARCHAR(50),
+    IN p_modified_by VARCHAR(255)
+)
+BEGIN
+
+    UPDATE `role`
+
+    SET
+        RoleName = p_role_name,
+        Status = p_status,
+        ModifiedBy = p_modified_by,
+        ModifiedAt = NOW()
+
+    WHERE RoleId = p_role_id;
+
+END $$
+
+DELIMITER ;
+
+
+-- -------------------------------------------------------
+-- DELETE ROLE
+-- -------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_role(
+    IN p_role_id INT
+)
+BEGIN
+
+    DELETE FROM `role`
+    WHERE RoleId = p_role_id;
+END $$
+DELIMITER ;
+
+
+/*
+=========================================================
+              PROCEDURES VERIFICATION
+=========================================================
+*/
+
+SHOW PROCEDURE STATUS
+WHERE Db = 'pulse360_finaldb';
+
+
+
+<----------------PayslipMpodule-------------->
+
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_payslips()
+BEGIN
+
+    SELECT
+        p.PayslipId,
+        p.UserId AS EmployeeId,
+
+        CONCAT(
+            COALESCE(u.FirstName, ''),
+            ' ',
+            COALESCE(u.LastName, '')
+        ) AS EmployeeName,
+
+        d.Name AS Department,
+        des.Name AS Designation,
+
+        p.Month,
+        p.Year,
+
+        COALESCE(es.TotalSalary, 0) AS TotalSalary,
+        COALESCE(e.TotalEarnings, 0) AS Earnings,
+        COALESCE(ed.TotalDeductions, 0) AS Deductions,
+        COALESCE(es.NetSalary, 0) AS NetPay,
+
+        p.PayslipPath,
+        p.GeneratedOn
+
+    FROM payslips p
+
+    LEFT JOIN `User` u
+        ON p.UserId = u.UserId
+
+    LEFT JOIN Departments d
+        ON u.DepartmentId = d.DepartmentId
+
+    LEFT JOIN Designations des
+        ON u.DesignationtId = des.DesignationId
+
+    LEFT JOIN employeesalaries es
+        ON es.SalaryId = (
+            SELECT es2.SalaryId
+            FROM employeesalaries es2
+            WHERE es2.UserId = p.UserId
+            ORDER BY es2.SalaryId DESC
+            LIMIT 1
+        )
+
+    LEFT JOIN (
+        SELECT
+            ee.SalaryId,
+            SUM(ee.EarningAmount) AS TotalEarnings
+        FROM employeeearnings ee
+        GROUP BY ee.SalaryId
+    ) e
+        ON e.SalaryId = es.SalaryId
+
+    LEFT JOIN (
+        SELECT
+            ed.SalaryId,
+            SUM(ed.DeductionAmount) AS TotalDeductions
+        FROM employeedeductions ed
+        GROUP BY ed.SalaryId
+    ) ed
+        ON ed.SalaryId = es.SalaryId
+
+    ORDER BY p.Year DESC, p.Month DESC, p.PayslipId DESC;
+
+END //
+
+DELIMITER ;
+
+
+<-------------Project Report--------------->
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_projects()
+BEGIN
+
+    SELECT
+        p.ProjectId,
+        p.ProjectName,
+        p.ClientName,
+        p.Description,
+        p.StartDate,
+        p.EndDate,
+        p.Priority,
+        p.ProjectValue,
+        p.PriceType,
+        p.FilePath,
+        p.LogoPath,
+        p.Status,
+        p.ManagerName,
+
+        COUNT(t.ProjectId) AS TotalTasks,
+
+        SUM(
+            CASE
+                WHEN t.Status = 'Completed'
+                THEN 1
+                ELSE 0
+            END
+        ) AS CompletedTasks,
+
+        SUM(
+            CASE
+                WHEN t.Status = 'Pending'
+                THEN 1
+                ELSE 0
+            END
+        ) AS PendingTasks,
+
+        SUM(
+            CASE
+                WHEN t.Status = 'Inprogress'
+                THEN 1
+                ELSE 0
+            END
+        ) AS InProgressTasks,
+
+        SUM(
+            CASE
+                WHEN t.Status = 'Onhold'
+                THEN 1
+                ELSE 0
+            END
+        ) AS OnHoldTasks,
+
+        SUM(
+            CASE
+                WHEN t.Deadline < NOW()
+                     AND t.Status <> 'Completed'
+                THEN 1
+                ELSE 0
+            END
+        ) AS OverdueTasks
+
+    FROM allprojects p
+
+    LEFT JOIN task t
+        ON t.ProjectId = p.ProjectId
+
+    GROUP BY
+        p.ProjectId,
+        p.ProjectName,
+        p.ClientName,
+        p.Description,
+        p.StartDate,
+        p.EndDate,
+        p.Priority,
+        p.ProjectValue,
+        p.PriceType,
+        p.FilePath,
+        p.LogoPath,
+        p.Status,
+        p.ManagerName
+
+    ORDER BY p.ProjectId DESC;
+
+END //
+
+DELIMITER ;
+
+
+<----------------Task Report-------------------->
+
+
+DROP PROCEDURE IF EXISTS get_all_tasks;
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_tasks()
+BEGIN
+    SELECT
+        t.TaskId,
+        t.ProjectId,
+        t.Title,
+        t.Description,
+        t.Status,
+        t.Priority,
+        t.FilePath,
+        t.Deadline,
+        p.ProjectName
+    FROM task t
+    LEFT JOIN allprojects p
+        ON t.ProjectId = p.ProjectId
+    ORDER BY t.Deadline DESC, t.TaskId DESC;
+END //
+
+DELIMITER ;
