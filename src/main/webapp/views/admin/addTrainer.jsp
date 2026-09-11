@@ -2,24 +2,21 @@
          language="java"
          isELIgnored="false" %>
 
-<%@ taglib prefix="c"
-           uri="jakarta.tags.core" %>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=0">
 
     <meta name="description"
-          content="HRMS Trainer List">
+          content="HRMS Add Trainer">
 
     <meta name="keywords"
-          content="HRMS, Human Resource Management System, Trainer List">
+          content="HRMS, Human Resource Management System, Add Trainer">
 
     <meta name="author"
           content="HRMS Team">
@@ -27,7 +24,7 @@
     <meta name="robots"
           content="noindex, nofollow">
 
-    <title>Trainer List | HRMS</title>
+    <title>Add Trainer | HRMS</title>
 
 
     <!-- FAVICON -->
@@ -88,15 +85,7 @@
           href="${pageContext.request.contextPath}/assets/css/style.css">
 
 
-    <!-- TRAINER LIST STYLE -->
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/assets/css/trainer-list.css">
-
-
-    <!-- ========================================================= -->
     <!-- SIDEBAR CSS -->
-    <!-- ========================================================= -->
-
     <style>
 
         .sidebar {
@@ -119,120 +108,25 @@
             border-radius: 10px;
         }
 
-        /*
-         * All submenu ULs are closed by default.
-         */
         .sidebar-menu li.submenu > ul {
             display: none !important;
         }
 
-        /*
-         * Only active submenu is displayed.
-         */
         .sidebar-menu li.submenu.active > ul {
             display: block !important;
         }
 
-        /*
-         * Arrow animation.
-         */
         .sidebar-menu li.submenu > a .menu-arrow {
             transition: transform 0.2s ease;
         }
 
-        /*
-         * Rotate arrow when submenu is open.
-         */
         .sidebar-menu li.submenu.active > a .menu-arrow {
             transform: rotate(90deg);
         }
 
-        /*
-         * Nested submenu links.
-         */
         .sidebar-menu li.submenu > ul > li > a {
             display: flex;
             align-items: center;
-        }
-
-
-        /* ===================================================== */
-        /* ADD TRAINER BUTTON */
-        /* ===================================================== */
-
-        .btn-add {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 8px 16px;
-
-            border-radius: 6px;
-
-            background-color: #ff6b2c;
-
-            color: #ffffff !important;
-
-            border: 1px solid #ff6b2c;
-
-            text-decoration: none;
-
-            font-weight: 500;
-        }
-
-        .btn-add:hover {
-            background-color: #e85a20;
-            border-color: #e85a20;
-            color: #ffffff !important;
-        }
-
-
-        /* ===================================================== */
-        /* TRAINER PROFILE IMAGE */
-        /* ===================================================== */
-
-        .trainer-avatar {
-            width: 35px;
-            height: 35px;
-
-            object-fit: cover;
-
-            border-radius: 50%;
-
-            margin-right: 8px;
-
-            vertical-align: middle;
-        }
-
-        .trainer-name {
-            vertical-align: middle;
-        }
-
-
-        /* ===================================================== */
-        /* ACTION BUTTONS */
-        /* ===================================================== */
-
-        .trainer-table .btn {
-            width: 34px;
-            height: 34px;
-
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 0;
-        }
-
-
-        /* ===================================================== */
-        /* EMPTY TABLE */
-        /* ===================================================== */
-
-        .empty {
-            text-align: center;
-            padding: 30px !important;
-            color: #777;
         }
 
     </style>
@@ -243,12 +137,12 @@
 <body>
 
 
-<!-- ========================================================= -->
 <!-- GLOBAL LOADER -->
-<!-- ========================================================= -->
 
 <div id="global-loader">
+
     <div class="page-loader"></div>
+
 </div>
 
 
@@ -295,8 +189,6 @@
             </div>
 
 
-            <!-- MOBILE BUTTON -->
-
             <a id="mobile_btn"
                class="mobile_btn"
                href="#sidebar">
@@ -312,17 +204,14 @@
             </a>
 
 
-            <!-- HEADER USER -->
-
             <div class="header-user">
 
                 <div class="nav user-menu nav-list">
 
+
                     <div class="me-auto d-flex align-items-center"
                          id="header-search">
 
-
-                        <!-- SIDEBAR TOGGLE -->
 
                         <a id="toggle_btn"
                            href="javascript:void(0);"
@@ -332,8 +221,6 @@
 
                         </a>
 
-
-                        <!-- SEARCH -->
 
                         <div class="input-group input-group-flat d-inline-flex me-1">
 
@@ -358,8 +245,6 @@
                         </div>
 
 
-                        <!-- SETTINGS -->
-
                         <a href="javascript:void(0);"
                            class="btn btn-menubar">
 
@@ -373,8 +258,6 @@
 
             </div>
 
-
-            <!-- MOBILE USER -->
 
             <div class="dropdown mobile-user-menu">
 
@@ -392,17 +275,25 @@
 
                     <a class="dropdown-item"
                        href="javascript:void(0);">
+
                         Profile
+
                     </a>
+
 
                     <a class="dropdown-item"
                        href="javascript:void(0);">
+
                         Settings
+
                     </a>
+
 
                     <a class="dropdown-item"
                        href="javascript:void(0);">
+
                         Logout
+
                     </a>
 
                 </div>
@@ -416,7 +307,7 @@
 
 
     <!-- ========================================================= -->
-    <!-- SIDEBAR -->
+    <!-- FULL DASHBOARD SIDEBAR -->
     <!-- ========================================================= -->
 
     <div class="sidebar"
@@ -426,6 +317,7 @@
         <!-- SIDEBAR LOGO -->
 
         <div class="sidebar-logo">
+
 
             <a href="${pageContext.request.contextPath}/admin/dashboard"
                class="logo logo-normal">
@@ -492,16 +384,14 @@
             <ul>
 
 
+                <!-- MAIN MENU -->
+
                 <li class="menu-title">
-
                     <span>MAIN MENU</span>
-
                 </li>
 
 
-                <!-- ================================================= -->
                 <!-- DASHBOARD -->
-                <!-- ================================================= -->
 
                 <li>
 
@@ -534,6 +424,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -600,6 +491,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -638,6 +530,7 @@
 
                             <ul>
 
+
                                 <li>
 
                                     <a href="javascript:void(0);">
@@ -670,6 +563,7 @@
 
                                 </li>
 
+
                             </ul>
 
                         </li>
@@ -696,6 +590,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -719,6 +614,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -752,6 +648,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -775,6 +672,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -830,6 +728,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -854,7 +753,8 @@
 
                     <ul>
 
-                        <li class="active">
+
+                        <li>
 
                             <a href="${pageContext.request.contextPath}/trainerList">
 
@@ -886,6 +786,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -910,6 +811,7 @@
 
                     <ul>
 
+
                         <li class="submenu">
 
                             <a href="javascript:void(0);">
@@ -922,6 +824,7 @@
 
 
                             <ul>
+
 
                                 <li>
 
@@ -944,6 +847,7 @@
 
                                 </li>
 
+
                             </ul>
 
                         </li>
@@ -958,6 +862,7 @@
                             </a>
 
                         </li>
+
 
                     </ul>
 
@@ -983,6 +888,7 @@
 
                     <ul>
 
+
                         <li>
 
                             <a href="javascript:void(0);">
@@ -1003,6 +909,7 @@
                             </a>
 
                         </li>
+
 
                     </ul>
 
@@ -1027,6 +934,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -1071,6 +979,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -1094,6 +1003,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -1127,6 +1037,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -1150,6 +1061,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -1216,6 +1128,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -1239,6 +1152,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -1272,6 +1186,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -1295,6 +1210,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -1328,6 +1244,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -1351,6 +1268,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -1384,13 +1302,14 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
 
 
                 <!-- ================================================= -->
-                <!-- HELP & SUPPORT -->
+                <!-- HELP & SUPPORTS -->
                 <!-- ================================================= -->
 
                 <li class="submenu">
@@ -1407,6 +1326,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -1440,6 +1360,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -1463,6 +1384,7 @@
 
 
                     <ul>
+
 
                         <li>
 
@@ -1496,6 +1418,7 @@
 
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -1526,7 +1449,7 @@
 
 
     <!-- ========================================================= -->
-    <!-- TRAINER PAGE -->
+    <!-- PAGE CONTENT -->
     <!-- ========================================================= -->
 
     <div class="page-wrapper">
@@ -1534,23 +1457,22 @@
         <div class="content">
 
 
-            <!-- ===================================================== -->
             <!-- PAGE HEADER -->
-            <!-- ===================================================== -->
 
             <div class="page-header">
 
                 <div class="row align-items-center">
 
 
-                    <div class="col-sm-6">
+                    <div class="col">
 
                         <h3 class="page-title">
-                            Trainers
+                            Add Trainer
                         </h3>
 
 
                         <ul class="breadcrumb">
+
 
                             <li class="breadcrumb-item">
 
@@ -1564,53 +1486,48 @@
 
 
                             <li class="breadcrumb-item">
-
                                 Training
+                            </li>
+
+
+                            <li class="breadcrumb-item">
+
+                                <a href="${pageContext.request.contextPath}/trainerList">
+
+                                    Trainer List
+
+                                </a>
 
                             </li>
 
 
                             <li class="breadcrumb-item active">
 
-                                Trainer List
+                                Add Trainer
 
                             </li>
+
 
                         </ul>
 
                     </div>
 
 
-                    <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
-
-                        <a href="${pageContext.request.contextPath}/addTrainer"
-                           class="btn btn-add">
-
-                            <i class="ti ti-circle-plus me-1"></i>
-
-                            Add Trainer
-
-                        </a>
-
-                    </div>
-
                 </div>
 
             </div>
 
 
-            <!-- ===================================================== -->
-            <!-- TRAINER CARD -->
-            <!-- ===================================================== -->
+            <!-- TRAINER FORM -->
 
-            <div class="card trainer-card">
+            <div class="card">
 
 
                 <div class="card-header">
 
                     <h5 class="card-title mb-0">
 
-                        Trainer List
+                        Trainer Information
 
                     </h5>
 
@@ -1620,342 +1537,203 @@
                 <div class="card-body">
 
 
-                    <!-- ================================================= -->
-                    <!-- TOOLBAR -->
-                    <!-- ================================================= -->
+                    <!-- IMPORTANT:
+                         enctype is required for file upload -->
 
-                    <div class="trainer-toolbar">
-
-                        <label class="mb-0">
-
-                            Rows per page
-
-                            <select id="pageSize">
-
-                                <option value="5">
-                                    5
-                                </option>
-
-                                <option value="10">
-                                    10
-                                </option>
-
-                                <option value="25">
-                                    25
-                                </option>
-
-                            </select>
-
-                        </label>
+                    <form method="post"
+                          action="${pageContext.request.contextPath}/addTrainer"
+                          enctype="multipart/form-data">
 
 
-                        <input id="trainerSearch"
-                               type="search"
-                               placeholder="Search trainers">
-
-                    </div>
+                        <div class="row">
 
 
-                    <!-- ================================================= -->
-                    <!-- TABLE -->
-                    <!-- ================================================= -->
+                            <!-- FIRST NAME -->
 
-                    <div class="table-responsive">
+                            <div class="col-md-6 mb-3">
 
-                        <table class="table trainer-table mb-0"
-                               id="trainerTable">
+                                <label class="form-label">
+
+                                    First Name
+
+                                    <span class="text-danger">*</span>
+
+                                </label>
 
 
-                            <thead>
+                                <input type="text"
+                                       name="firstName"
+                                       class="form-control"
+                                       placeholder="Enter first name"
+                                       required>
 
-                            <tr>
+                            </div>
 
-                                <th>
-                                    Trainer ID
-                                </th>
 
-                                <th>
-                                    Trainer Name
-                                </th>
+                            <!-- LAST NAME -->
 
-                                <th>
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+
+                                    Last Name
+
+                                    <span class="text-danger">*</span>
+
+                                </label>
+
+
+                                <input type="text"
+                                       name="lastName"
+                                       class="form-control"
+                                       placeholder="Enter last name"
+                                       required>
+
+                            </div>
+
+
+                            <!-- ROLE -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+
                                     Role
-                                </th>
 
-                                <th>
+                                    <span class="text-danger">*</span>
+
+                                </label>
+
+
+                                <input type="text"
+                                       name="role"
+                                       class="form-control"
+                                       placeholder="Enter trainer role"
+                                       required>
+
+                            </div>
+
+
+                            <!-- EMAIL -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+
                                     Email
-                                </th>
 
-                                <th>
+                                    <span class="text-danger">*</span>
+
+                                </label>
+
+
+                                <input type="email"
+                                       name="email"
+                                       class="form-control"
+                                       placeholder="Enter email"
+                                       required>
+
+                            </div>
+
+
+                            <!-- PHONE -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+
                                     Phone
-                                </th>
 
-                                <th>
+                                    <span class="text-danger">*</span>
+
+                                </label>
+
+
+                                <input type="tel"
+                                       name="phone"
+                                       class="form-control"
+                                       placeholder="Enter phone number"
+                                       maxlength="15"
+                                       required>
+
+                            </div>
+
+
+                            <!-- PROFILE PICTURE -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+
+                                    Profile Picture
+
+                                </label>
+
+
+                                <input type="file"
+                                       name="profilePicture"
+                                       class="form-control"
+                                       accept="image/*">
+
+
+                                <small class="text-muted">
+
+                                    Select JPG, JPEG, PNG or WEBP image.
+
+                                </small>
+
+                            </div>
+
+
+                            <!-- DESCRIPTION -->
+
+                            <div class="col-12 mb-3">
+
+                                <label class="form-label">
+
                                     Description
-                                </th>
 
-                                <th>
-                                    Status
-                                </th>
+                                </label>
 
-                                <th class="text-end">
-                                    Actions
-                                </th>
 
-                            </tr>
+                                <textarea name="description"
+                                          class="form-control"
+                                          rows="4"
+                                          placeholder="Enter trainer description"></textarea>
 
-                            </thead>
+                            </div>
 
 
-                            <tbody>
+                            <!-- BUTTONS -->
 
+                            <div class="col-12">
 
-                            <c:choose>
 
+                                <button type="submit"
+                                        class="btn btn-primary me-2">
 
-                                <c:when test="${not empty trainers}">
+                                    <i class="ti ti-device-floppy me-1"></i>
 
+                                    Save Trainer
 
-                                    <c:forEach items="${trainers}"
-                                               var="trainer">
+                                </button>
 
 
-                                        <tr>
+                                <a href="${pageContext.request.contextPath}/trainerList"
+                                   class="btn btn-light">
 
+                                    Cancel
 
-                                            <!-- TRAINER ID -->
+                                </a>
 
-                                            <td>
 
-                                                ${trainer.trainerId}
+                            </div>
 
-                                            </td>
 
+                        </div>
 
-                                            <!-- TRAINER NAME -->
 
-                                            <td>
-
-
-                                                <c:choose>
-
-
-                                                    <c:when test="${not empty trainer.profilePicture}">
-
-                                                        <img src="${pageContext.request.contextPath}/trainerImage?id=${trainer.trainerId}"
-                                                             alt="${trainer.firstName}"
-                                                             class="trainer-avatar">
-
-                                                    </c:when>
-
-
-                                                    <c:otherwise>
-
-                                                        <span class="avatar avatar-sm bg-light text-primary me-2">
-
-                                                            <i class="ti ti-user"></i>
-
-                                                        </span>
-
-                                                    </c:otherwise>
-
-
-                                                </c:choose>
-
-
-                                                <span class="trainer-name">
-
-                                                    ${trainer.firstName}
-                                                    ${trainer.lastName}
-
-                                                </span>
-
-
-                                            </td>
-
-
-                                            <!-- ROLE -->
-
-                                            <td>
-
-                                                ${trainer.role}
-
-                                            </td>
-
-
-                                            <!-- EMAIL -->
-
-                                            <td>
-
-                                                ${trainer.email}
-
-                                            </td>
-
-
-                                            <!-- PHONE -->
-
-                                            <td>
-
-                                                ${trainer.phone}
-
-                                            </td>
-
-
-                                            <!-- DESCRIPTION -->
-
-                                            <td>
-
-                                                ${trainer.description}
-
-                                            </td>
-
-
-                                            <!-- STATUS -->
-
-                                            <td>
-
-
-                                                <a href="${pageContext.request.contextPath}/changeTrainerStatus?id=${trainer.trainerId}"
-                                                   style="text-decoration: none;"
-                                                   title="Click to change status"
-                                                   onclick="return confirm('Change trainer status?');">
-
-
-                                                    <c:choose>
-
-
-                                                        <c:when test="${trainer.status eq 'Active'}">
-
-                                                            <span class="badge bg-success">
-
-                                                                ${trainer.status}
-
-                                                            </span>
-
-                                                        </c:when>
-
-
-                                                        <c:otherwise>
-
-                                                            <span class="badge bg-danger">
-
-                                                                ${trainer.status}
-
-                                                            </span>
-
-                                                        </c:otherwise>
-
-
-                                                    </c:choose>
-
-
-                                                </a>
-
-
-                                            </td>
-
-
-                                            <!-- ================================================= -->
-                                            <!-- ACTIONS -->
-                                            <!-- ================================================= -->
-
-                                            <td class="text-end">
-
-
-                                                <!-- EDIT -->
-
-                                                <a href="${pageContext.request.contextPath}/editTrainer?id=${trainer.trainerId}"
-                                                   class="btn btn-sm btn-outline-primary"
-                                                   title="Edit Trainer">
-
-                                                    <i class="ti ti-edit"></i>
-
-                                                </a>
-
-
-                                                <!-- DELETE -->
-
-                                                <form action="${pageContext.request.contextPath}/deleteTrainer"
-                                                      method="post"
-                                                      style="display: inline;"
-                                                      onsubmit="return confirm('Are you sure you want to delete this trainer?');">
-
-
-                                                    <input type="hidden"
-                                                           name="id"
-                                                           value="${trainer.trainerId}">
-
-
-                                                    <button type="submit"
-                                                            class="btn btn-sm btn-outline-danger"
-                                                            title="Delete Trainer">
-
-                                                        <i class="ti ti-trash"></i>
-
-                                                    </button>
-
-
-                                                </form>
-
-
-                                            </td>
-
-
-                                        </tr>
-
-
-                                    </c:forEach>
-
-
-                                </c:when>
-
-
-                                <c:otherwise>
-
-
-                                    <tr>
-
-                                        <td colspan="8"
-                                            class="empty">
-
-                                            No trainers found.
-
-                                        </td>
-
-                                    </tr>
-
-
-                                </c:otherwise>
-
-
-                            </c:choose>
-
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-
-                    <!-- ================================================= -->
-                    <!-- PAGINATION -->
-                    <!-- ================================================= -->
-
-                    <div class="d-flex justify-content-between align-items-center pt-3">
-
-
-                        <span id="tableInfo"></span>
-
-
-                        <ul class="pagination mb-0"
-                            id="pagination">
-
-                        </ul>
-
-
-                    </div>
-
+                    </form>
 
                 </div>
 
@@ -1965,9 +1743,7 @@
         </div>
 
 
-        <!-- ===================================================== -->
         <!-- FOOTER -->
-        <!-- ===================================================== -->
 
         <div class="footer d-sm-flex align-items-center justify-content-between border-top bg-white p-3">
 
@@ -1987,7 +1763,7 @@
 
 
 <!-- ========================================================= -->
-<!-- DASHBOARD JAVASCRIPT -->
+<!-- JAVASCRIPT -->
 <!-- ========================================================= -->
 
 <script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
@@ -1995,8 +1771,6 @@
 <script src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/js/feather.min.js"></script>
-
-<script src="${pageContext.request.contextPath}/assets/plugins/apexchart/apexcharts.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/js/moment.js"></script>
 
@@ -2012,15 +1786,9 @@
 
 <script src="${pageContext.request.contextPath}/assets/js/todo.js"></script>
 
-<script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-
-<script src="${pageContext.request.contextPath}/assets/plugins/chartjs/chart.min.js"></script>
-
-<script src="${pageContext.request.contextPath}/assets/plugins/chartjs/chart-data.js"></script>
-
 
 <!-- ========================================================= -->
-<!-- PERFECT SIDEBAR SUBMENU SCRIPT -->
+<!-- SIDEBAR SCRIPT -->
 <!-- ========================================================= -->
 
 <script>
@@ -2030,82 +1798,42 @@
         function initHRMSSidebar() {
 
             var sidebar =
-                document.querySelector(".sidebar-menu");
+                document.querySelector('.sidebar-menu');
+
+            if (!sidebar) return;
 
 
-            if (!sidebar) {
-                return;
-            }
+            sidebar.addEventListener('click', function (event) {
 
-
-            sidebar.addEventListener("click", function (event) {
-
-
-                /*
-                 * Find the submenu link that was clicked.
-                 */
 
                 var link =
-                    event.target.closest("li.submenu > a");
+                    event.target.closest('li.submenu > a');
 
 
-                /*
-                 * Ignore normal links.
-                 */
+                if (!link ||
+                    !sidebar.contains(link)) {
 
-                if (!link || !sidebar.contains(link)) {
                     return;
+
                 }
 
-
-                /*
-                 * Prevent javascript:void(0)
-                 * from navigating.
-                 */
 
                 event.preventDefault();
 
                 event.stopPropagation();
 
 
-                /*
-                 * Current submenu.
-                 */
-
                 var currentItem =
                     link.parentElement;
 
-
-                /*
-                 * Parent UL.
-                 */
 
                 var parentList =
                     currentItem.parentElement;
 
 
-                /*
-                 * Check whether current submenu
-                 * is already open.
-                 */
-
                 var isOpen =
-                    currentItem.classList.contains("active");
+                    currentItem.classList.contains('active');
 
-
-                /*
-                 * Close only sibling submenus.
-                 *
-                 * This is important for nested menus.
-                 *
-                 * Example:
-                 *
-                 * Attendance
-                 *    └── Leaves
-                 *
-                 * Opening Leaves should NOT
-                 * accidentally close Attendance.
-                 */
 
                 Array.prototype.forEach.call(
                     parentList.children,
@@ -2113,10 +1841,10 @@
 
                         if (
                             item !== currentItem &&
-                            item.classList.contains("submenu")
+                            item.classList.contains('submenu')
                         ) {
 
-                            item.classList.remove("active");
+                            item.classList.remove('active');
 
                         }
 
@@ -2124,33 +1852,20 @@
                 );
 
 
-                /*
-                 * Toggle current submenu.
-                 */
-
-                if (isOpen) {
-
-                    currentItem.classList.remove("active");
-
-                } else {
-
-                    currentItem.classList.add("active");
-
-                }
+                currentItem.classList.toggle(
+                    'active',
+                    !isOpen
+                );
 
             });
 
         }
 
 
-        /*
-         * Initialize after DOM is ready.
-         */
-
-        if (document.readyState === "loading") {
+        if (document.readyState === 'loading') {
 
             document.addEventListener(
-                "DOMContentLoaded",
+                'DOMContentLoaded',
                 initHRMSSidebar
             );
 
@@ -2159,429 +1874,6 @@
             initHRMSSidebar();
 
         }
-
-    })();
-
-</script>
-
-
-<!-- ========================================================= -->
-<!-- TRAINER SEARCH + PAGINATION -->
-<!-- ========================================================= -->
-
-<script>
-
-    (function () {
-
-
-        var table =
-            document.getElementById("trainerTable");
-
-
-        var search =
-            document.getElementById("trainerSearch");
-
-
-        var pageSize =
-            document.getElementById("pageSize");
-
-
-        var tableInfo =
-            document.getElementById("tableInfo");
-
-
-        var pagination =
-            document.getElementById("pagination");
-
-
-        var page = 1;
-
-
-        /*
-         * Get only real trainer rows.
-         *
-         * Empty-state row contains only one cell,
-         * therefore it is ignored.
-         */
-
-        var rows =
-            Array.prototype.slice.call(
-                table.tBodies[0].rows
-            ).filter(function (row) {
-
-                return row.cells.length > 1;
-
-            });
-
-
-        function renderTable() {
-
-
-            /*
-             * Get search value.
-             */
-
-            var searchText =
-                search.value
-                    .toLowerCase()
-                    .trim();
-
-
-            /*
-             * Filter trainers.
-             */
-
-            var filteredRows =
-                rows.filter(function (row) {
-
-                    return row.textContent
-                        .toLowerCase()
-                        .includes(searchText);
-
-                });
-
-
-            /*
-             * Rows per page.
-             */
-
-            var size =
-                Number(pageSize.value);
-
-
-            /*
-             * Calculate total pages.
-             */
-
-            var totalPages =
-                Math.max(
-                    1,
-                    Math.ceil(
-                        filteredRows.length / size
-                    )
-                );
-
-
-            /*
-             * Keep page inside valid range.
-             */
-
-            if (page > totalPages) {
-
-                page = totalPages;
-
-            }
-
-
-            if (page < 1) {
-
-                page = 1;
-
-            }
-
-
-            /*
-             * Hide every trainer row first.
-             */
-
-            rows.forEach(function (row) {
-
-                row.style.display = "none";
-
-            });
-
-
-            /*
-             * Current page indexes.
-             */
-
-            var start =
-                (page - 1) * size;
-
-
-            var end =
-                page * size;
-
-
-            /*
-             * Display current page rows.
-             */
-
-            filteredRows
-                .slice(start, end)
-                .forEach(function (row) {
-
-                    row.style.display = "";
-
-                });
-
-
-            /*
-             * Table information.
-             */
-
-            if (filteredRows.length === 0) {
-
-                tableInfo.textContent =
-                    "Showing 0 entries";
-
-            } else {
-
-                tableInfo.textContent =
-                    "Showing "
-                    + (start + 1)
-                    + " to "
-                    + Math.min(
-                        end,
-                        filteredRows.length
-                    )
-                    + " of "
-                    + filteredRows.length
-                    + " entries";
-
-            }
-
-
-            /*
-             * Clear old pagination.
-             */
-
-            pagination.innerHTML = "";
-
-
-            /* ================================================= */
-            /* PREVIOUS */
-            /* ================================================= */
-
-            var previousItem =
-                document.createElement("li");
-
-
-            previousItem.className =
-                "page-item";
-
-
-            if (page === 1) {
-
-                previousItem.classList.add("disabled");
-
-            }
-
-
-            var previousButton =
-                document.createElement("button");
-
-
-            previousButton.type =
-                "button";
-
-
-            previousButton.className =
-                "page-link";
-
-
-            previousButton.textContent =
-                "Previous";
-
-
-            previousItem.appendChild(
-                previousButton
-            );
-
-
-            previousItem.addEventListener(
-                "click",
-                function () {
-
-                    if (page > 1) {
-
-                        page--;
-
-                        renderTable();
-
-                    }
-
-                }
-            );
-
-
-            pagination.appendChild(
-                previousItem
-            );
-
-
-            /* ================================================= */
-            /* PAGE NUMBERS */
-            /* ================================================= */
-
-            for (
-                var i = 1;
-                i <= totalPages;
-                i++
-            ) {
-
-
-                var item =
-                    document.createElement("li");
-
-
-                item.className =
-                    "page-item";
-
-
-                if (i === page) {
-
-                    item.classList.add("active");
-
-                }
-
-
-                var button =
-                    document.createElement("button");
-
-
-                button.type =
-                    "button";
-
-
-                button.className =
-                    "page-link";
-
-
-                button.textContent =
-                    i;
-
-
-                (function (pageNumber) {
-
-                    button.addEventListener(
-                        "click",
-                        function () {
-
-                            page =
-                                pageNumber;
-
-                            renderTable();
-
-                        }
-                    );
-
-                })(i);
-
-
-                item.appendChild(
-                    button
-                );
-
-
-                pagination.appendChild(
-                    item
-                );
-
-            }
-
-
-            /* ================================================= */
-            /* NEXT */
-            /* ================================================= */
-
-            var nextItem =
-                document.createElement("li");
-
-
-            nextItem.className =
-                "page-item";
-
-
-            if (page === totalPages) {
-
-                nextItem.classList.add("disabled");
-
-            }
-
-
-            var nextButton =
-                document.createElement("button");
-
-
-            nextButton.type =
-                "button";
-
-
-            nextButton.className =
-                "page-link";
-
-
-            nextButton.textContent =
-                "Next";
-
-
-            nextItem.appendChild(
-                nextButton
-            );
-
-
-            nextItem.addEventListener(
-                "click",
-                function () {
-
-                    if (page < totalPages) {
-
-                        page++;
-
-                        renderTable();
-
-                    }
-
-                }
-            );
-
-
-            pagination.appendChild(
-                nextItem
-            );
-
-        }
-
-
-        /* ===================================================== */
-        /* SEARCH */
-        /* ===================================================== */
-
-        search.addEventListener(
-            "input",
-            function () {
-
-                page = 1;
-
-                renderTable();
-
-            }
-        );
-
-
-        /* ===================================================== */
-        /* PAGE SIZE */
-        /* ===================================================== */
-
-        pageSize.addEventListener(
-            "change",
-            function () {
-
-                page = 1;
-
-                renderTable();
-
-            }
-        );
-
-
-        /* ===================================================== */
-        /* INITIAL LOAD */
-        /* ===================================================== */
-
-        renderTable();
-
 
     })();
 

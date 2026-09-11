@@ -116,4 +116,26 @@ public class TrainerService {
 
         trainerDao.deleteTrainerById(trainerId);
     }
+    public Trainer changeTrainerStatus(int trainerId) {
+
+        if (trainerId <= 0) {
+            throw new IllegalArgumentException("Invalid trainer ID");
+        }
+
+        Trainer trainer = trainerDao.getTrainerById(trainerId);
+
+        if (trainer == null) {
+            throw new IllegalArgumentException("Trainer not found");
+        }
+
+        String newStatus;
+
+        if ("Active".equalsIgnoreCase(trainer.getStatus())) {
+            newStatus = "InActive";
+        } else {
+            newStatus = "Active";
+        }
+
+        return trainerDao.changeTrainerStatus(trainerId, newStatus);
+    }
 }

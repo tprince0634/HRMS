@@ -368,30 +368,38 @@
 
                 </li>
 
-               <!-- ADD EVENT -->
-                                      <li>
-                                          <a href="${pageContext.request.contextPath}/admin/events?action=add">
-                                              <span>Add Event</span>
-                                          </a>
-                                      </li>
+                <!-- EVENTS -->
+                <li class="submenu">
 
-                                      <!-- ADD MASTER EVENT -->
-                                      <li>
-                                          <a href="${pageContext.request.contextPath}/admin/event-types">
-                                              <span>Add Master Event</span>
-                                          </a>
-                                      </li>
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-calendar-event"></i>
+                        <span>Events</span>
+                        <span class="menu-arrow"></span>
+                    </a>
 
-                                      <!-- EVENT LIST -->
-                                      <li>
-                                          <a href="${pageContext.request.contextPath}/admin/events?action=list">
-                                              <span>Event List</span>
-                                          </a>
-                                      </li>
+                    <ul>
 
-                                  </ul>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Add Event</span>
+                            </a>
+                        </li>
 
-                              </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Add Master Event</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span>Event List</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
 
                 <!-- PAYROLL -->
                 <li class="submenu">
@@ -644,27 +652,46 @@
                 </li>
 
                 <!-- PROMOTIONS -->
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/promotion">
-                                        <i class="ti ti-trending-up"></i>
-                                        <span>Promotions</span>
-                                    </a>
-                                </li>
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-trending-up"></i>
+                        <span>Promotions</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Add Promotion</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Promotion List</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Promotion History</span></a></li>
+                    </ul>
+                </li>
 
-                               <!-- RESIGNATION -->
-                               <li>
-                                   <a href="${pageContext.request.contextPath}/resignation">
-                                       <i class="ti ti-logout-2"></i>
-                                       <span>Resignation</span>
-                                   </a>
-                               </li>
-                                <!-- TERMINATION -->
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/termination">
-                                        <i class="ti ti-user-x"></i>
-                                        <span>Termination</span>
-                                    </a>
-                                </li>
+                <!-- RESIGNATION -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-logout-2"></i>
+                        <span>Resignation</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Resignation Request</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Resignation List</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Exit Details</span></a></li>
+                    </ul>
+                </li>
+
+                <!-- TERMINATION -->
+                <li class="submenu">
+                    <a href="javascript:void(0);">
+                        <i class="ti ti-user-x"></i>
+                        <span>Termination</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="javascript:void(0);"><span>Add Termination</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Termination List</span></a></li>
+                        <li><a href="javascript:void(0);"><span>Termination History</span></a></li>
+                    </ul>
+                </li>
 
                 <!-- HELP & SUPPORT -->
                 <li class="submenu">
@@ -2748,3 +2775,5 @@
 
 </body>
 </html>
+
+```
