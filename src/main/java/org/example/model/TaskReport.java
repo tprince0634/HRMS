@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -14,22 +14,12 @@ import java.time.LocalDate;
 public class TaskReport {
 
     private int taskId;
-
     private int projectId;
-
-    private String projectName;
-
     private String title;
-
     private String description;
-
     private String status;
-
     private String priority;
-
-    private LocalDate deadline;
-
-    private String assignedEmployee;
-
-    private boolean overdue;
+    private String filePath;
+    private LocalDateTime deadline;
+    private String projectName;
 }

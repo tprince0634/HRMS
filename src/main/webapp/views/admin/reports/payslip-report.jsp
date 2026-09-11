@@ -1,7 +1,25 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List,java.util.Set,java.util.TreeSet,java.util.Collections,java.util.LinkedHashSet,java.text.DecimalFormat,org.example.model.PayslipReport" %>
+<%
+    List<PayslipReport> payslipList = (List<PayslipReport>) request.getAttribute("payslipList");
+    if (payslipList == null) {
+        payslipList = Collections.emptyList();
+    }
+
+    double totalPayroll = request.getAttribute("totalPayroll") != null
+            ? ((Number) request.getAttribute("totalPayroll")).doubleValue() : 0;
+    double totalEarnings = request.getAttribute("totalEarnings") != null
+            ? ((Number) request.getAttribute("totalEarnings")).doubleValue() : 0;
+    double totalDeductions = request.getAttribute("totalDeductions") != null
+            ? ((Number) request.getAttribute("totalDeductions")).doubleValue() : 0;
+    double totalNetPay = request.getAttribute("totalNetPay") != null
+            ? ((Number) request.getAttribute("totalNetPay")).doubleValue() : 0;
+
+    DecimalFormat money = new DecimalFormat("#,##0.00");
+%>
 
 <!DOCTYPE html>
 <html lang="en">
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <head>
     <meta charset="utf-8">
@@ -10,7 +28,7 @@
     <meta name="keywords" content="admin, estimates, bootstrap, business, html5, responsive, Projects">
     <meta name="author" content="Dreams technologies - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Attendance Report</title>
+    <title>Smarthr Admin Template</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/favicon.png">
@@ -50,65 +68,104 @@
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/select2/css/select2.min.css">
 
-    <!-- Bootstrap Tagsinput CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
-
     <!-- Main CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
 
 
     <style>
-        /* Dashboard vertical sidebar - sidebar only */
-        .sidebar { height: 100vh !important; overflow-y: auto !important; overflow-x: hidden !important; scrollbar-width: thin; scrollbar-color: #cfd4dc transparent; }
-        .sidebar::-webkit-scrollbar { width: 5px; }
-        .sidebar::-webkit-scrollbar-track { background: transparent; }
-        .sidebar::-webkit-scrollbar-thumb { background: #cfd4dc; border-radius: 10px; }
-        .sidebar-menu { height: auto !important; overflow: visible !important; padding-bottom: 20px; }
-        .sidebar-menu ul { list-style: none !important; margin: 0 !important; padding: 0 !important; }
-        .sidebar-menu li { list-style: none !important; }
-        .sidebar-menu > ul > li > a { display: flex; align-items: center; min-height: 44px; margin: 2px 8px; border-radius: 6px; transition: all .2s ease; }
-        .sidebar-menu > ul > li > a:hover { background: #f3f6fb; }
-        .sidebar-menu > ul > li.active > a { background: #fff4ec; color: #f97316; }
-        .sidebar-menu > ul > li.active > a i { color: #f97316; }
-        .sidebar-menu li.submenu > ul { width: 100%; background: transparent; }
-        .sidebar-menu li.submenu > a { cursor: pointer; }
-        .sidebar-menu li.submenu > a .menu-arrow { margin-left: auto; }
-        .sidebar-menu li.submenu > ul > li > a { display: flex; align-items: center; min-height: 38px; margin: 1px 8px; padding: 7px 15px 7px 48px !important; border-radius: 5px; font-size: 13px; transition: all .2s ease; }
-        .sidebar-menu li.submenu > ul > li > a:hover { background: #f6f8fb; color: #0d6efd; }
-        .sidebar-menu li.submenu > ul > li.submenu > a { padding-left: 48px !important; }
-        .sidebar-menu li.submenu > ul > li.submenu > ul > li > a { padding-left: 68px !important; font-size: 12.5px; }
-        .sidebar-menu .menu-title { padding: 18px 20px 8px !important; }
-        .sidebar-menu .menu-title span { font-size: 10px; font-weight: 700; letter-spacing: .7px; color: #98a2b3; }
-        .modern-profile .user-profile { border: 1px solid #edf0f5; box-shadow: 0 3px 12px rgba(16,24,40,.04); }
-        .modern-profile .avatar-lg img { object-fit: cover; }
-        /* Attendance page also contains a separate horizontal menu; hide only that menu. */
-        #horizontal-single { display: none !important; }
-        @media (max-width: 991px) { .sidebar { height: 100vh !important; } }
-        @media (max-width: 767px) { .sidebar-menu > ul > li > a { margin-left: 5px; margin-right: 5px; } }
-
-        /* Attendance Report - sidebar submenu visibility fix only */
-        #sidebar {
+        .sidebar {
             height: 100vh !important;
             overflow-y: auto !important;
             overflow-x: hidden !important;
         }
-        #sidebar .sidebar-menu {
+
+        .sidebar-menu {
             height: auto !important;
             overflow: visible !important;
-            padding-bottom: 20px;
         }
-        #sidebar .sidebar-menu > ul > li.submenu.active > ul {
-            display: block !important;
+
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+
+        .sidebar-menu li.submenu > ul {
+            display: none;
+        }
+
+        .sidebar-menu li.submenu.active > ul,
+        .sidebar-menu li.submenu > a.subdrop + ul {
+            display: block;
+        }
+
+        .sidebar-menu li.submenu > a .menu-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .sidebar-menu li.submenu.active > a .menu-arrow,
+        .sidebar-menu li.submenu > a.subdrop .menu-arrow {
+            transform: rotate(90deg);
+        }
+
+        @media print {
+            .sidebar,
+            .header,
+            .page-breadcrumb,
+            .head-icons,
+            .dropdown,
+            #payslipSearch,
+            #payslipDateRange,
+            .card-header .right-content,
+            .dataTables_length,
+            .dataTables_filter,
+            .dataTables_paginate,
+            .dataTables_info,
+            .dataTables_wrapper > .row:first-child,
+            .dataTables_wrapper > .row:last-child {
+                display: none !important;
+            }
+
+            .main-wrapper,
+            .page-wrapper,
+            .content {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+
+            .card {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+            }
+
+            table {
+                width: 100% !important;
+            }
+        }
+    </style>
+
+    <style>
+        /* Payslip report: keep the same working Admin sidebar behavior as Dashboard */
+        .sidebar {
+            height: 100vh !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+        }
+        .sidebar-menu {
             height: auto !important;
-            max-height: none !important;
             overflow: visible !important;
         }
-        #sidebar .sidebar-menu > ul > li.submenu.active > ul > li {
-            display: block !important;
-        }
-        #sidebar .sidebar-menu > ul > li.submenu.active > ul > li > a {
-            display: flex !important;
-        }
+        .sidebar::-webkit-scrollbar { width: 5px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        .sidebar-menu li.submenu > ul { display: none !important; }
+        .sidebar-menu li.submenu.active > ul { display: block !important; }
+        .sidebar-menu li.submenu > a .menu-arrow { transition: transform 0.2s ease; }
+        .sidebar-menu li.submenu.active > a .menu-arrow { transform: rotate(90deg); }
+        .sidebar-menu li.submenu > ul > li > a { display: flex; align-items: center; }
     </style>
 </head>
 
@@ -120,6 +177,7 @@
 
 <!-- Main Wrapper -->
 <div class="main-wrapper">
+
     <!-- Header -->
     <div class="header">
         <div class="main-header">
@@ -557,8 +615,8 @@
                                                     <li><a href="task-report.html">Task Report</a></li>
                                                     <li><a href="user-report.html">User Report</a></li>
                                                     <li><a href="employee-report.html">Employee Report</a></li>
-                                                    <li><a href="payslip-report.html">Payslip Report</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/admin/attendance-report" class="active">Attendance Report</a></li>
+                                                    <li><a href="payslip-report.html" class="active">Payslip Report</a></li>
+                                                    <li><a href="attendance-report.html">Attendance Report</a></li>
                                                     <li><a href="leave-report.html">Leave Report</a></li>
                                                     <li><a href="daily-report.html">Daily Report</a></li>
                                                 </ul>
@@ -1377,7 +1435,7 @@
     </div>
     <!-- /Header -->
 
-    <!-- SIDEBAR -->
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
 
         <div class="sidebar-logo">
@@ -1635,7 +1693,7 @@
                     <ul>
 
                         <li>
-                            <a href="${pageContext.request.contextPath}/trainerList">
+                            <a href="javascript:void(0);">
                                 <span>Trainer List</span>
                             </a>
                         </li>
@@ -1676,13 +1734,13 @@
                             <ul>
 
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/uploadFile">
+                                    <a href="javascript:void(0);">
                                         <span>Upload Document</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/documentList">
+                                    <a href="javascript:void(0);">
                                         <span>Document List</span>
                                     </a>
                                 </li>
@@ -1794,7 +1852,7 @@
                         </li>
 
                         <li>
-                            <a href="${pageContext.request.contextPath}/admin/attendance-report" class="active">
+                            <a href="${pageContext.request.contextPath}/admin/attendance-report">
                                 <span>Attendance Report</span>
                             </a>
                         </li>
@@ -1806,21 +1864,13 @@
                         </li>
 
                         <li>
-                            <a href="${pageContext.request.contextPath}/admin/payslip-report">
-                                <i class="ti ti-file-invoice"></i>
+                            <a href="${pageContext.request.contextPath}/admin/payslip-report" class="active">
                                 <span>Payslip Report</span>
                             </a>
                         </li>
 
-
                         <li>
-                            <a href="${pageContext.request.contextPath}/admin/project-report">
-                                <span>Project Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/admin/task-report">
+                            <a href="javascript:void(0);">
                                 <span>Task Report</span>
                             </a>
                         </li>
@@ -1919,394 +1969,352 @@
 
     </div>
 
-    <!-- Page Wrapper -->
+    <!-- PAGE WRAPPER -->
+
     <div class="page-wrapper">
+        <!-- Sidebar -->
+
+
         <div class="content">
 
-            <!-- Breadcrumb -->
             <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
                 <div class="my-auto mb-2">
-                    <h2 class="mb-1">Attendance Report</h2>
+                    <h2 class="mb-1">Payslip Report</h2>
                     <nav>
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item">
-                                <a href="${pageContext.request.contextPath}/Admin/dashboard"><i class="ti ti-smart-home"></i></a>
+                                <a href="${pageContext.request.contextPath}/admin/dashboard">
+                                    <i class="ti ti-smart-home"></i>
+                                </a>
                             </li>
-                            <li class="breadcrumb-item">
-                                HR
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Attendance Report</li>
+                            <li class="breadcrumb-item">HR</li>
+                            <li class="breadcrumb-item active" aria-current="page">Payslip Report</li>
                         </ol>
                     </nav>
                 </div>
-                <div class="d-flex my-xl-auto right-content align-items-center flex-wrap ">
+
+                <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
                     <div class="mb-2">
                         <div class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                            <a href="javascript:void(0);"
+                               class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+                               data-bs-toggle="dropdown">
                                 <i class="ti ti-file-export me-1"></i>Export
                             </a>
-                            <ul class="dropdown-menu  dropdown-menu-end p-3">
+                            <ul class="dropdown-menu dropdown-menu-end p-2">
                                 <li>
-                                    <a href="javascript:void(0);" id="attendanceExportPdf" class="dropdown-item rounded-1"><i class="ti ti-file-type-pdf me-1"></i>Export as PDF</a>
+                                    <a href="javascript:void(0);" id="exportPayslipPdf"
+                                       class="dropdown-item rounded-1">
+                                        <i class="ti ti-file-type-pdf me-1"></i>Export as PDF
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);" id="attendanceExportExcel" class="dropdown-item rounded-1"><i class="ti ti-file-type-xls me-1"></i>Export as Excel </a>
+                                    <a href="javascript:void(0);" id="exportPayslipExcel"
+                                       class="dropdown-item rounded-1">
+                                        <i class="ti ti-file-type-xls me-1"></i>Export as Excel
+                                    </a>
                                 </li>
                             </ul>
                         </div>
-
                     </div>
+
                     <div class="head-icons ms-2">
-                        <a href="javascript:void(0);" class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Collapse" id="collapse-header">
+                        <a href="javascript:void(0);" data-bs-toggle="tooltip"
+                           data-bs-placement="top" title="Collapse" id="collapse-header">
                             <i class="ti ti-chevrons-up"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <!-- /Breadcrumb -->
+
             <div class="row">
+
+                <!-- Report cards -->
                 <div class="col-xl-6 d-flex">
                     <div class="row flex-fill">
-                        <!-- Total Companies -->
-                        <div class="col-lg-6 col-md-6 d-flex">
-                            <div class="card flex-fill">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center overflow-hidden mb-2">
-                                        <div class="attendence-icon">
-                                            <span><i class="ti ti-calendar text-primary"></i></span>
-                                        </div>
-                                        <div class="ms-2 overflow-hidden">
-                                            <p class="fs-12 fw-normal mb-1 text-truncate">Total Working Days</p>
-                                            <h4>${workingDays}</h4>
-                                        </div>
-                                    </div>
-                                    <div class="attendance-report-bar mb-2">
-                                        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 5px;">
-                                            <div class="progress-bar bg-success" style="width: 85%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p class="fs-12 fw-normal d-flex align-items-center text-truncate"><span class="text-success fs-12 d-flex align-items-center me-1"><i class="ti ti-arrow-wave-right-up me-1"></i>+20.01%</span>from last month</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Total Companies -->
 
-                        <!-- Total Companies -->
-                        <div class="col-lg-6 col-md-6 d-flex">
+                        <div class="col-md-6 d-flex">
                             <div class="card flex-fill">
                                 <div class="card-body">
-                                    <div class="d-flex align-items-center overflow-hidden mb-2">
-                                        <div class="attendence-icon">
-                                            <span><i class="ti ti-calendar text-info"></i></span>
+                                    <div class="d-flex align-items-center justify-content-between bg-light border rounded p-2 mb-2">
+                                        <div>
+                                            <span class="fs-14 fw-normal text-truncate mb-1">Total Payroll</span>
+                                            <h5>₹<%= money.format(totalPayroll) %></h5>
                                         </div>
-                                        <div class="ms-2 overflow-hidden">
-                                            <p class="fs-12 fw-normal mb-1 text-truncate">Total Leave Taken</p>
-                                            <h4>${leaveTaken}</h4>
-                                        </div>
+                                        <span class="avatar avatar-md avatar-rounded bg-transparent-primary border border-primary">
+                                    <span class="text-primary"><i class="ti ti-wallet"></i></span>
+                                </span>
                                     </div>
-                                    <div class="attendance-report-bar mb-2">
-                                        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 5px;">
-                                            <div class="progress-bar bg-success" style="width: 85%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p class="fs-12 fw-normal d-flex align-items-center text-truncate"><span class="text-success fs-12 d-flex align-items-center me-1"><i class="ti ti-arrow-wave-right-up me-1"></i>+20.01%</span>from last month</p>
-                                    </div>
+                                    <p class="fs-12 text-muted mb-0">Total salary across payslips</p>
                                 </div>
                             </div>
                         </div>
-                        <!-- /Total Companies -->
 
-                        <!-- Inactive Companies -->
-                        <div class="col-lg-6 col-md-6 d-flex">
+                        <div class="col-md-6 d-flex">
                             <div class="card flex-fill">
                                 <div class="card-body">
-                                    <div class="d-flex align-items-center overflow-hidden mb-2">
-                                        <div class="attendence-icon">
-                                            <span><i class="ti ti-calendar text-pink"></i></span>
+                                    <div class="d-flex align-items-center justify-content-between bg-light border rounded p-2 mb-2">
+                                        <div>
+                                            <span class="fs-14 fw-normal text-truncate mb-1">Deductions</span>
+                                            <h5>₹<%= money.format(totalDeductions) %></h5>
                                         </div>
-                                        <div class="ms-2 overflow-hidden">
-                                            <p class="fs-12 fw-normal mb-1 text-truncate">Total Holidays</p>
-                                            <h4>${holidays}</h4>
-                                        </div>
+                                        <span class="avatar avatar-md avatar-rounded bg-transparent-danger border border-danger">
+                                    <span class="text-danger"><i class="ti ti-minus"></i></span>
+                                </span>
                                     </div>
-                                    <div class="attendance-report-bar mb-2">
-                                        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 5px;">
-                                            <div class="progress-bar bg-success" style="width: 85%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p class="fs-12 fw-normal d-flex align-items-center text-truncate"><span class="text-success fs-12 d-flex align-items-center me-1"><i class="ti ti-arrow-wave-right-up me-1"></i>+20.01%</span>from last month</p>
-                                    </div>
+                                    <p class="fs-12 text-muted mb-0">Total employee deductions</p>
                                 </div>
                             </div>
                         </div>
-                        <!-- /Inactive Companies -->
 
-                        <!-- Company Location -->
-                        <div class="col-lg-6 col-md-6 d-flex">
+                        <div class="col-md-6 d-flex">
                             <div class="card flex-fill">
                                 <div class="card-body">
-                                    <div class="d-flex align-items-center overflow-hidden mb-2">
-                                        <div class="attendence-icon">
-                                            <span><i class="ti ti-calendar text-warning"></i></span>
+                                    <div class="d-flex align-items-center justify-content-between bg-light border rounded p-2 mb-2">
+                                        <div>
+                                            <span class="fs-14 fw-normal text-truncate mb-1">Net Pay</span>
+                                            <h5>₹<%= money.format(totalNetPay) %></h5>
                                         </div>
-                                        <div class="ms-2 overflow-hidden">
-                                            <p class="fs-12 fw-normal mb-1 text-truncate">Total Halfdays</p>
-                                            <h4><c:out value="${halfDayCount}" default="0"/></h4>
-                                        </div>
+                                        <span class="avatar avatar-md avatar-rounded bg-transparent-success border border-success">
+                                    <span class="text-success"><i class="ti ti-cash"></i></span>
+                                </span>
                                     </div>
-                                    <div class="attendance-report-bar mb-2">
-                                        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 5px;">
-                                            <div class="progress-bar bg-success" style="width: 85%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p class="fs-12 fw-normal d-flex align-items-center text-truncate"><span class="text-success fs-12 d-flex align-items-center me-1"><i class="ti ti-arrow-wave-right-up me-1"></i>+20.01%</span>from last month</p>
-                                    </div>
+                                    <p class="fs-12 text-muted mb-0">Total net salary payable</p>
                                 </div>
                             </div>
                         </div>
-                        <!-- /Company Location -->
+
+                        <div class="col-md-6 d-flex">
+                            <div class="card flex-fill">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between bg-light border rounded p-2 mb-2">
+                                        <div>
+                                            <span class="fs-14 fw-normal text-truncate mb-1">Earnings</span>
+                                            <h5>₹<%= money.format(totalEarnings) %></h5>
+                                        </div>
+                                        <span class="avatar avatar-md avatar-rounded bg-transparent-info border border-info">
+                                    <span class="text-info"><i class="ti ti-trending-up"></i></span>
+                                </span>
+                                    </div>
+                                    <p class="fs-12 text-muted mb-0">Total additional earnings</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="col-xl-6">
-                    <div class="card">
+
+                <!-- Payroll chart -->
+                <div class="col-xl-6 d-flex">
+                    <div class="card flex-fill">
                         <div class="card-header border-0 pb-0">
                             <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="d-flex align-items-center ">
-                                    <span class="me-2"><i class="ti ti-chart-line text-danger"></i></span>
-                                    <h5>Attendance  </h5>
+                                <div class="d-flex align-items-center">
+                            <span class="me-2">
+                                <i class="ti ti-chart-area-line text-primary"></i>
+                            </span>
+                                    <h5>Payroll Trend</h5>
                                 </div>
+
                                 <div class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-sm fs-12 btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                                    <a href="javascript:void(0);"
+                                       id="payslipChartYearButton"
+                                       class="dropdown-toggle btn btn-sm fs-12 btn-white d-inline-flex align-items-center"
+                                       data-bs-toggle="dropdown">
                                         This Year
                                     </a>
-                                    <ul class="dropdown-menu  dropdown-menu-end p-2">
+                                    <ul class="dropdown-menu dropdown-menu-end p-2" id="payslipChartYearMenu">
+                                        <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-year-option" data-year="all">All Years</a></li>
+                                        <%
+                                            Set<Integer> chartYears = new TreeSet<>(Collections.reverseOrder());
+                                            for (PayslipReport p : payslipList) {
+                                                chartYears.add(p.getYear());
+                                            }
+                                            for (Integer y : chartYears) {
+                                        %>
                                         <li>
-                                            <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-year-option" data-year="2024">2024</a>
+                                            <a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-year-option"
+                                               data-year="<%= y %>"><%= y %></a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-year-option" data-year="2023">2023</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-year-option" data-year="2022">2022</a>
-                                        </li>
+                                        <% } %>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body py-0 px-2">
-                            <div id="attendance-report"> </div>
+
+                        <div class="card-body py-0">
+                            <div id="payslip-chart" style="min-height: 280px;"></div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
+            <!-- Payslip table -->
             <div class="card">
                 <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
-                    <h5>Employee Attendance</h5>
-                    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
-                        <div class="me-3">
+                    <h5>Payslip List</h5>
+
+                    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-2">
+
+                        <div class="me-2">
                             <div class="input-icon-end position-relative">
-                                <input type="text" id="attendanceDateRange" class="form-control date-range bookingrange" placeholder="dd/mm/yyyy - dd/mm/yyyy">
+                                <input type="text" id="payslipDateRange"
+                                       class="form-control date-range"
+                                       placeholder="dd/mm/yyyy - dd/mm/yyyy">
                                 <span class="input-icon-addon">
-                               <i class="ti ti-chevron-down"></i>
-                            </span>
+                            <i class="ti ti-chevron-down"></i>
+                        </span>
                             </div>
                         </div>
-                        <div class="dropdown me-3">
-                            <a href="javascript:void(0);" id="attendanceStatusButton" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
-                                Select Status
+
+                        <div class="dropdown me-2">
+                            <a href="javascript:void(0);"
+                               id="payslipSalaryButton"
+                               class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+                               data-bs-toggle="dropdown">
+                                Salary Range
                             </a>
-                            <ul class="dropdown-menu  dropdown-menu-end p-3">
-                                <li>
-                                    <a href="javascript:void(0);" <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-status-option" data-status="">All Status</a>
-                                    <a href="javascript:void(0);" </li>
-                                <a href="javascript:void(0);" <li>
-                                <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-status-option" data-status="Present">Present</a>
-                            </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-status-option" data-status="Absent">Absent</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-status-option" data-status="Half Day">Half Day</a>
-                                </li>
+                            <ul class="dropdown-menu dropdown-menu-end p-2">
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-salary-option" data-range="all">All Salaries</a></li>
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-salary-option" data-range="0-30000">Below ₹30,000</a></li>
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-salary-option" data-range="30000-50000">₹30,000 - ₹50,000</a></li>
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-salary-option" data-range="50000-plus">Above ₹50,000</a></li>
                             </ul>
                         </div>
-                        <div class="dropdown">
-                            <a href="javascript:void(0);" id="attendanceSortButton" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
-                                Sort By : Last 7 Days
+
+                        <div class="dropdown me-2">
+                            <a href="javascript:void(0);"
+                               id="payslipMonthButton"
+                               class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+                               data-bs-toggle="dropdown">
+                                Month
                             </a>
-                            <ul class="dropdown-menu  dropdown-menu-end p-3">
-                                <li>
-                                    <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-sort-option" data-sort="recent">Recently Added</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-sort-option" data-sort="asc">Ascending</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-sort-option" data-sort="desc">Desending</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-sort-option" data-sort="month">Last Month</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-sort-option" data-sort="7days">Last 7 Days</a>
-                                </li>
+                            <ul class="dropdown-menu dropdown-menu-end p-2">
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-month-option" data-month="all">All Months</a></li>
+                                <%
+                                    LinkedHashSet<String> months = new LinkedHashSet<>();
+                                    for (PayslipReport p : payslipList) {
+                                        if (p.getMonth() != null && !p.getMonth().trim().isEmpty()) {
+                                            months.add(p.getMonth());
+                                        }
+                                    }
+                                    for (String m : months) {
+                                %>
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-month-option"
+                                       data-month="<%= m %>"><%= m %></a></li>
+                                <% } %>
                             </ul>
                         </div>
+
+                        <div class="dropdown me-2">
+                            <a href="javascript:void(0);"
+                               id="payslipSortButton"
+                               class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+                               data-bs-toggle="dropdown">
+                                Sort By : Recently Added
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end p-2">
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-sort-option" data-sort="recent">Recently Added</a></li>
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-sort-option" data-sort="salary-asc">Salary: Low to High</a></li>
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-sort-option" data-sort="salary-desc">Salary: High to Low</a></li>
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-sort-option" data-sort="name-asc">Name: A to Z</a></li>
+                                <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-sort-option" data-sort="name-desc">Name: Z to A</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="input-group" style="width:220px;">
+                    <span class="input-group-text bg-white">
+                        <i class="ti ti-search"></i>
+                    </span>
+                            <input type="text" id="payslipSearch" class="form-control"
+                                   placeholder="Search employee...">
+                        </div>
+
                     </div>
                 </div>
+
                 <div class="card-body p-0">
                     <div class="custom-datatable-filter table-responsive">
-                        <table class="table datatable">
+                        <table class="table datatable" id="payslipTable">
                             <thead class="thead-light">
                             <tr>
-                                <th>Name</th>
-                                <th>Date</th>
-                                <th>Check In</th>
-                                <th>Status</th>
-                                <th>Check Out</th>
-                                <th>Break</th>
-                                <th>Late</th>
-                                <th>Overtime</th>
-                                <th>Production Hours</th>
+                                <th class="no-sort">
+                                    <div class="form-check form-check-md">
+                                        <input class="form-check-input" type="checkbox" id="select-all">
+                                    </div>
+                                </th>
+                                <th>Employee</th>
+                                <th>Department</th>
+                                <th>Designation</th>
+                                <th>Total Salary</th>
+                                <th>Earnings</th>
+                                <th>Deductions</th>
+                                <th>Net Pay</th>
+                                <th>Month</th>
+                                <th>Year</th>
+                                <th>Generated On</th>
                             </tr>
                             </thead>
+
                             <tbody>
-                            <c:choose>
-                                <c:when test="${not empty attendanceList}">
-                                    <c:forEach var="attendance" items="${attendanceList}">
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                        <span class="avatar avatar-md">
-                            <img src="${pageContext.request.contextPath}/assets/img/users/user-01.jpg"
-                                 class="img-fluid rounded-circle" alt="Employee">
-                        </span>
-                                                    <div class="ms-2">
-                                                        <p class="text-dark mb-0">
-                                                                ${attendance.firstName} ${attendance.lastName}
-                                                        </p>
-                                                        <span class="fs-12">${attendance.email}</span>
-                                                    </div>
-                                                </div>
-                                            </td>
+                            <%
+                                for (PayslipReport p : payslipList) {
+                                    String employeeName = p.getEmployeeName() == null || p.getEmployeeName().trim().isEmpty()
+                                            ? "Unknown Employee" : p.getEmployeeName().trim();
+                                    String department = p.getDepartment() == null ? "-" : p.getDepartment();
+                                    String designation = p.getDesignation() == null ? "-" : p.getDesignation();
+                                    String month = p.getMonth() == null ? "-" : p.getMonth();
+                                    String generatedOn = p.getGeneratedOn() == null ? "-" : p.getGeneratedOn();
+                            %>
+                            <tr
+                                    data-year="<%= p.getYear() %>"
+                                    data-month="<%= month %>"
+                                    data-generated="<%= generatedOn %>"
+                                    data-salary="<%= p.getTotalSalary() %>">
 
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${not empty attendance.date}">
-                                                        ${attendance.date}
-                                                    </c:when>
-                                                    <c:otherwise>-</c:otherwise>
-                                                </c:choose>
-                                            </td>
+                                <td>
+                                    <div class="form-check form-check-md">
+                                        <input class="form-check-input payslip-row-check" type="checkbox">
+                                    </div>
+                                </td>
 
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${not empty attendance.checkIn}">
-                                                        ${attendance.checkIn}
-                                                    </c:when>
-                                                    <c:otherwise>-</c:otherwise>
-                                                </c:choose>
-                                            </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-md">
+                                    <span class="avatar-title rounded-circle bg-transparent-primary text-primary">
+                                        <%= employeeName.substring(0, 1).toUpperCase() %>
+                                    </span>
+                                        </div>
+                                        <div class="ms-2">
+                                            <p class="text-dark mb-0 fw-medium">
+                                                <%= employeeName %>
+                                            </p>
+                                            <span class="fs-12 text-muted">Employee ID: <%= p.getEmployeeId() %></span>
+                                        </div>
+                                    </div>
+                                </td>
 
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${attendance.status eq 'Present'}">
-                            <span class="badge badge-soft-success d-inline-flex align-items-center badge-xs">
-                                <i class="ti ti-point-filled me-1"></i>${attendance.status}
-                            </span>
-                                                    </c:when>
-                                                    <c:when test="${attendance.status eq 'Absent'}">
-                            <span class="badge badge-soft-danger d-inline-flex align-items-center badge-xs">
-                                <i class="ti ti-point-filled me-1"></i>${attendance.status}
-                            </span>
-                                                    </c:when>
-                                                    <c:when test="${attendance.status eq 'Half Day'}">
-                            <span class="badge badge-soft-warning d-inline-flex align-items-center badge-xs">
-                                <i class="ti ti-point-filled me-1"></i>${attendance.status}
-                            </span>
-                                                    </c:when>
-                                                    <c:when test="${attendance.status eq 'Leave'}">
-                            <span class="badge badge-soft-info d-inline-flex align-items-center badge-xs">
-                                <i class="ti ti-point-filled me-1"></i>${attendance.status}
-                            </span>
-                                                    </c:when>
-                                                    <c:when test="${attendance.status eq 'Holiday'}">
-                            <span class="badge badge-soft-primary d-inline-flex align-items-center badge-xs">
-                                <i class="ti ti-point-filled me-1"></i>${attendance.status}
-                            </span>
-                                                    </c:when>
-                                                    <c:otherwise>
-                            <span class="badge badge-soft-secondary d-inline-flex align-items-center badge-xs">
-                                <i class="ti ti-point-filled me-1"></i>${attendance.status}
-                            </span>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </td>
-
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${not empty attendance.checkOut}">
-                                                        ${attendance.checkOut}
-                                                    </c:when>
-                                                    <c:otherwise>-</c:otherwise>
-                                                </c:choose>
-                                            </td>
-
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${not empty attendance.breakHours}">
-                                                        ${attendance.breakHours}
-                                                    </c:when>
-                                                    <c:otherwise>-</c:otherwise>
-                                                </c:choose>
-                                            </td>
-
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${not empty attendance.late}">
-                                                        ${attendance.late}
-                                                    </c:when>
-                                                    <c:otherwise>-</c:otherwise>
-                                                </c:choose>
-                                            </td>
-
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${not empty attendance.overtimeHours}">
-                                                        ${attendance.overtimeHours}
-                                                    </c:when>
-                                                    <c:otherwise>-</c:otherwise>
-                                                </c:choose>
-                                            </td>
-
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${not empty attendance.productionHours}">
-                            <span class="badge badge-success d-inline-flex align-items-center badge-sm">
-                                <i class="ti ti-clock-hour-11 me-1"></i>${attendance.productionHours}
-                            </span>
-                                                    </c:when>
-                                                    <c:otherwise>-</c:otherwise>
-                                                </c:choose>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </c:when>
-
-                                <c:otherwise>
-                                    <tr>
-                                        <td colspan="9" class="text-center py-4">
-                                            No attendance records found.
-                                        </td>
-                                    </tr>
-                                </c:otherwise>
-                            </c:choose>
+                                <td><%= department %></td>
+                                <td><%= designation %></td>
+                                <td data-order="<%= p.getTotalSalary() %>">₹<%= money.format(p.getTotalSalary()) %></td>
+                                <td data-order="<%= p.getEarnings() %>">₹<%= money.format(p.getEarnings()) %></td>
+                                <td data-order="<%= p.getDeductions() %>">₹<%= money.format(p.getDeductions()) %></td>
+                                <td data-order="<%= p.getNetPay() %>"><strong>₹<%= money.format(p.getNetPay()) %></strong></td>
+                                <td><%= month %></td>
+                                <td><%= p.getYear() %></td>
+                                <td><%= generatedOn %></td>
+                            </tr>
+                            <%
+                                }
+                                if (payslipList.isEmpty()) {
+                            %>
+                            <tr>
+                                <td colspan="11" class="text-center py-5 text-muted">
+                                    No payslip records found.
+                                </td>
+                            </tr>
+                            <% } %>
                             </tbody>
                         </table>
                     </div>
@@ -2314,7 +2322,6 @@
             </div>
 
         </div>
-
         <div class="footer d-sm-flex align-items-center justify-content-between border-top bg-white p-3">
             <p class="mb-0">2014 - 2025 &copy; SmartHR.</p>
             <p>Designed &amp; Developed By <a href="javascript:void(0);" class="text-primary">Dreams</a></p>
@@ -2322,6 +2329,7 @@
 
     </div>
     <!-- /Page Wrapper -->
+
 
 </div>
 <!-- /Main Wrapper -->
@@ -2353,9 +2361,6 @@
 <!-- Select2 JS -->
 <script src="${pageContext.request.contextPath}/assets/plugins/select2/js/select2.min.js"></script>
 
-<!-- Bootstrap Tagsinput JS -->
-<script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-
 <!-- Chart JS -->
 <script src="${pageContext.request.contextPath}/assets/plugins/apexchart/apexcharts.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/apexchart/chart-data.js"></script>
@@ -2365,255 +2370,416 @@
 <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 
 
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        if (typeof jQuery === "undefined" || !jQuery.fn.DataTable) return;
 
-        var $ = jQuery;
-        var tableElement = document.querySelector("table.datatable");
-        if (!tableElement) return;
-
-        var table = $.fn.dataTable.isDataTable(tableElement)
-            ? $(tableElement).DataTable()
-            : $(tableElement).DataTable({ pageLength: 10, order: [[1, "desc"]] });
-
-        var selectedStatus = "";
-        var startDate = null;
-        var endDate = null;
-
-        function parseDate(value) {
-            if (!value || typeof moment === "undefined") return null;
-            var m = moment(value, ["YYYY-MM-DD", "DD/MM/YYYY", "MM/DD/YYYY"], true);
-            return m.isValid() ? m.startOf("day") : null;
-        }
-
-        function redraw() {
-            table.draw();
-        }
-
-        if ($.fn.daterangepicker && $("#attendanceDateRange").length) {
-            $("#attendanceDateRange").daterangepicker({
-                autoUpdateInput: false,
-                locale: { format: "DD/MM/YYYY", cancelLabel: "Clear" }
-            });
-
-            $("#attendanceDateRange").on("apply.daterangepicker", function (ev, picker) {
-                startDate = picker.startDate.clone().startOf("day");
-                endDate = picker.endDate.clone().endOf("day");
-                $(this).val(picker.startDate.format("DD/MM/YYYY") + " - " + picker.endDate.format("DD/MM/YYYY"));
-                redraw();
-            });
-
-            $("#attendanceDateRange").on("cancel.daterangepicker", function () {
-                startDate = null;
-                endDate = null;
-                $(this).val("");
-                redraw();
-            });
-        }
-
-        $(document).on("click", ".attendance-status-option", function (e) {
-            e.preventDefault();
-            selectedStatus = String($(this).data("status") || "");
-            $("#attendanceStatusButton").text(selectedStatus || "All Status");
-            redraw();
+        var payslipTable = $("#payslipTable").DataTable({
+            pageLength: 10,
+            ordering: true,
+            searching: true,
+            lengthChange: true,
+            columnDefs: [
+                { targets: 0, orderable: false },
+                { targets: 4, type: "num" },
+                { targets: 5, type: "num" },
+                { targets: 6, type: "num" },
+                { targets: 7, type: "num" }
+            ],
+            order: [[10, "desc"]]
         });
 
-        $(document).on("click", ".attendance-sort-option", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
+        var selectedSalaryRange = "all";
+        var selectedMonth = "all";
+        var selectedStartDate = null;
+        var selectedEndDate = null;
+        var selectedChartYear = "all";
 
-            var sort = String($(this).data("sort") || "");
-            var label = $(this).text().trim();
-            $("#attendanceSortButton").text("Sort By : " + label);
+        function parseGeneratedDate(value) {
+            if (!value || value === "-") return null;
 
-            // Clear any date-range filter when a pure sorting option is selected.
-            if (sort === "recent" || sort === "asc" || sort === "desc") {
-                startDate = null;
-                endDate = null;
-                $("#attendanceDateRange").val("");
+            var m = moment(value, [
+                "YYYY-MM-DD HH:mm:ss",
+                "YYYY-MM-DDTHH:mm:ss",
+                "YYYY-MM-DD",
+                "DD/MM/YYYY HH:mm:ss",
+                "DD/MM/YYYY"
+            ], true);
+
+            if (!m.isValid()) {
+                m = moment(value);
             }
 
-            if (sort === "recent") {
-                // Most recent attendance date first.
-                table.order([[1, "desc"]]).draw(false);
-                return;
+            return m.isValid() ? m : null;
+        }
+
+        function salaryMatches(value) {
+            var salary = parseFloat(value || "0");
+
+            if (selectedSalaryRange === "0-30000") {
+                return salary < 30000;
             }
 
-            if (sort === "asc") {
-                // Attendance date: oldest first.
-                table.order([[1, "asc"]]).draw(false);
-                return;
+            if (selectedSalaryRange === "30000-50000") {
+                return salary >= 30000 && salary <= 50000;
             }
 
-            if (sort === "desc") {
-                // Attendance date: newest first.
-                table.order([[1, "desc"]]).draw(false);
-                return;
+            if (selectedSalaryRange === "50000-plus") {
+                return salary > 50000;
             }
 
-            if (typeof moment !== "undefined" && (sort === "month" || sort === "7days")) {
-                var now = moment().startOf("day");
-                if (sort === "month") {
-                    startDate = now.clone().subtract(1, "month");
-                } else {
-                    startDate = now.clone().subtract(6, "days");
-                }
-                endDate = now.clone().endOf("day");
+            return true;
+        }
 
-                $("#attendanceDateRange").val(
-                    startDate.format("DD/MM/YYYY") + " - " + endDate.format("DD/MM/YYYY")
-                );
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 
-                table.order([[1, "desc"]]).draw(false);
+            if (settings.nTable.id !== "payslipTable") {
+                return true;
             }
-        });
 
-        $.fn.dataTable.ext.search.push(function (settings, data) {
-            if (settings.nTable !== tableElement) return true;
+            var row = settings.aoData[dataIndex].nTr;
+            if (!row) return true;
 
-            var status = $("<div>").html(data[3] || "").text().trim();
-            var date = parseDate((data[1] || "").trim());
+            var rowMonth = (row.getAttribute("data-month") || "").trim();
+            var rowDate = parseGeneratedDate(row.getAttribute("data-generated") || "");
+            var rowSalary = row.getAttribute("data-salary") || "0";
 
-            if (selectedStatus && status !== selectedStatus) return false;
-            if (startDate && (!date || date.isBefore(startDate, "day"))) return false;
-            if (endDate && (!date || date.isAfter(endDate, "day"))) return false;
+            if (selectedMonth !== "all" &&
+                rowMonth.toLowerCase() !== selectedMonth.toLowerCase()) {
+                return false;
+            }
+
+            if (!salaryMatches(rowSalary)) {
+                return false;
+            }
+
+            if (selectedStartDate && rowDate &&
+                rowDate.isBefore(selectedStartDate, "day")) {
+                return false;
+            }
+
+            if (selectedEndDate && rowDate &&
+                rowDate.isAfter(selectedEndDate, "day")) {
+                return false;
+            }
+
+            if ((selectedStartDate || selectedEndDate) && !rowDate) {
+                return false;
+            }
 
             return true;
         });
 
-        $("#attendanceExportExcel").on("click", function (e) {
-            e.preventDefault();
+        $("#payslipSearch").on("keyup", function () {
+            payslipTable.search(this.value).draw();
+        });
 
-            var headers = [];
-            $(tableElement).find("thead th").each(function () {
-                headers.push($(this).text().trim());
+        $(".payslip-salary-option").on("click", function () {
+            selectedSalaryRange = $(this).data("range");
+            $("#payslipSalaryButton").text($(this).text());
+            payslipTable.draw();
+        });
+
+        $(".payslip-month-option").on("click", function () {
+            selectedMonth = $(this).data("month");
+            $("#payslipMonthButton").text($(this).text());
+            payslipTable.draw();
+        });
+
+        $(".payslip-sort-option").on("click", function () {
+
+            var sort = $(this).data("sort");
+            $("#payslipSortButton").text("Sort By : " + $(this).text());
+
+            if (sort === "salary-asc") {
+                payslipTable.order([[4, "asc"]]).draw();
+            } else if (sort === "salary-desc") {
+                payslipTable.order([[4, "desc"]]).draw();
+            } else if (sort === "name-asc") {
+                payslipTable.order([[1, "asc"]]).draw();
+            } else if (sort === "name-desc") {
+                payslipTable.order([[1, "desc"]]).draw();
+            } else {
+                payslipTable.order([[10, "desc"]]).draw();
+            }
+        });
+
+        if ($.fn.daterangepicker) {
+            $("#payslipDateRange").daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: "Clear",
+                    format: "DD/MM/YYYY"
+                }
             });
 
-            var html = "<table><tr>" +
-                headers.map(function (h) { return "<th>" + $("<div>").text(h).html() + "</th>"; }).join("") +
-                "</tr>";
+            $("#payslipDateRange").on("apply.daterangepicker", function (ev, picker) {
+                selectedStartDate = picker.startDate.clone().startOf("day");
+                selectedEndDate = picker.endDate.clone().endOf("day");
 
-            table.rows({ search: "applied" }).every(function () {
-                var row = this.data();
-                html += "<tr>" + row.map(function (cell) {
-                    return "<td>" + $("<div>").html(cell).text().trim() + "</td>";
-                }).join("") + "</tr>";
+                $(this).val(
+                    picker.startDate.format("DD/MM/YYYY") +
+                    " - " +
+                    picker.endDate.format("DD/MM/YYYY")
+                );
+
+                payslipTable.draw();
             });
 
-            html += "</table>";
+            $("#payslipDateRange").on("cancel.daterangepicker", function () {
+                selectedStartDate = null;
+                selectedEndDate = null;
+                $(this).val("");
+                payslipTable.draw();
+            });
+        }
 
-            var blob = new Blob(["\ufeff", html], { type: "application/vnd.ms-excel" });
+        // Select all rows
+        $("#select-all").on("change", function () {
+            var checked = this.checked;
+            $("#payslipTable tbody .payslip-row-check").prop("checked", checked);
+        });
+
+        $("#payslipTable tbody").on("change", ".payslip-row-check", function () {
+            var total = $("#payslipTable tbody .payslip-row-check").length;
+            var checked = $("#payslipTable tbody .payslip-row-check:checked").length;
+            $("#select-all").prop("checked", total > 0 && total === checked);
+        });
+
+        // Payroll chart
+        var payslipChart = null;
+
+        function buildChartData(year) {
+
+            var monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+
+            var totals = {};
+            monthNames.forEach(function (month) {
+                totals[month] = 0;
+            });
+
+            $("#payslipTable tbody tr").each(function () {
+
+                var salary = parseFloat($(this).attr("data-salary"));
+                var rowYear = $(this).attr("data-year");
+                var rowMonth = $(this).attr("data-month");
+
+                if (isNaN(salary) || !rowYear || !rowMonth) {
+                    return;
+                }
+
+                if (year !== "all" && String(rowYear) !== String(year)) {
+                    return;
+                }
+
+                var monthIndex = -1;
+                var normalizedMonth = String(rowMonth).trim().toLowerCase();
+
+                var monthLookup = {
+                    january: 0, jan: 0,
+                    february: 1, feb: 1,
+                    march: 2, mar: 2,
+                    april: 3, apr: 3,
+                    may: 4,
+                    june: 5, jun: 5,
+                    july: 6, jul: 6,
+                    august: 7, aug: 7,
+                    september: 8, sep: 8, sept: 8,
+                    october: 9, oct: 9,
+                    november: 10, nov: 10,
+                    december: 11, dec: 11
+                };
+
+                if (Object.prototype.hasOwnProperty.call(monthLookup, normalizedMonth)) {
+                    monthIndex = monthLookup[normalizedMonth];
+                } else {
+                    var numericMonth = parseInt(normalizedMonth, 10);
+                    if (!isNaN(numericMonth) && numericMonth >= 1 && numericMonth <= 12) {
+                        monthIndex = numericMonth - 1;
+                    }
+                }
+
+                if (monthIndex >= 0 && monthIndex < 12) {
+                    totals[monthNames[monthIndex]] += salary;
+                }
+            });
+
+            return {
+                categories: monthNames,
+                values: monthNames.map(function (month) {
+                    return Number(totals[month].toFixed(2));
+                })
+            };
+        }
+
+        function renderPayslipChart(year) {
+
+            var chartData = buildChartData(year);
+
+            var options = {
+                chart: {
+                    type: "area",
+                    height: 280,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                series: [{
+                    name: "Payroll",
+                    data: chartData.values
+                }],
+                xaxis: {
+                    categories: chartData.categories
+                },
+                yaxis: {
+                    labels: {
+                        formatter: function (value) {
+                            return "₹" + Number(value).toLocaleString("en-IN");
+                        }
+                    }
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (value) {
+                            return "₹" + Number(value).toLocaleString("en-IN", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            });
+                        }
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: "smooth",
+                    width: 2
+                },
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        opacityFrom: 0.35,
+                        opacityTo: 0.05
+                    }
+                }
+            };
+
+            if (payslipChart) {
+                payslipChart.destroy();
+            }
+
+            if (document.querySelector("#payslip-chart") &&
+                typeof ApexCharts !== "undefined") {
+
+                payslipChart = new ApexCharts(
+                    document.querySelector("#payslip-chart"),
+                    options
+                );
+
+                payslipChart.render();
+            }
+        }
+
+        $(".payslip-year-option").on("click", function () {
+            selectedChartYear = $(this).data("year");
+            $("#payslipChartYearButton").text($(this).text());
+            renderPayslipChart(selectedChartYear);
+        });
+
+        renderPayslipChart("all");
+
+        // Export as Excel-compatible CSV
+        $("#exportPayslipExcel").on("click", function () {
+
+            var csv = [];
+            var headers = [
+                "Employee",
+                "Department",
+                "Designation",
+                "Total Salary",
+                "Earnings",
+                "Deductions",
+                "Net Pay",
+                "Month",
+                "Year",
+                "Generated On"
+            ];
+
+            csv.push(headers.map(function (value) {
+                return '"' + value.replace(/"/g, '""') + '"';
+            }).join(","));
+
+            payslipTable.rows({ search: "applied" }).every(function () {
+
+                var row = $(this.node());
+
+                if (!row.length) return;
+
+                var values = [
+                    row.find("td").eq(1).text().trim().replace(/\s+/g, " "),
+                    row.find("td").eq(2).text().trim(),
+                    row.find("td").eq(3).text().trim(),
+                    row.find("td").eq(4).text().trim(),
+                    row.find("td").eq(5).text().trim(),
+                    row.find("td").eq(6).text().trim(),
+                    row.find("td").eq(7).text().trim(),
+                    row.find("td").eq(8).text().trim(),
+                    row.find("td").eq(9).text().trim(),
+                    row.find("td").eq(10).text().trim()
+                ];
+
+                csv.push(values.map(function (value) {
+                    return '"' + value.replace(/"/g, '""') + '"';
+                }).join(","));
+            });
+
+            var blob = new Blob(
+                ["\ufeff" + csv.join("\r\n")],
+                { type: "text/csv;charset=utf-8;" }
+            );
+
             var url = URL.createObjectURL(blob);
-            var a = document.createElement("a");
-            a.href = url;
-            a.download = "attendance-report.xls";
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
+            var link = document.createElement("a");
+
+            link.href = url;
+            link.download = "payslip-report.csv";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
             URL.revokeObjectURL(url);
         });
 
-        $("#attendanceExportPdf").on("click", function (e) {
-            e.preventDefault();
-
-            var cloned = $(tableElement).clone();
-            cloned.find("tbody").empty();
-
-            table.rows({ search: "applied" }).every(function () {
-                var row = this.data();
-                cloned.find("tbody").append(
-                    $("<tr>").html(row.map(function (cell) { return "<td>" + cell + "</td>"; }).join(""))
-                );
-            });
-
-            var win = window.open("", "_blank", "width=1200,height=800");
-            if (!win) return;
-
-            win.document.write(
-                "<html><head><title>Attendance Report</title><style>" +
-                "body{font-family:Arial;padding:20px}h2{text-align:center}" +
-                "table{width:100%;border-collapse:collapse;font-size:12px}" +
-                "th,td{border:1px solid #ccc;padding:7px;text-align:left}" +
-                "th{background:#eee}" +
-                "</style></head><body><h2>Attendance Report</h2>" +
-                cloned.prop("outerHTML") + "</body></html>"
-            );
-            win.document.close();
-            win.focus();
-            setTimeout(function () { win.print(); }, 300);
+        // Export as PDF using browser print dialog
+        $("#exportPayslipPdf").on("click", function () {
+            window.print();
         });
 
-        $(document).on("click", ".attendance-year-option", function (e) {
-            e.preventDefault();
-
-            var year = String($(this).data("year"));
-            $(this).closest(".dropdown").find(".dropdown-toggle").text(year);
-
-            // Use the selected year on the table; chart is refreshed from the matching rows.
-            table.column(1).search("^" + year + "-", true, false).draw();
-
-            var present = 0, absent = 0;
-            table.rows({ search: "applied" }).every(function () {
-                var status = $("<div>").html((this.data()[3] || "")).text().trim();
-                if (status === "Present") present++;
-                if (status === "Absent") absent++;
-            });
-
-            if (window.attendanceChartInstance) {
-                window.attendanceChartInstance.updateSeries([present, absent]);
-            }
-        });
     });
 </script>
+
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    /* Keep sidebar submenu interactions working on the Payslip Report page. */
+    document.addEventListener('DOMContentLoaded', function () {
+        var sidebar = document.getElementById('sidebar');
+        if (!sidebar) return;
 
-        var attendanceChartElement = document.querySelector("#attendance-report");
+        sidebar.querySelectorAll('.sidebar-menu li.submenu > a').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                var parent = link.parentElement;
+                if (!parent) return;
+                var submenu = parent.querySelector(':scope > ul');
+                if (!submenu) return;
 
-        if (!attendanceChartElement || typeof ApexCharts === "undefined") {
-            return;
-        }
-
-        var presentCount = Number("${presentCount}") || 0;
-        var absentCount = Number("${absentCount}") || 0;
-
-        var options = {
-            series: [
-                presentCount,
-                absentCount
-            ],
-            chart: {
-                type: "donut",
-                height: 300
-            },
-            labels: [
-                "Present",
-                "Absent"
-            ],
-            legend: {
-                position: "bottom"
-            },
-            dataLabels: {
-                enabled: true
-            },
-            responsive: [{
-                breakpoint: 576,
-                options: {
-                    chart: {
-                        height: 260
-                    }
-                }
-            }]
-        };
-
-        attendanceChartElement.innerHTML = "";
-        window.attendanceChartInstance = new ApexCharts(attendanceChartElement, options);
-        window.attendanceChartInstance.render();
+                e.preventDefault();
+                var wasActive = parent.classList.contains('active');
+                parent.classList.toggle('active', !wasActive);
+            });
+        });
     });
 </script>
-
 </body>
 
 </html>

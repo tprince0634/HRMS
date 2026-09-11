@@ -563,20 +563,38 @@
 
                     <ul>
 
+<<<<<<< HEAD
+                        <!-- ADD EVENT -->
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/events?action=add">
+=======
                         <li>
                             <a href="javascript:void(0);">
+>>>>>>> 1b752f30964ad6578c4233c2bf3ff167e25f6a04
                                 <span>Add Event</span>
                             </a>
                         </li>
 
+<<<<<<< HEAD
+                        <!-- ADD MASTER EVENT -->
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/event-types">
+=======
                         <li>
                             <a href="javascript:void(0);">
+>>>>>>> 1b752f30964ad6578c4233c2bf3ff167e25f6a04
                                 <span>Add Master Event</span>
                             </a>
                         </li>
 
+<<<<<<< HEAD
+                        <!-- EVENT LIST -->
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/events?action=list">
+=======
                         <li>
                             <a href="javascript:void(0);">
+>>>>>>> 1b752f30964ad6578c4233c2bf3ff167e25f6a04
                                 <span>Event List</span>
                             </a>
                         </li>
@@ -808,28 +826,31 @@
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/admin/leave-report">
                                 <span>Leave Report</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/admin/payslip-report">
+                                <i class="ti ti-file-invoice"></i>
                                 <span>Payslip Report</span>
                             </a>
                         </li>
 
+
                         <li>
-                            <a href="javascript:void(0);">
-                                <span>Task Report</span>
+                            <a href="${pageContext.request.contextPath}/admin/project-report">
+                                <span>Project Report</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
-                                <span>Daily Report</span>
+                            <a href="${pageContext.request.contextPath}/admin/task-report">
+                                <span>Task Report</span>
                             </a>
                         </li>
+
 
                     </ul>
 
@@ -2958,6 +2979,10 @@
 </script>
 
 </body>
+<<<<<<< HEAD
+</html>
+=======
 </html>
 
 ```
+>>>>>>> 1b752f30964ad6578c4233c2bf3ff167e25f6a04

@@ -17,4 +17,6 @@ public interface ReportDao {
     List<ProjectReport> getAllProjects();
 
     List<TaskReport> getAllTasks();
+
+
 }
