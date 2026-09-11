@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,46 +50,229 @@
 
 
     <style>
+        /* =========================
+           HRMS SIDEBAR / DASHBOARD FIX
+           ========================= */
+
         .sidebar {
             height: 100vh !important;
             overflow-y: auto !important;
             overflow-x: hidden !important;
-        }
-
-        .sidebar-menu {
-            height: auto !important;
-            overflow: visible !important;
+            scrollbar-width: thin;
+            scrollbar-color: #cfd4dc transparent;
         }
 
         .sidebar::-webkit-scrollbar {
             width: 5px;
         }
 
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
         .sidebar::-webkit-scrollbar-thumb {
-            background: #ccc;
+            background: #cfd4dc;
             border-radius: 10px;
         }
 
-        /* HRMS SIDEBAR SUBMENU FIX */
+        .sidebar-menu {
+            height: auto !important;
+            overflow: visible !important;
+            padding-bottom: 20px;
+        }
+
+        /* Remove browser default bullets/indentation */
+        .sidebar-menu ul {
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .sidebar-menu li {
+            list-style: none !important;
+        }
+
+        /* Main menu links */
+        .sidebar-menu > ul > li > a {
+            display: flex;
+            align-items: center;
+            min-height: 44px;
+            margin: 2px 8px;
+            border-radius: 6px;
+            transition: all .2s ease;
+        }
+
+        .sidebar-menu > ul > li > a:hover {
+            background: #f3f6fb;
+        }
+
+        .sidebar-menu > ul > li.active > a {
+            background: #fff4ec;
+            color: #f97316;
+        }
+
+        .sidebar-menu > ul > li.active > a i {
+            color: #f97316;
+        }
+
+        /* All submenu levels stay hidden until their parent is active */
         .sidebar-menu li.submenu > ul {
             display: none !important;
+            width: 100%;
+            background: transparent;
         }
 
         .sidebar-menu li.submenu.active > ul {
             display: block !important;
         }
 
+        .sidebar-menu li.submenu > a {
+            cursor: pointer;
+        }
+
         .sidebar-menu li.submenu > a .menu-arrow {
-            transition: transform 0.2s ease;
+            margin-left: auto;
+            transition: transform .2s ease;
         }
 
         .sidebar-menu li.submenu.active > a .menu-arrow {
             transform: rotate(90deg);
         }
 
+        /* First-level submenu items */
         .sidebar-menu li.submenu > ul > li > a {
             display: flex;
             align-items: center;
+            min-height: 38px;
+            margin: 1px 8px;
+            padding: 7px 15px 7px 48px !important;
+            border-radius: 5px;
+            font-size: 13px;
+            transition: all .2s ease;
+        }
+
+        .sidebar-menu li.submenu > ul > li > a:hover {
+            background: #f6f8fb;
+            color: #0d6efd;
+        }
+
+        /* Nested submenu */
+        .sidebar-menu li.submenu > ul > li.submenu > a {
+            padding-left: 48px !important;
+        }
+
+        .sidebar-menu li.submenu > ul > li.submenu > ul > li > a {
+            padding-left: 68px !important;
+            font-size: 12.5px;
+        }
+
+        /* Menu title */
+        .sidebar-menu .menu-title {
+            padding: 18px 20px 8px !important;
+        }
+
+        .sidebar-menu .menu-title span {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .7px;
+            color: #98a2b3;
+        }
+
+        /* HR action links */
+        .sidebar-menu > ul > li > a[href*="/promotion"] i {
+            color: #7c3aed;
+        }
+
+        .sidebar-menu > ul > li > a[href*="/resignation"] i {
+            color: #f97316;
+        }
+
+        .sidebar-menu > ul > li > a[href*="/termination"] i {
+            color: #ef4444;
+        }
+
+        .sidebar-menu > ul > li > a[href*="/promotion"]:hover {
+            background: #f4efff;
+        }
+
+        .sidebar-menu > ul > li > a[href*="/resignation"]:hover {
+            background: #fff5eb;
+        }
+
+        .sidebar-menu > ul > li > a[href*="/termination"]:hover {
+            background: #fff0f0;
+        }
+
+        /* Profile */
+        .modern-profile .user-profile {
+            border: 1px solid #edf0f5;
+            box-shadow: 0 3px 12px rgba(16, 24, 40, .04);
+        }
+
+        .modern-profile .avatar-lg img {
+            object-fit: cover;
+        }
+
+        /* Dashboard */
+        .page-wrapper {
+            background: #f7f8fa;
+        }
+
+        .page-wrapper .content {
+            min-height: calc(100vh - 70px);
+        }
+
+        .page-wrapper .card {
+            border: 1px solid #edf0f5;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(16, 24, 40, .025);
+        }
+
+        .page-wrapper .card-header {
+            background: transparent;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .page-wrapper .table > :not(caption) > * > * {
+            vertical-align: middle;
+        }
+
+        #emp-department {
+            min-height: 260px;
+        }
+
+        .attendance-canvas {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .emp-stack {
+            height: 8px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .emp-stack .progress {
+            height: 8px;
+        }
+
+        @media (max-width: 991px) {
+            .sidebar {
+                height: 100vh !important;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .page-wrapper .card {
+                border-radius: 8px;
+            }
+
+            .sidebar-menu > ul > li > a {
+                margin-left: 5px;
+                margin-right: 5px;
+            }
         }
     </style>
 </head>
