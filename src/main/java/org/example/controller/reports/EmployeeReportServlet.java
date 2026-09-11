@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.example.dao.DesignationDAOImpl;
+import org.example.model.Designation;
 import org.example.model.EmployeeReport;
 import org.example.service.ReportService;
 
@@ -16,10 +18,12 @@ import java.util.List;
 public class EmployeeReportServlet extends HttpServlet {
 
     private ReportService reportService;
+    private DesignationDAOImpl designationDAO;
 
     @Override
     public void init() {
         reportService = new ReportService();
+        designationDAO = new DesignationDAOImpl();
     }
 
     @Override
@@ -33,8 +37,15 @@ public class EmployeeReportServlet extends HttpServlet {
             List<EmployeeReport> employees =
                     reportService.getAllEmployees();
 
+            // Fetch ALL designations from Designation master table
+            List<Designation> designations =
+                    designationDAO.getAllDesignations();
+
             // Send employee list to JSP
             request.setAttribute("employees", employees);
+
+            // Send designation master list to JSP
+            request.setAttribute("designations", designations);
 
             // Total employees
             int totalEmployees = employees.size();

@@ -123,11 +123,7 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="${pageContext.request.contextPath}/admin/daily-report">
-                            <span>Daily Report</span>
-                        </a>
-                    </li>
+
                 </ul>
             </li>
         </ul>

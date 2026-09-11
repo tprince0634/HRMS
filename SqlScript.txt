@@ -5,6 +5,7 @@ CREATE PROCEDURE sp_login_user(
     IN p_email VARCHAR(255),
     IN p_password VARCHAR(255)
 )
+
 BEGIN
     SELECT
         u.UserId,
@@ -468,202 +469,1114 @@ DELIMITER ;
 SHOW PROCEDURE STATUS
 WHERE Db = 'pulse360_finaldb';
 
+-- ===============================================================================================================
+--  Training and File upload procedures
+-- ===============================================================================================================
+
+DELIMITER $$
+
+-- 1. Upload a single file
+CREATE PROCEDURE upload_file(
+    IN p_fileName LONGTEXT,
+    IN p_filePath LONGTEXT,
+    IN p_userId INT
+)
+BEGIN
+    INSERT INTO FileUploads (FileName, FilePath, UserId)
+    VALUES (p_fileName, p_filePath, p_userId);
+
+    SELECT
+        id,
+        FileName,
+        FilePath,
+        UserId
+    FROM FileUploads
+    WHERE id = LAST_INSERT_ID();
+END $$
 
 
-<----------------PayslipMpodule-------------->
+-- 2. Find file by ID
+CREATE PROCEDURE find_file_by_id(
+    IN p_id INT
+)
+BEGIN
+    SELECT
+        id,
+        FileName,
+        FilePath,
+        UserId
+    FROM FileUploads
+    WHERE id = p_id;
+END $$
 
 
-DELIMITER //
+-- 3. Find all files uploaded by a user
+CREATE PROCEDURE find_files_by_user_id(
+    IN p_userId INT
+)
+BEGIN
+    SELECT
+        id,
+        FileName,
+        FilePath,
+        UserId
+    FROM FileUploads
+    WHERE UserId = p_userId
+    ORDER BY id DESC;
+END $$
 
-CREATE PROCEDURE get_all_payslips()
+
+-- 4. Get all uploaded files
+CREATE PROCEDURE get_all_file_uploads()
+BEGIN
+    SELECT
+        id,
+        FileName,
+        FilePath,
+        UserId
+    FROM FileUploads
+    ORDER BY id DESC;
+END $$
+
+
+-- 5. Delete file by ID
+CREATE PROCEDURE delete_file_by_id(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM FileUploads
+    WHERE id = p_id;
+END $$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+-- =========================================================
+-- 1. ADD TRAINER
+-- =========================================================
+
+CREATE PROCEDURE add_trainer(
+    IN p_firstName LONGTEXT,
+    IN p_lastName LONGTEXT,
+    IN p_role LONGTEXT,
+    IN p_email LONGTEXT,
+    IN p_description LONGTEXT,
+    IN p_status LONGTEXT,
+    IN p_phone BIGINT,
+    IN p_profilePicture LONGTEXT
+)
+BEGIN
+
+    INSERT INTO Trainer
+    (
+        FirstName,
+        LastName,
+        Role,
+        Email,
+        Description,
+        Status,
+        Phone,
+        ProfilePicture
+    )
+    VALUES
+    (
+        p_firstName,
+        p_lastName,
+        p_role,
+        p_email,
+        p_description,
+        p_status,
+        p_phone,
+        p_profilePicture
+    );
+
+    SELECT
+        TrainerId,
+        FirstName,
+        LastName,
+        Role,
+        Email,
+        Description,
+        Status,
+        Phone,
+        ProfilePicture
+    FROM Trainer
+    WHERE TrainerId = LAST_INSERT_ID();
+
+END $$
+
+
+-- =========================================================
+-- 2. UPDATE TRAINER
+-- =========================================================
+
+CREATE PROCEDURE update_trainer(
+    IN p_trainerId INT,
+    IN p_firstName LONGTEXT,
+    IN p_lastName LONGTEXT,
+    IN p_role LONGTEXT,
+    IN p_email LONGTEXT,
+    IN p_description LONGTEXT,
+    IN p_status LONGTEXT,
+    IN p_phone BIGINT,
+    IN p_profilePicture LONGTEXT
+)
+BEGIN
+
+    UPDATE Trainer
+    SET
+        FirstName = p_firstName,
+        LastName = p_lastName,
+        Role = p_role,
+        Email = p_email,
+        Description = p_description,
+        Status = p_status,
+        Phone = p_phone,
+        ProfilePicture = p_profilePicture
+    WHERE TrainerId = p_trainerId;
+
+    SELECT
+        TrainerId,
+        FirstName,
+        LastName,
+        Role,
+        Email,
+        Description,
+        Status,
+        Phone,
+        ProfilePicture
+    FROM Trainer
+    WHERE TrainerId = p_trainerId;
+
+END $$
+
+
+-- =========================================================
+-- 3. GET TRAINER BY ID
+-- =========================================================
+
+CREATE PROCEDURE get_trainer_by_id(
+    IN p_trainerId INT
+)
 BEGIN
 
     SELECT
-        p.PayslipId,
-        p.UserId AS EmployeeId,
+        TrainerId,
+        FirstName,
+        LastName,
+        Role,
+        Email,
+        Description,
+        Status,
+        Phone,
+        ProfilePicture
+    FROM Trainer
+    WHERE TrainerId = p_trainerId;
 
-        CONCAT(
-            COALESCE(u.FirstName, ''),
-            ' ',
-            COALESCE(u.LastName, '')
-        ) AS EmployeeName,
+END $$
 
-        d.Name AS Department,
-        des.Name AS Designation,
 
-        p.Month,
-        p.Year,
+-- =========================================================
+-- 4. GET ALL TRAINERS
+-- =========================================================
 
-        COALESCE(es.TotalSalary, 0) AS TotalSalary,
-        COALESCE(e.TotalEarnings, 0) AS Earnings,
-        COALESCE(ed.TotalDeductions, 0) AS Deductions,
-        COALESCE(es.NetSalary, 0) AS NetPay,
+CREATE PROCEDURE get_all_trainers()
+BEGIN
 
-        p.PayslipPath,
-        p.GeneratedOn
+    SELECT
+        TrainerId,
+        FirstName,
+        LastName,
+        Role,
+        Email,
+        Description,
+        Status,
+        Phone,
+        ProfilePicture
+    FROM Trainer
+    ORDER BY TrainerId DESC;
 
-    FROM payslips p
+END $$
 
-    LEFT JOIN `User` u
-        ON p.UserId = u.UserId
 
-    LEFT JOIN Departments d
-        ON u.DepartmentId = d.DepartmentId
+-- =========================================================
+-- 5. GET TRAINERS BY PAGE
+-- =========================================================
 
-    LEFT JOIN Designations des
-        ON u.DesignationtId = des.DesignationId
+CREATE PROCEDURE get_trainers_by_page(
+    IN p_pageNo INT,
+    IN p_pageSize INT,
+    IN p_sortDirection VARCHAR(10)
+)
+BEGIN
 
-    LEFT JOIN employeesalaries es
-        ON es.SalaryId = (
-            SELECT es2.SalaryId
-            FROM employeesalaries es2
-            WHERE es2.UserId = p.UserId
-            ORDER BY es2.SalaryId DESC
-            LIMIT 1
+    DECLARE v_offset INT;
+
+    SET v_offset = (p_pageNo - 1) * p_pageSize;
+
+    IF UPPER(p_sortDirection) = 'DESC' THEN
+
+        SELECT
+            TrainerId,
+            FirstName,
+            LastName,
+            Role,
+            Email,
+            Description,
+            Status,
+            Phone,
+            ProfilePicture
+        FROM Trainer
+        ORDER BY TrainerId DESC
+        LIMIT v_offset, p_pageSize;
+
+    ELSE
+
+        SELECT
+            TrainerId,
+            FirstName,
+            LastName,
+            Role,
+            Email,
+            Description,
+            Status,
+            Phone,
+            ProfilePicture
+        FROM Trainer
+        ORDER BY TrainerId ASC
+        LIMIT v_offset, p_pageSize;
+
+    END IF;
+
+END $$
+
+
+-- =========================================================
+-- 6. SEARCH TRAINER BY NAME OR EMAIL
+-- =========================================================
+
+CREATE PROCEDURE search_trainer_by_name_or_email(
+    IN p_name VARCHAR(255),
+    IN p_email VARCHAR(255)
+)
+BEGIN
+
+    SELECT
+        TrainerId,
+        FirstName,
+        LastName,
+        Role,
+        Email,
+        Description,
+        Status,
+        Phone,
+        ProfilePicture
+    FROM Trainer
+    WHERE
+        (
+            p_name IS NOT NULL
+            AND p_name <> ''
+            AND (
+                FirstName LIKE CONCAT('%', p_name, '%')
+                OR LastName LIKE CONCAT('%', p_name, '%')
+            )
         )
+        OR
+        (
+            p_email IS NOT NULL
+            AND p_email <> ''
+            AND Email LIKE CONCAT('%', p_email, '%')
+        )
+    ORDER BY TrainerId DESC;
 
-    LEFT JOIN (
-        SELECT
-            ee.SalaryId,
-            SUM(ee.EarningAmount) AS TotalEarnings
-        FROM employeeearnings ee
-        GROUP BY ee.SalaryId
-    ) e
-        ON e.SalaryId = es.SalaryId
+END $$
 
-    LEFT JOIN (
-        SELECT
-            ed.SalaryId,
-            SUM(ed.DeductionAmount) AS TotalDeductions
-        FROM employeedeductions ed
-        GROUP BY ed.SalaryId
-    ) ed
-        ON ed.SalaryId = es.SalaryId
 
-    ORDER BY p.Year DESC, p.Month DESC, p.PayslipId DESC;
+-- =========================================================
+-- 7. DELETE TRAINER BY ID
+-- =========================================================
 
-END //
+CREATE PROCEDURE delete_trainer_by_id(
+    IN p_trainerId INT
+)
+BEGIN
+
+    DELETE FROM Trainer
+    WHERE TrainerId = p_trainerId;
+
+END $$
+
 
 DELIMITER ;
 
 
-<-------------Project Report--------------->
 
 
 
-DELIMITER //
+DELIMITER $$
 
-CREATE PROCEDURE get_all_projects()
+-- =========================================================
+-- 1. CREATE TRAINING
+-- DAO: createTraining(Training training)
+-- =========================================================
+
+CREATE PROCEDURE create_training(
+    IN p_trainerId INT,
+    IN p_trainingTypeId INT,
+    IN p_userId INT,
+    IN p_trainingCost DECIMAL(18,2),
+    IN p_description LONGTEXT,
+    IN p_status LONGTEXT,
+    IN p_startDate DATETIME,
+    IN p_endDate DATETIME,
+    IN p_createdAt DATETIME,
+    IN p_createdBy VARCHAR(255)
+)
+BEGIN
+
+    INSERT INTO Training
+    (
+        TrainerId,
+        TrainingTypeId,
+        UserId,
+        TrainingCost,
+        Description,
+        Status,
+        StartDate,
+        EndDate,
+        CreatedAt,
+        CreatedBy
+    )
+    VALUES
+    (
+        p_trainerId,
+        p_trainingTypeId,
+        p_userId,
+        p_trainingCost,
+        p_description,
+        p_status,
+        p_startDate,
+        p_endDate,
+        p_createdAt,
+        p_createdBy
+    );
+
+    SELECT
+        TrainingId,
+        TrainerId,
+        TrainingTypeId,
+        UserId,
+        TrainingCost,
+        Description,
+        Status,
+        StartDate,
+        EndDate,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+    FROM Training
+    WHERE TrainingId = LAST_INSERT_ID();
+
+END $$
+
+
+-- =========================================================
+-- 2. GET ALL TRAININGS
+-- DAO: getAllTrainings()
+-- =========================================================
+
+CREATE PROCEDURE get_all_trainings()
 BEGIN
 
     SELECT
-        p.ProjectId,
-        p.ProjectName,
-        p.ClientName,
-        p.Description,
-        p.StartDate,
-        p.EndDate,
-        p.Priority,
-        p.ProjectValue,
-        p.PriceType,
-        p.FilePath,
-        p.LogoPath,
-        p.Status,
-        p.ManagerName,
+        TrainingId,
+        TrainerId,
+        TrainingTypeId,
+        UserId,
+        TrainingCost,
+        Description,
+        Status,
+        StartDate,
+        EndDate,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+    FROM Training
+    ORDER BY TrainingId DESC;
 
-        COUNT(t.ProjectId) AS TotalTasks,
-
-        SUM(
-            CASE
-                WHEN t.Status = 'Completed'
-                THEN 1
-                ELSE 0
-            END
-        ) AS CompletedTasks,
-
-        SUM(
-            CASE
-                WHEN t.Status = 'Pending'
-                THEN 1
-                ELSE 0
-            END
-        ) AS PendingTasks,
-
-        SUM(
-            CASE
-                WHEN t.Status = 'Inprogress'
-                THEN 1
-                ELSE 0
-            END
-        ) AS InProgressTasks,
-
-        SUM(
-            CASE
-                WHEN t.Status = 'Onhold'
-                THEN 1
-                ELSE 0
-            END
-        ) AS OnHoldTasks,
-
-        SUM(
-            CASE
-                WHEN t.Deadline < NOW()
-                     AND t.Status <> 'Completed'
-                THEN 1
-                ELSE 0
-            END
-        ) AS OverdueTasks
-
-    FROM allprojects p
-
-    LEFT JOIN task t
-        ON t.ProjectId = p.ProjectId
-
-    GROUP BY
-        p.ProjectId,
-        p.ProjectName,
-        p.ClientName,
-        p.Description,
-        p.StartDate,
-        p.EndDate,
-        p.Priority,
-        p.ProjectValue,
-        p.PriceType,
-        p.FilePath,
-        p.LogoPath,
-        p.Status,
-        p.ManagerName
-
-    ORDER BY p.ProjectId DESC;
-
-END //
-
-DELIMITER ;
+END $$
 
 
-<----------------Task Report-------------------->
+-- =========================================================
+-- 3. FIND TRAINING BY ID
+-- DAO: findTrainingById(int id)
+-- =========================================================
 
-
-DROP PROCEDURE IF EXISTS get_all_tasks;
-
-DELIMITER //
-
-CREATE PROCEDURE get_all_tasks()
+CREATE PROCEDURE find_training_by_id(
+    IN p_trainingId INT
+)
 BEGIN
+
     SELECT
-        t.TaskId,
-        t.ProjectId,
-        t.Title,
-        t.Description,
-        t.Status,
-        t.Priority,
-        t.FilePath,
-        t.Deadline,
-        p.ProjectName
-    FROM task t
-    LEFT JOIN allprojects p
-        ON t.ProjectId = p.ProjectId
-    ORDER BY t.Deadline DESC, t.TaskId DESC;
-END //
+        TrainingId,
+        TrainerId,
+        TrainingTypeId,
+        UserId,
+        TrainingCost,
+        Description,
+        Status,
+        StartDate,
+        EndDate,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+    FROM Training
+    WHERE TrainingId = p_trainingId;
+
+END $$
+
+
+-- =========================================================
+-- 4. UPDATE TRAINING
+-- DAO: updateTraining(int id, Training training)
+-- =========================================================
+
+CREATE PROCEDURE update_training(
+    IN p_trainingId INT,
+    IN p_trainerId INT,
+    IN p_trainingTypeId INT,
+    IN p_userId INT,
+    IN p_trainingCost DECIMAL(18,2),
+    IN p_description LONGTEXT,
+    IN p_status LONGTEXT,
+    IN p_startDate DATETIME,
+    IN p_endDate DATETIME,
+    IN p_modifiedBy VARCHAR(255),
+    IN p_modifiedAt DATETIME
+)
+BEGIN
+
+    UPDATE Training
+    SET
+        TrainerId = p_trainerId,
+        TrainingTypeId = p_trainingTypeId,
+        UserId = p_userId,
+        TrainingCost = p_trainingCost,
+        Description = p_description,
+        Status = p_status,
+        StartDate = p_startDate,
+        EndDate = p_endDate,
+        ModifiedBy = p_modifiedBy,
+        ModifiedAt = p_modifiedAt
+    WHERE TrainingId = p_trainingId;
+
+    SELECT
+        TrainingId,
+        TrainerId,
+        TrainingTypeId,
+        UserId,
+        TrainingCost,
+        Description,
+        Status,
+        StartDate,
+        EndDate,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+    FROM Training
+    WHERE TrainingId = p_trainingId;
+
+END $$
+
+
+-- =========================================================
+-- 5. DELETE TRAINING BY ID
+-- DAO: deleteTrainingById(int id)
+-- =========================================================
+
+CREATE PROCEDURE delete_training_by_id(
+    IN p_trainingId INT
+)
+BEGIN
+
+    DELETE FROM Training
+    WHERE TrainingId = p_trainingId;
+
+END $$
+
+
+-- =========================================================
+-- 6. FIND TRAININGS BY TRAINER ID
+-- DAO: findByTrainerId(int trainerId)
+-- =========================================================
+
+CREATE PROCEDURE find_trainings_by_trainer_id(
+    IN p_trainerId INT
+)
+BEGIN
+
+    SELECT
+        TrainingId,
+        TrainerId,
+        TrainingTypeId,
+        UserId,
+        TrainingCost,
+        Description,
+        Status,
+        StartDate,
+        EndDate,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+    FROM Training
+    WHERE TrainerId = p_trainerId
+    ORDER BY TrainingId DESC;
+
+END $$
+
+
+-- =========================================================
+-- 7. GET TRAININGS BY USER ID
+-- DAO: getTrainingsByUserId(int userId)
+-- =========================================================
+
+CREATE PROCEDURE get_trainings_by_user_id(
+    IN p_userId INT
+)
+BEGIN
+
+    SELECT
+        TrainingId,
+        TrainerId,
+        TrainingTypeId,
+        UserId,
+        TrainingCost,
+        Description,
+        Status,
+        StartDate,
+        EndDate,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+    FROM Training
+    WHERE UserId = p_userId
+    ORDER BY TrainingId DESC;
+
+END $$
+
+
+-- =========================================================
+-- 8. GET TRAININGS BY PAGE
+-- DAO: getTrainingsByPage(int page, int pageSize, String sortDirection)
+-- =========================================================
+
+CREATE PROCEDURE get_trainings_by_page(
+    IN p_page INT,
+    IN p_pageSize INT,
+    IN p_sortDirection VARCHAR(10)
+)
+BEGIN
+
+    DECLARE v_offset INT;
+
+    SET v_offset = (p_page - 1) * p_pageSize;
+
+    IF UPPER(p_sortDirection) = 'DESC' THEN
+
+        SELECT
+            TrainingId,
+            TrainerId,
+            TrainingTypeId,
+            UserId,
+            TrainingCost,
+            Description,
+            Status,
+            StartDate,
+            EndDate,
+            CreatedAt,
+            CreatedBy,
+            ModifiedBy,
+            ModifiedAt
+        FROM Training
+        ORDER BY TrainingId DESC
+        LIMIT v_offset, p_pageSize;
+
+    ELSE
+
+        SELECT
+            TrainingId,
+            TrainerId,
+            TrainingTypeId,
+            UserId,
+            TrainingCost,
+            Description,
+            Status,
+            StartDate,
+            EndDate,
+            CreatedAt,
+            CreatedBy,
+            ModifiedBy,
+            ModifiedAt
+        FROM Training
+        ORDER BY TrainingId ASC
+        LIMIT v_offset, p_pageSize;
+
+    END IF;
+
+END $$
+
+
+-- =========================================================
+-- 9. GET TRAININGS BY TIME PERIOD
+-- DAO: getTrainingsByTime(int page, int pageSize, String period)
+--
+-- Supported periods:
+-- TODAY
+-- LAST_7_DAYS
+-- LAST_MONTH
+-- =========================================================
+
+CREATE PROCEDURE get_trainings_by_time(
+    IN p_page INT,
+    IN p_pageSize INT,
+    IN p_period VARCHAR(50)
+)
+BEGIN
+
+    DECLARE v_offset INT;
+
+    SET v_offset = (p_page - 1) * p_pageSize;
+
+    IF UPPER(p_period) = 'TODAY' THEN
+
+        SELECT
+            TrainingId,
+            TrainerId,
+            TrainingTypeId,
+            UserId,
+            TrainingCost,
+            Description,
+            Status,
+            StartDate,
+            EndDate,
+            CreatedAt,
+            CreatedBy,
+            ModifiedBy,
+            ModifiedAt
+        FROM Training
+        WHERE StartDate >= CURDATE()
+          AND StartDate < CURDATE() + INTERVAL 1 DAY
+        ORDER BY StartDate DESC
+        LIMIT v_offset, p_pageSize;
+
+
+    ELSEIF UPPER(p_period) = 'LAST_7_DAYS' THEN
+
+        SELECT
+            TrainingId,
+            TrainerId,
+            TrainingTypeId,
+            UserId,
+            TrainingCost,
+            Description,
+            Status,
+            StartDate,
+            EndDate,
+            CreatedAt,
+            CreatedBy,
+            ModifiedBy,
+            ModifiedAt
+        FROM Training
+        WHERE StartDate >= NOW() - INTERVAL 7 DAY
+          AND StartDate <= NOW()
+        ORDER BY StartDate DESC
+        LIMIT v_offset, p_pageSize;
+
+
+    ELSEIF UPPER(p_period) = 'LAST_MONTH' THEN
+
+        SELECT
+            TrainingId,
+            TrainerId,
+            TrainingTypeId,
+            UserId,
+            TrainingCost,
+            Description,
+            Status,
+            StartDate,
+            EndDate,
+            CreatedAt,
+            CreatedBy,
+            ModifiedBy,
+            ModifiedAt
+        FROM Training
+        WHERE StartDate >= NOW() - INTERVAL 1 MONTH
+          AND StartDate <= NOW()
+        ORDER BY StartDate DESC
+        LIMIT v_offset, p_pageSize;
+
+    ELSE
+
+        SELECT
+            TrainingId,
+            TrainerId,
+            TrainingTypeId,
+            UserId,
+            TrainingCost,
+            Description,
+            Status,
+            StartDate,
+            EndDate,
+            CreatedAt,
+            CreatedBy,
+            ModifiedBy,
+            ModifiedAt
+        FROM Training
+        ORDER BY StartDate DESC
+        LIMIT v_offset, p_pageSize;
+
+    END IF;
+
+END $$
+
+
+-- =========================================================
+-- 10. CHANGE TRAINING STATUS
+-- DAO: changeTrainingStatus(int id, String status)
+-- =========================================================
+
+CREATE PROCEDURE change_training_status(
+    IN p_trainingId INT,
+    IN p_status VARCHAR(50)
+)
+BEGIN
+
+    UPDATE Training
+    SET
+        Status = p_status,
+        ModifiedAt = NOW()
+    WHERE TrainingId = p_trainingId;
+
+    SELECT
+        TrainingId,
+        TrainerId,
+        TrainingTypeId,
+        UserId,
+        TrainingCost,
+        Description,
+        Status,
+        StartDate,
+        EndDate,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+    FROM Training
+    WHERE TrainingId = p_trainingId;
+
+END $$
+
 
 DELIMITER ;
+
+
+DELIMITER $$
+
+
+-- =========================================================
+-- 1. ADD TRAINING TYPE
+-- DAO: addTrainingType(TrainingType trainingType)
+-- =========================================================
+
+CREATE PROCEDURE add_training_type(
+    IN p_trainingTypeName LONGTEXT,
+    IN p_description LONGTEXT,
+    IN p_status LONGTEXT
+)
+BEGIN
+
+    INSERT INTO TrainingType
+    (
+        TrainingTypeName,
+        Description,
+        Status
+    )
+    VALUES
+    (
+        p_trainingTypeName,
+        p_description,
+        p_status
+    );
+
+    SELECT
+        TrainingTypeId,
+        TrainingTypeName,
+        Description,
+        Status
+    FROM TrainingType
+    WHERE TrainingTypeId = LAST_INSERT_ID();
+
+END $$
+
+
+-- =========================================================
+-- 2. UPDATE TRAINING TYPE
+-- DAO: updateTrainingType(int id, TrainingType trainingType)
+-- =========================================================
+
+CREATE PROCEDURE update_training_type(
+    IN p_trainingTypeId INT,
+    IN p_trainingTypeName LONGTEXT,
+    IN p_description LONGTEXT,
+    IN p_status LONGTEXT
+)
+BEGIN
+
+    UPDATE TrainingType
+    SET
+        TrainingTypeName = p_trainingTypeName,
+        Description = p_description,
+        Status = p_status
+    WHERE TrainingTypeId = p_trainingTypeId;
+
+    SELECT
+        TrainingTypeId,
+        TrainingTypeName,
+        Description,
+        Status
+    FROM TrainingType
+    WHERE TrainingTypeId = p_trainingTypeId;
+
+END $$
+
+
+-- =========================================================
+-- 3. FIND TRAINING TYPE BY ID
+-- DAO: findTrainingTypeById(int id)
+-- =========================================================
+
+CREATE PROCEDURE find_training_type_by_id(
+    IN p_trainingTypeId INT
+)
+BEGIN
+
+    SELECT
+        TrainingTypeId,
+        TrainingTypeName,
+        Description,
+        Status
+    FROM TrainingType
+    WHERE TrainingTypeId = p_trainingTypeId;
+
+END $$
+
+
+-- =========================================================
+-- 4. GET ALL TRAINING TYPES
+-- DAO: getAllTrainingTypes()
+-- =========================================================
+
+CREATE PROCEDURE get_all_training_types()
+BEGIN
+
+    SELECT
+        TrainingTypeId,
+        TrainingTypeName,
+        Description,
+        Status
+    FROM TrainingType
+    ORDER BY TrainingTypeId DESC;
+
+END $$
+
+
+-- =========================================================
+-- 5. FIND TRAINING TYPE BY NAME
+-- DAO: findTrainingTypeByName(String name)
+-- =========================================================
+
+CREATE PROCEDURE find_training_type_by_name(
+    IN p_trainingTypeName VARCHAR(255)
+)
+BEGIN
+
+    SELECT
+        TrainingTypeId,
+        TrainingTypeName,
+        Description,
+        Status
+    FROM TrainingType
+    WHERE TrainingTypeName = p_trainingTypeName
+    LIMIT 1;
+
+END $$
+
+
+-- =========================================================
+-- 6. GET ALL TRAINING TYPES BY NAME
+-- DAO: getAllTrainingTypesByName(String name)
+-- =========================================================
+
+CREATE PROCEDURE get_all_training_types_by_name(
+    IN p_trainingTypeName VARCHAR(255)
+)
+BEGIN
+
+    SELECT
+        TrainingTypeId,
+        TrainingTypeName,
+        Description,
+        Status
+    FROM TrainingType
+    WHERE TrainingTypeName LIKE CONCAT('%', p_trainingTypeName, '%')
+    ORDER BY TrainingTypeId DESC;
+
+END $$
+
+
+-- =========================================================
+-- 7. GET TRAINING TYPES BY PAGE
+-- DAO: getTrainingTypesByPage(
+--      int page,
+--      int pageSize,
+--      String sortDirection
+-- )
+-- =========================================================
+
+CREATE PROCEDURE get_training_types_by_page(
+    IN p_page INT,
+    IN p_pageSize INT,
+    IN p_sortDirection VARCHAR(10)
+)
+BEGIN
+
+    DECLARE v_offset INT;
+
+    SET v_offset = (p_page - 1) * p_pageSize;
+
+    IF UPPER(p_sortDirection) = 'DESC' THEN
+
+        SELECT
+            TrainingTypeId,
+            TrainingTypeName,
+            Description,
+            Status
+        FROM TrainingType
+        ORDER BY TrainingTypeId DESC
+        LIMIT v_offset, p_pageSize;
+
+    ELSE
+
+        SELECT
+            TrainingTypeId,
+            TrainingTypeName,
+            Description,
+            Status
+        FROM TrainingType
+        ORDER BY TrainingTypeId ASC
+        LIMIT v_offset, p_pageSize;
+
+    END IF;
+
+END $$
+
+
+-- =========================================================
+-- 8. GET TRAINING TYPES BY TIME
+-- DAO: getTrainingTypesByTime(
+--      int page,
+--      int pageSize,
+--      String period
+-- )
+--
+-- NOTE:
+-- TrainingType table does NOT have CreatedAt/ModifiedAt/date
+-- columns.
+--
+-- Therefore, actual time-based filtering is not possible
+-- with the current table structure.
+--
+-- This procedure returns paginated records according to
+-- the requested period parameter, but does NOT filter by
+-- creation time.
+-- =========================================================
+
+CREATE PROCEDURE get_training_types_by_time(
+    IN p_page INT,
+    IN p_pageSize INT,
+    IN p_period VARCHAR(50)
+)
+BEGIN
+
+    DECLARE v_offset INT;
+
+    SET v_offset = (p_page - 1) * p_pageSize;
+
+    SELECT
+        TrainingTypeId,
+        TrainingTypeName,
+        Description,
+        Status
+    FROM TrainingType
+    ORDER BY TrainingTypeId DESC
+    LIMIT v_offset, p_pageSize;
+
+END $$
+
+
+-- =========================================================
+-- 9. CHANGE TRAINING TYPE STATUS
+-- DAO: changeTrainingTypeStatus(int id, String status)
+-- =========================================================
+
+CREATE PROCEDURE change_training_type_status(
+    IN p_trainingTypeId INT,
+    IN p_status VARCHAR(50)
+)
+BEGIN
+
+    UPDATE TrainingType
+    SET
+        Status = p_status
+    WHERE TrainingTypeId = p_trainingTypeId;
+
+    SELECT
+        TrainingTypeId,
+        TrainingTypeName,
+        Description,
+        Status
+    FROM TrainingType
+    WHERE TrainingTypeId = p_trainingTypeId;
+
+END $$
+
+
+-- =========================================================
+-- 10. DELETE TRAINING TYPE BY ID
+-- DAO: deleteTrainingTypeById(int id)
+-- =========================================================
+
+CREATE PROCEDURE delete_training_type_by_id(
+    IN p_trainingTypeId INT
+)
+BEGIN
+
+    DELETE FROM TrainingType
+    WHERE TrainingTypeId = p_trainingTypeId;
+
+END $$
+
+
+DELIMITER ;
+
+--  ====================================================================================================================
+--  ===================================================================================================================

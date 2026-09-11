@@ -831,11 +831,6 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Daily Report</span>
-                            </a>
-                        </li>
 
                     </ul>
 
