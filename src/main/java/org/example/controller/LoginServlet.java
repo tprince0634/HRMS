@@ -42,12 +42,8 @@ public class LoginServlet extends HttpServlet {
 
         // Login failed
         if (user == null) {
-            request.setAttribute(
-                    "errorMessage",
-                    "Invalid email or password!"
-            );
-            request.getRequestDispatcher("/login.jsp")
-                    .forward(request, response);
+            request.setAttribute("errorMessage", "Invalid email or password!");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
 
@@ -76,7 +72,6 @@ public class LoginServlet extends HttpServlet {
         // MANAGER
         // ==========================
         else if ("Manager".equalsIgnoreCase(role)) {
-
             response.sendRedirect(
                     request.getContextPath() +
                             "/Manager/dashboard"

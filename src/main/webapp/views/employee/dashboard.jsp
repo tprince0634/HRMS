@@ -402,7 +402,7 @@
                         </li>
                         <li>
 
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/documentList">
 
                                 <span>My Documents</span>
 
@@ -411,7 +411,7 @@
                         </li>
                         <li>
 
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/uploadFile">
 
                                 <span>Upload Documents</span>
 
