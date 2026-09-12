@@ -9,12 +9,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.example.model.Termination;
 import org.example.service.TerminationServiceImpl;
 
+import org.example.util.DBConnection;
+
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/termination")
@@ -223,6 +229,106 @@ public class TerminationServlet extends HttpServlet {
                 "terminations",
                 terminations
         );
+
+        /*
+         * Load employee name + department for the JSP.
+         *
+         * Termination table stores only UserId.
+         * The JSP therefore needs the User table joined
+         * with Departments to display:
+         *
+         * Employee Name
+         * Department
+         *
+         * We intentionally load all Employee-role users here
+         * so an already-terminated employee is still displayed
+         * correctly even if their status is no longer Active.
+         */
+        loadEmployees(request);
+    }
+
+    private void loadEmployees(HttpServletRequest request) {
+
+        List<EmployeeOption> employees =
+                new ArrayList<>();
+
+        String sql =
+                "SELECT u.UserId, " +
+                        "       u.FirstName, " +
+                        "       u.LastName, " +
+                        "       u.DepartmentId, " +
+                        "       COALESCE(d.Name, '-') AS DepartmentName " +
+                        "FROM `User` u " +
+                        "LEFT JOIN `Departments` d " +
+                        "       ON u.DepartmentId = d.DepartmentId " +
+                        "WHERE u.RoleId = 10 " +
+                        "ORDER BY u.FirstName, u.LastName";
+
+        try (Connection connection =
+                     DBConnection.getConnection();
+             PreparedStatement statement =
+                     connection.prepareStatement(sql);
+             ResultSet rs =
+                     statement.executeQuery()) {
+
+            while (rs.next()) {
+
+                EmployeeOption employee =
+                        new EmployeeOption();
+
+                employee.setUserId(
+                        rs.getInt("UserId")
+                );
+
+                employee.setFirstName(
+                        rs.getString("FirstName")
+                );
+
+                employee.setLastName(
+                        rs.getString("LastName")
+                );
+
+                int departmentId =
+                        rs.getInt("DepartmentId");
+
+                if (rs.wasNull()) {
+                    departmentId = 0;
+                }
+
+                employee.setDepartmentId(
+                        departmentId
+                );
+
+                String departmentName =
+                        rs.getString("DepartmentName");
+
+                if (departmentName == null ||
+                        departmentName.trim().isEmpty()) {
+
+                    departmentName = "-";
+                }
+
+                employee.setDepartmentName(
+                        departmentName.trim()
+                );
+
+                employees.add(employee);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            request.setAttribute(
+                    "employeeLoadError",
+                    "Unable to load employee details."
+            );
+        }
+
+        request.setAttribute(
+                "employees",
+                employees
+        );
     }
 
     private LocalDateTime parseDate(String value) {
@@ -317,6 +423,63 @@ public class TerminationServlet extends HttpServlet {
      * fields need dd/MM/yyyy. This wrapper exposes the same termination
      * fields and adds display values for the edit modal.
      */
+    /*
+     * ============================================================
+     * EMPLOYEE OPTION
+     * ============================================================
+     *
+     * Used by admin-termination.jsp to show the real employee
+     * name and department instead of only the UserId.
+     */
+    public static class EmployeeOption {
+
+        private int userId;
+        private String firstName;
+        private String lastName;
+        private int departmentId;
+        private String departmentName;
+
+        public int getUserId() {
+            return userId;
+        }
+
+        public void setUserId(int userId) {
+            this.userId = userId;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        public int getDepartmentId() {
+            return departmentId;
+        }
+
+        public void setDepartmentId(int departmentId) {
+            this.departmentId = departmentId;
+        }
+
+        public String getDepartmentName() {
+            return departmentName;
+        }
+
+        public void setDepartmentName(String departmentName) {
+            this.departmentName = departmentName;
+        }
+    }
+
     public static class TerminationView extends Termination {
 
         private final String noticeDateDisplay;
@@ -355,4 +518,3 @@ public class TerminationServlet extends HttpServlet {
         }
     }
 }
-

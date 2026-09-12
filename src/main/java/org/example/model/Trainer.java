@@ -17,6 +17,7 @@ public class Trainer {
     private String role;
     private String email;
     private String description;
+    private String status;
     private Long phone;
     private String profilePicture; // store path for image file
 

@@ -1,0 +1,536 @@
+<%
+    String contextPath = request.getContextPath();
+    String currentUri = request.getRequestURI();
+%>
+<!-- Favicon -->
+<link rel="shortcut icon"
+      type="image/x-icon"
+      href="${pageContext.request.contextPath}/assets/img/favicon.png">
+
+<!-- Theme Script -->
+<script src="${pageContext.request.contextPath}/assets/js/theme-script.js"></script>
+
+<!-- Bootstrap -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css">
+
+<!-- Feather Icons -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/plugins/icons/feather/feather.css">
+
+<!-- Tabler Icons -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/plugins/tabler-icons/tabler-icons.css">
+
+<!-- Select2 -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/plugins/select2/css/select2.min.css">
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/plugins/fontawesome/css/fontawesome.min.css">
+
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/plugins/fontawesome/css/all.min.css">
+
+<!-- Bootstrap Datepicker -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/css/bootstrap-datetimepicker.min.css">
+
+<!-- Date Range Picker -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/plugins/daterangepicker/daterangepicker.css">
+
+<!-- Flatpickr -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/plugins/flatpickr/flatpickr.min.css">
+
+<!-- Main Style -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/css/style.css">
+
+<!-- Sidebar CSS -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/assets/css/sidebar.css">
+
+<!-- Admin Sidebar -->
+<div class="sidebar" id="sidebar">
+
+    <!-- Logo -->
+    <div class="sidebar-logo">
+        <a href="<%= contextPath %>/admin/dashboard">
+            <img src="<%= contextPath %>/assets/img/logo.svg"
+                 alt="HRMS Logo">
+        </a>
+    </div>
+
+    <!-- Admin Profile -->
+    <div class="sidebar-profile">
+        <div class="profile-image">
+            <img src="<%= contextPath %>/assets/img/profiles/avatar-02.jpg"
+                 alt="Admin">
+        </div>
+
+        <div class="profile-info">
+            <h6>Administrator</h6>
+            <span>Admin</span>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-menu">
+
+        <ul>
+
+            <!-- MAIN MENU -->
+            <li class="menu-title">
+                <span>MAIN MENU</span>
+            </li>
+
+            <!-- Dashboard -->
+            <li class="<%= currentUri.endsWith("/admin/dashboard") ? "active" : "" %>">
+                <a href="<%= contextPath %>/admin/dashboard">
+                    <i data-feather="home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+
+            <!-- EMPLOYEES -->
+            <li class="menu-title">
+                <span>EMPLOYEES</span>
+            </li>
+
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="users"></i>
+                    <span>Employees</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="<%= contextPath %>/Employee/AddDepartment">
+                            Department
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<%= contextPath %>/Employee/Role">
+                            Role
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<%= contextPath %>/Employee/AddDesignation">
+                            Designation
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<%= contextPath %>/Employee/EmployeeList">
+                            Employee List
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<%= contextPath %>/Employee/EmployeeGrid">
+                            Employee Grid
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<%= contextPath %>/Employee/EmployeeDetails">
+                            Employee Details
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- ATTENDANCE -->
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="calendar"></i>
+                    <span>Attendance</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+
+                    <!-- Leaves -->
+                    <li class="submenu">
+                        <a href="javascript:void(0);">
+                            <span>Leaves</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+
+                        <ul>
+                            <li>
+                                <a href="<%= contextPath %>/leaves.jsp">
+                                    Apply Leave
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    Leave Details
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    Leave Approval
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Attendance
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Timesheet
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+
+            <!-- EVENTS -->
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="calendar"></i>
+                    <span>Events</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="<%= contextPath %>/views/admin/event/addEvent.jsp">
+                            Add Event
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<%= contextPath %>/views/admin/event/addMasterEvent.jsp">
+                            Add Master Event
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<%= contextPath %>/views/admin/event/eventList.jsp">
+                            Event List
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- PAYROLL -->
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="credit-card"></i>
+                    <span>Payroll</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="#">
+                            Add Employee Salary
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Master Payroll
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Employee Salary List
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Generate Payslips Monthly
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Transaction History
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- TRAINING -->
+            <li class="menu-title">
+                <span>TRAINING</span>
+            </li>
+
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="book-open"></i>
+                    <span>Training</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+
+                    <li>
+                        <a href="<%= contextPath %>/trainerList">
+                            Trainer List
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Trainers
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<%= contextPath %>/training-type">
+                            Training Type
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+
+            <!-- DOCUMENTS -->
+            <li class="menu-title">
+                <span>DOCUMENTS</span>
+            </li>
+
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="file-text"></i>
+                    <span>Documents</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+
+                    <!-- Upload Documents -->
+                    <li class="submenu">
+                        <a href="javascript:void(0);">
+                            <span>Upload Documents</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+
+                        <ul>
+
+                            <!-- Upload Form -->
+                            <li>
+                                <a href="<%= contextPath %>/uploadFile.jsp">
+                                    Upload Document
+                                </a>
+                            </li>
+
+                            <!-- Uploaded Documents -->
+                            <li>
+                                <a href="<%= contextPath %>/documentList.jsp">
+                                    Document List
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Generate Letter
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+
+            <!-- MASTER DOCUMENT -->
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="file"></i>
+                    <span>Master Document</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="#">
+                            Document Types
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Document Templates
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- PERFORMANCE -->
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="trending-up"></i>
+                    <span>Performance &amp; Goal</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="#">
+                            Performance
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Goals
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- PROJECTS -->
+            <li>
+                <a href="#">
+                    <i data-feather="briefcase"></i>
+                    <span>Projects</span>
+                </a>
+            </li>
+
+
+            <!-- REPORTS -->
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="bar-chart-2"></i>
+                    <span>Reports</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="#">
+                            Employee Reports
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Attendance Reports
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Payroll Reports
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- PROMOTIONS -->
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="award"></i>
+                    <span>Promotions</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="<%= contextPath %>/views/admin/promotion/promotionList.jsp">
+                            Promotion List
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- RESIGNATION -->
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="log-out"></i>
+                    <span>Resignation</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="<%= contextPath %>/views/admin/resignation/resignationList.jsp">
+                            Resignation List
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- TERMINATION -->
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i data-feather="user-x"></i>
+                    <span>Termination</span>
+                    <span class="menu-arrow"></span>
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="<%= contextPath %>/views/admin/Termination/terminationList.jsp">
+                            Termination List
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- SUPPORT -->
+            <li class="menu-title">
+                <span>SUPPORT</span>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i data-feather="help-circle"></i>
+                    <span>Help &amp; Supports</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i data-feather="message-square"></i>
+                    <span>Tickets</span>
+                </a>
+            </li>
+
+
+            <!-- LOGOUT -->
+            <li>
+                <a href="<%= contextPath %>/logout">
+                    <i data-feather="log-out"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+</div>
+<!-- /Admin Sidebar -->
