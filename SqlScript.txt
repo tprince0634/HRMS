@@ -1766,37 +1766,46 @@ DELIMITER ;
 
 
 
+DROP PROCEDURE IF EXISTS GetAllEmployees;
+
 DELIMITER $$
 
-CREATE PROCEDURE get_all_users()
+CREATE PROCEDURE GetAllEmployees()
 BEGIN
-
     SELECT
-        UserId,
-        FirstName,
-        LastName,
-        Email,
-        PasswordHash,
-        PhoneNumber,
-        RoleId,
-        DepartmentId,
-        DesignationtId,
-        DateOfJoining,
-        DateOfBirth,
-        Gender,
-        Address,
-        AboutEmployee,
-        ProfilePicture,
-        RoleId1,
-        ReportingManager,
-        CreatedAt,
-        CreatedBy,
-        ModifiedBy,
-        ModifiedAt,
-        Status
-    FROM User
-    ORDER BY UserId DESC;
+        u.UserId,
+        u.FirstName,
+        u.LastName,
+        u.Email,
+        u.PhoneNumber,
+        u.DateOfJoining,
+        u.DateOfBirth,
+        u.Gender,
+        u.Address,
+        u.AboutEmployee,
+        u.ProfilePicture,
+        u.ReportingManager,
+        u.Status,
 
-END $$
+        u.DepartmentId,
+        d.Name AS DepartmentName,
+
+        u.DesignationtId AS DesignationId,
+        des.Name AS DesignationName,
+
+        u.RoleId,
+        r.RoleName
+
+    FROM `User` u
+
+    LEFT JOIN Department d
+        ON u.DepartmentId = d.DepartmentId
+
+    LEFT JOIN Designation des
+        ON u.DesignationtId = des.DesignationId
+
+    LEFT JOIN Role r
+        ON u.RoleId = r.RoleId;
+END$$
 
 DELIMITER ;

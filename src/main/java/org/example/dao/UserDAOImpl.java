@@ -51,50 +51,67 @@ public class UserDAOImpl  implements UserDao {
     @Override
     public List<User> getAllUsers() {
 
-        String sql = "CALL get_all_users()";
-
-        List<User> users = new ArrayList<>();
+        String sql = "{CALL GetAllEmployees()}";
 
         try (Connection connection = DBConnection.getConnection();
-             CallableStatement callableStatement = connection.prepareCall(sql);
-             ResultSet rs = callableStatement.executeQuery()) {
+             CallableStatement cs = connection.prepareCall(sql);
+             ResultSet rs = cs.executeQuery()) {
+
+            List<User> employees = new ArrayList<>();
 
             while (rs.next()) {
-                users.add(map(rs));
+
+                User user = new User();
+
+                user.setUserId(rs.getInt("UserId"));
+                user.setFirstName(rs.getString("FirstName"));
+                user.setLastName(rs.getString("LastName"));
+                user.setEmail(rs.getString("Email"));
+                user.setPasswordHash(rs.getString("PasswordHash"));
+                user.setPhoneNumber(rs.getString("PhoneNumber"));
+
+                user.setRoleId(rs.getInt("RoleId"));
+                user.setDepartmentId(getInteger(rs, "DepartmentId"));
+                user.setDesignationtId(getInteger(rs, "DesignationtId"));
+
+                // Date fields - null safe
+                user.setDateOfJoining(
+                        getLocalDateTime(rs, "DateOfJoining")
+                );
+
+                user.setDateOfBirth(
+                        getLocalDateTime(rs, "DateOfBirth")
+                );
+
+                user.setGender(rs.getString("Gender"));
+                user.setAddress(rs.getString("Address"));
+                user.setAboutEmployee(rs.getString("AboutEmployee"));
+                user.setProfilePicture(rs.getString("ProfilePicture"));
+                user.setReportingManager(rs.getString("ReportingManager"));
+
+                // Audit fields - null safe
+                user.setCreatedAt(
+                        getLocalDateTime(rs, "CreatedAt")
+                );
+
+                user.setCreatedBy(rs.getString("CreatedBy"));
+
+                user.setModifiedBy(rs.getString("ModifiedBy"));
+
+                user.setModifiedAt(
+                        getLocalDateTime(rs, "ModifiedAt")
+                );
+
+                user.setStatus(rs.getString("Status"));
+
+                employees.add(user);
             }
 
-            return users;
+            return employees;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to fetch all users", e);
         }
-    }
-    private User map(ResultSet rs) throws SQLException {
-
-        return User.builder()
-                .userId(rs.getInt("UserId"))
-                .firstName(rs.getString("FirstName"))
-                .lastName(rs.getString("LastName"))
-                .email(rs.getString("Email"))
-                .passwordHash(rs.getString("PasswordHash"))
-                .phoneNumber(rs.getString("PhoneNumber"))
-                .roleId(rs.getInt("RoleId"))
-                .departmentId(getInteger(rs, "DepartmentId"))
-                .designationtId(getInteger(rs, "DesignationtId"))
-                .dateOfJoining(getLocalDateTime(rs, "DateOfJoining"))
-                .dateOfBirth(getLocalDateTime(rs, "DateOfBirth"))
-                .gender(rs.getString("Gender"))
-                .address(rs.getString("Address"))
-                .aboutEmployee(rs.getString("AboutEmployee"))
-                .profilePicture(rs.getString("ProfilePicture"))
-                .roleId1(getInteger(rs, "RoleId1"))
-                .reportingManager(rs.getString("ReportingManager"))
-                .createdAt(getLocalDateTime(rs, "CreatedAt"))
-                .createdBy(rs.getString("CreatedBy"))
-                .modifiedBy(rs.getString("ModifiedBy"))
-                .modifiedAt(getLocalDateTime(rs, "ModifiedAt"))
-                .status(rs.getString("Status"))
-                .build();
     }
 
 
@@ -144,7 +161,7 @@ public class UserDAOImpl  implements UserDao {
 
         List<Map<String, Object>> employees = new ArrayList<>();
 
-        String sql = "{CALL get_all_employees()}";
+        String sql = "{CALL GetAllEmployees()}";
 
         try (
                 Connection connection = DBConnection.getConnection();
