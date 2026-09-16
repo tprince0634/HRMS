@@ -10,7 +10,6 @@ private static final String URL = "jdbc:mysql://localhost:3306/Pulse360_FinalDb?
 private static final String USERNAME = "root";
 private static final String PASSWORD = "root";
 
-// Static initializer block runs ONCE when the class is loaded into memory
 static {
     try {
         Class.forName("com.mysql.cj.jdbc.Driver");

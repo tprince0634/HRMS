@@ -292,25 +292,15 @@
 
                         <!-- Attendance Employee -->
                         <li>
-
-                            <a href="javascript:void(0);">
-
+                            <a href="${pageContext.request.contextPath}/employee/attendance">
                                 <span>Attendance (Employee)</span>
-
                             </a>
-
                         </li>
-
-
-                        <!-- Timesheet -->
+<%--                        time sheet--%>
                         <li>
-
-                            <a href="javascript:void(0);">
-
-                                <span>Timesheet</span>
-
+                            <a href="${pageContext.request.contextPath}/AddTimesheet">
+                                <span>TimeSheets</span>
                             </a>
-
                         </li>
 
                     </ul>
