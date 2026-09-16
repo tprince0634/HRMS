@@ -1809,3 +1809,331 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+-- =========================================================
+-- ADMIN DOCUMENT NAMES PROCEDURES
+-- TABLE: addAdminDocNames
+-- =========================================================
+
+
+-- =========================================================
+-- 1. ADD ADMIN DOCUMENT NAME
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_admin_doc_name(
+    IN p_doc_name VARCHAR(255)
+)
+BEGIN
+    INSERT INTO addAdminDocNames (DocName)
+    VALUES (p_doc_name);
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 2. GET ADMIN DOCUMENT NAME BY ID
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_admin_doc_name_by_id(
+    IN p_id INT
+)
+BEGIN
+    SELECT
+        Id,
+        DocName
+    FROM addAdminDocNames
+    WHERE Id = p_id;
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 3. GET ALL ADMIN DOCUMENT NAMES
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_admin_doc_names()
+BEGIN
+    SELECT
+        Id,
+        DocName
+    FROM addAdminDocNames
+    ORDER BY Id DESC;
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 4. UPDATE ADMIN DOCUMENT NAME
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_admin_doc_name(
+    IN p_id INT,
+    IN p_doc_name VARCHAR(255)
+)
+BEGIN
+    UPDATE addAdminDocNames
+    SET DocName = p_doc_name
+    WHERE Id = p_id;
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 5. DELETE ADMIN DOCUMENT NAME
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_admin_doc_name(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM addAdminDocNames
+    WHERE Id = p_id;
+END $$
+
+DELIMITER ;
+
+
+
+-- =========================================================
+-- EMPLOYEE DOCUMENT NAMES PROCEDURES
+-- TABLE: addEmployeeDocNames
+-- =========================================================
+
+
+-- =========================================================
+-- 1. ADD EMPLOYEE DOCUMENT NAME
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_employee_doc_name(
+    IN p_doc_name VARCHAR(255)
+)
+BEGIN
+    INSERT INTO addEmployeeDocNames (DocName)
+    VALUES (p_doc_name);
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 2. GET EMPLOYEE DOCUMENT NAME BY ID
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_employee_doc_name_by_id(
+    IN p_id INT
+)
+BEGIN
+    SELECT
+        Id,
+        DocName
+    FROM addEmployeeDocNames
+    WHERE Id = p_id;
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 3. GET ALL EMPLOYEE DOCUMENT NAMES
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_employee_doc_names()
+BEGIN
+    SELECT
+        Id,
+        DocName
+    FROM addEmployeeDocNames
+    ORDER BY Id DESC;
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 4. UPDATE EMPLOYEE DOCUMENT NAME
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_employee_doc_name(
+    IN p_id INT,
+    IN p_doc_name VARCHAR(255)
+)
+BEGIN
+    UPDATE addEmployeeDocNames
+    SET DocName = p_doc_name
+    WHERE Id = p_id;
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 5. DELETE EMPLOYEE DOCUMENT NAME
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_employee_doc_name(
+    IN p_id INT
+)
+BEGIN
+    DELETE FROM addEmployeeDocNames
+    WHERE Id = p_id;
+END $$
+
+DELIMITER ;
+-- =========================================================
+-- ADMIN DOCUMENTS PROCEDURES
+-- TABLE: AdminDocuments
+-- =========================================================
+
+
+-- =========================================================
+-- 1. ADD ADMIN DOCUMENT
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_add_admin_document(
+    IN p_email VARCHAR(255),
+    IN p_doc_name VARCHAR(255),
+    IN p_doc_file VARCHAR(500)
+)
+BEGIN
+    INSERT INTO AdminDocuments (
+        Email,
+        DocName,
+        DocFile
+    )
+    VALUES (
+        p_email,
+        p_doc_name,
+        p_doc_file
+    );
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 2. GET ADMIN DOCUMENT BY ID
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_admin_document_by_id(
+    IN p_admin_doc_id INT
+)
+BEGIN
+    SELECT
+        AdminDocId,
+        Email,
+        DocName,
+        DocFile
+    FROM AdminDocuments
+    WHERE AdminDocId = p_admin_doc_id;
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 3. GET ALL ADMIN DOCUMENTS
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_admin_documents()
+BEGIN
+    SELECT
+        AdminDocId,
+        Email,
+        DocName,
+        DocFile
+    FROM AdminDocuments
+    ORDER BY AdminDocId DESC;
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 4. GET ADMIN DOCUMENTS BY EMAIL
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_admin_documents_by_email(
+    IN p_email VARCHAR(255)
+)
+BEGIN
+    SELECT
+        AdminDocId,
+        Email,
+        DocName,
+        DocFile
+    FROM AdminDocuments
+    WHERE Email = p_email
+    ORDER BY AdminDocId DESC;
+END $$
+
+DELIMITER ;
+
+
+-- =========================================================
+-- 5. DELETE ADMIN DOCUMENT
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_delete_admin_document(
+    IN p_admin_doc_id INT
+)
+BEGIN
+    DELETE FROM AdminDocuments
+    WHERE AdminDocId = p_admin_doc_id;
+END $$
+
+DELIMITER ;
+
+-- =========================================================
+-- FIND ADMIN DOCUMENT NAMES BY NAME
+-- =========================================================
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_find_admin_doc_names_by_name(
+    IN p_name VARCHAR(255)
+)
+BEGIN
+    SELECT
+        Id,
+        DocName
+    FROM addAdminDocNames
+    WHERE DocName LIKE CONCAT('%', p_name, '%')
+    ORDER BY Id DESC;
+END $$
+
+DELIMITER ;
