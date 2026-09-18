@@ -389,7 +389,7 @@ ${sessionScope.userEmail}
     </div>
 
     <!-- SIDEBAR -->
-    <%@ include file="/partials/sidebar/sidebar.jsp" %>
+    <%@ include file="/partials/sidebar/adminSidebar.jsp" %>
 
     <!-- PAGE WRAPPER -->
     <div class="page-wrapper">

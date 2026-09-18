@@ -584,7 +584,8 @@
         </div>
 
         <!-- SIDEBAR -->
-        <%@ include file="/partials/sidebar/sidebar.jsp" %>
+        <%@ include file="/partials/sidebar/adminSidebar.jsp" %>
+
 
         <!-- ADMIN PROFILE -->
         <div class="modern-profile p-3 pb-0">
