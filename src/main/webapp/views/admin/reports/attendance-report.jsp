@@ -560,7 +560,7 @@
                                                     <li><a href="payslip-report.html">Payslip Report</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/admin/attendance-report" class="active">Attendance Report</a></li>
                                                     <li><a href="leave-report.html">Leave Report</a></li>
-                                                    <li><a href="daily-report.html">Daily Report</a></li>
+
                                                 </ul>
                                             </li>
                                             <li class="submenu">
@@ -1825,11 +1825,7 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Daily Report</span>
-                            </a>
-                        </li>
+
 
                     </ul>
 
@@ -2084,16 +2080,8 @@
                                     <a href="javascript:void(0);" class="dropdown-toggle btn btn-sm fs-12 btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
                                         This Year
                                     </a>
-                                    <ul class="dropdown-menu  dropdown-menu-end p-2">
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-year-option" data-year="2024">2024</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-year-option" data-year="2023">2023</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-year-option" data-year="2022">2022</a>
-                                        </li>
+                                    <ul class="dropdown-menu dropdown-menu-end p-2" id="attendanceYearMenu">
+                                        <!-- Years are populated dynamically from attendance data -->
                                     </ul>
                                 </div>
                             </div>
@@ -2123,11 +2111,8 @@
                             </a>
                             <ul class="dropdown-menu  dropdown-menu-end p-3">
                                 <li>
-                                    <a href="javascript:void(0);" <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-status-option" data-status="">All Status</a>
-                                    <a href="javascript:void(0);" </li>
-                                <a href="javascript:void(0);" <li>
-                                <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-status-option" data-status="Present">Present</a>
-                            </li>
+                                    <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-status-option" data-status="Present">Present</a>
+                                </li>
                                 <li>
                                     <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-status-option" data-status="Absent">Absent</a>
                                 </li>
@@ -2135,6 +2120,11 @@
                                     <a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-status-option" data-status="Half Day">Half Day</a>
                                 </li>
                             </ul>
+                        </div>
+                        <div class="dropdown me-3">
+                            <button type="button" id="attendanceResetFilters" class="btn btn-white border d-inline-flex align-items-center">
+                                <i class="ti ti-refresh me-1"></i>Reset
+                            </button>
                         </div>
                         <div class="dropdown">
                             <a href="javascript:void(0);" id="attendanceSortButton" class="dropdown-toggle btn btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
@@ -2413,10 +2403,27 @@
             });
         }
 
+        $(document).on("click", "#attendanceResetFilters", function (e) {
+            e.preventDefault();
+
+            selectedStatus = "";
+            startDate = null;
+            endDate = null;
+
+            $("#attendanceDateRange").val("");
+            $("#attendanceStatusButton").text("Select Status");
+            $("#attendanceSortButton").text("Sort By : Recently Added");
+
+            // Clear any year/date column search and restore the default table order.
+            table.search("");
+            table.columns().search("");
+            table.order([[1, "desc"]]).draw();
+        });
+
         $(document).on("click", ".attendance-status-option", function (e) {
             e.preventDefault();
             selectedStatus = String($(this).data("status") || "");
-            $("#attendanceStatusButton").text(selectedStatus || "All Status");
+            $("#attendanceStatusButton").text(selectedStatus || "Select Status");
             redraw();
         });
 
@@ -2545,13 +2552,42 @@
             setTimeout(function () { win.print(); }, 300);
         });
 
+        function populateAttendanceYears() {
+            var years = {};
+
+            table.rows().every(function () {
+                var dateValue = $("<div>").html((this.data()[1] || "")).text().trim();
+                var date = parseDate(dateValue);
+                if (date && date.isValid()) {
+                    years[date.format("YYYY")] = true;
+                } else {
+                    var match = String(dateValue).match(/\b(19\d{2}|20\d{2})\b/);
+                    if (match) years[match[1]] = true;
+                }
+            });
+
+            var yearList = Object.keys(years).sort(function (a, b) {
+                return Number(b) - Number(a);
+            });
+
+            var menu = $("#attendanceYearMenu");
+            if (!menu.length) return;
+            menu.empty();
+
+            yearList.forEach(function (year) {
+                menu.append(
+                    '<li><a href="javascript:void(0);" class="dropdown-item rounded-1 attendance-year-option" data-year="' + year + '">' + year + '</a></li>'
+                );
+            });
+        }
+
         $(document).on("click", ".attendance-year-option", function (e) {
             e.preventDefault();
 
             var year = String($(this).data("year"));
             $(this).closest(".dropdown").find(".dropdown-toggle").text(year);
 
-            // Use the selected year on the table; chart is refreshed from the matching rows.
+            // Show chart data for the selected year.
             table.column(1).search("^" + year + "-", true, false).draw();
 
             var present = 0, absent = 0;
@@ -2565,6 +2601,8 @@
                 window.attendanceChartInstance.updateSeries([present, absent]);
             }
         });
+
+        populateAttendanceYears();
     });
 </script>
 <script>

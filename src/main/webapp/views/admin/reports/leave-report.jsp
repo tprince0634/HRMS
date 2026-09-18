@@ -1810,11 +1810,7 @@
                      </a>
                   </li>
 
-                  <li>
-                     <a href="javascript:void(0);">
-                        <span>Daily Report</span>
-                     </a>
-                  </li>
+
 
                </ul>
 
@@ -4242,6 +4238,9 @@
                   </div>
 
                </div>
+               <button type="button" id="leaveResetFilters" class="btn btn-white border mb-2 ms-2">
+                  <i class="ti ti-refresh me-1"></i>Reset
+               </button>
                <div class="head-icons ms-2">
                   <a href="javascript:void(0);" class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Collapse" id="collapse-header">
                      <i class="ti ti-chevrons-up"></i>
@@ -4636,6 +4635,22 @@
          });
       }
 
+
+      const resetBtn = document.getElementById('leaveResetFilters');
+      if (resetBtn) resetBtn.addEventListener('click', function () {
+         if (search) search.value = '';
+         if (dateRange) dateRange.value = '';
+         typeFilter = '';
+         statusFilter = '';
+         sortMode = 'newest';
+         startDate = null;
+         endDate = null;
+         if (typeBtn) typeBtn.textContent = 'Leave Type';
+         if (statusBtn) statusBtn.textContent = 'Select Status';
+         if (sortBtn) sortBtn.textContent = 'Sort By : Newest';
+         applyFilters();
+      });
+
       function downloadFile(filename, content, type) {
          const blob = new Blob([content], { type: type });
          const url = URL.createObjectURL(blob);
@@ -4708,13 +4723,33 @@
       // Dynamic Leave Type chart.
       const chartElement = document.querySelector('#leave-reports');
       if (window.ApexCharts && chartElement) {
+         // Calculate leave counts directly from the report rows so every leave type is accurate.
+         const leaveCounts = {
+            paid: 0,
+            sick: 0,
+            cl: 0,
+            ml: 0,
+            unpaid: 0,
+            test: 0
+         };
+
+         rows.forEach(row => {
+            const leaveType = (row.dataset.leaveType || '').trim().toLowerCase();
+            if (leaveType === 'paid leave' || leaveType === 'paid') leaveCounts.paid++;
+            else if (leaveType === 'sick leave' || leaveType === 'sick') leaveCounts.sick++;
+            else if (leaveType === 'cl' || leaveType === 'casual leave') leaveCounts.cl++;
+            else if (leaveType === 'ml' || leaveType === 'medical leave') leaveCounts.ml++;
+            else if (leaveType === 'unpaid leave' || leaveType === 'unpaid') leaveCounts.unpaid++;
+            else if (leaveType === 'test leave' || leaveType === 'test') leaveCounts.test++;
+         });
+
          const chartData = [
-            Number('${paidLeaveCount}') || 0,
-            Number('${sickLeaveCount}') || 0,
-            Number('${clCount}') || 0,
-            Number('${mlCount}') || 0,
-            Number('${unpaidLeaveCount}') || 0,
-            Number('${testLeaveCount}') || 0
+            leaveCounts.paid,
+            leaveCounts.sick,
+            leaveCounts.cl,
+            leaveCounts.ml,
+            leaveCounts.unpaid,
+            leaveCounts.test
          ];
 
          new ApexCharts(chartElement, {

@@ -26,6 +26,7 @@
                     <i class="ti ti-smart-home"></i><span>Dashboard</span>
                 </a>
             </li>
+
             <li class="submenu">
                 <a href="#" class="submenu-toggle" aria-expanded="false">
                     <i class="ti ti-users"></i><span>Employees</span><span class="menu-arrow"></span>
@@ -39,13 +40,16 @@
                     <li><a href="${pageContext.request.contextPath}/Employee/EmployeeDetails"><span>Employee Details</span></a></li>
                 </ul>
             </li>
+
             <li class="submenu">
                 <a href="#" class="submenu-toggle" aria-expanded="false">
                     <i class="ti ti-calendar-check"></i><span>Attendance</span><span class="menu-arrow"></span>
                 </a>
                 <ul>
                     <li class="submenu">
-                        <a href="#" class="submenu-toggle" aria-expanded="false"><span>Leaves</span><span class="menu-arrow"></span></a>
+                        <a href="#" class="submenu-toggle" aria-expanded="false">
+                            <span>Leaves</span><span class="menu-arrow"></span>
+                        </a>
                         <ul>
                             <li><a href="${pageContext.request.contextPath}/leaves/apply"><span>Apply Leave</span></a></li>
                             <li><a href="${pageContext.request.contextPath}/leaves"><span>Leave Details</span></a></li>
@@ -56,6 +60,7 @@
                     <li><a href="${pageContext.request.contextPath}/timesheet"><span>Timesheet</span></a></li>
                 </ul>
             </li>
+
             <li class="submenu">
                 <a href="#" class="submenu-toggle" aria-expanded="false">
                     <i class="ti ti-school"></i><span>Training</span><span class="menu-arrow"></span>
@@ -65,13 +70,16 @@
                     <li><a href="${pageContext.request.contextPath}/training-type"><span>Training Type</span></a></li>
                 </ul>
             </li>
+
             <li class="submenu">
                 <a href="#" class="submenu-toggle" aria-expanded="false">
                     <i class="ti ti-file-description"></i><span>Documents</span><span class="menu-arrow"></span>
                 </a>
                 <ul>
                     <li class="submenu">
-                        <a href="#" class="submenu-toggle" aria-expanded="false"><span>Upload Documents</span><span class="menu-arrow"></span></a>
+                        <a href="#" class="submenu-toggle" aria-expanded="false">
+                            <span>Upload Documents</span><span class="menu-arrow"></span>
+                        </a>
                         <ul>
                             <li><a href="${pageContext.request.contextPath}/uploadFile"><span>Upload Document</span></a></li>
                             <li><a href="${pageContext.request.contextPath}/documentList"><span>Document List</span></a></li>
@@ -80,9 +88,49 @@
                     <li><a href="${pageContext.request.contextPath}/generateLetter"><span>Generate Letter</span></a></li>
                 </ul>
             </li>
+
             <li class="submenu">
                 <a href="#" class="submenu-toggle" aria-expanded="false">
                     <i class="ti ti-chart-bar"></i><span>Reports</span><span class="menu-arrow"></span>
                 </a>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}/admin/employee-report"><span>Employee Report</span></a></li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/employee-report">
+                            <span>Employee Report</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/attendance-report">
+                            <span>Attendance Report</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/leave-report">
+                            <span>Leave Report</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/payslip-report">
+                            <span>Payslip Report</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/project-report">
+                            <span>Project Report</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/task-report">
+                            <span>Task Report</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

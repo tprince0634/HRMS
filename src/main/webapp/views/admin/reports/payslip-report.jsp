@@ -1870,16 +1870,18 @@
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
-                                <span>Task Report</span>
+                            <a href="${pageContext.request.contextPath}/admin/project-report">
+                                <span>Project Report</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
-                                <span>Daily Report</span>
+                            <a href="${pageContext.request.contextPath}/admin/task-report">
+                                <span>Task Report</span>
                             </a>
                         </li>
+
+
 
                     </ul>
 
@@ -2193,13 +2195,11 @@
                             <ul class="dropdown-menu dropdown-menu-end p-2">
                                 <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-month-option" data-month="all">All Months</a></li>
                                 <%
-                                    LinkedHashSet<String> months = new LinkedHashSet<>();
-                                    for (PayslipReport p : payslipList) {
-                                        if (p.getMonth() != null && !p.getMonth().trim().isEmpty()) {
-                                            months.add(p.getMonth());
-                                        }
-                                    }
-                                    for (String m : months) {
+                                    String[] allMonths = {
+                                            "January", "February", "March", "April", "May", "June",
+                                            "July", "August", "September", "October", "November", "December"
+                                    };
+                                    for (String m : allMonths) {
                                 %>
                                 <li><a href="javascript:void(0);" class="dropdown-item rounded-1 payslip-month-option"
                                        data-month="<%= m %>"><%= m %></a></li>
@@ -2230,6 +2230,12 @@
                             <input type="text" id="payslipSearch" class="form-control"
                                    placeholder="Search employee...">
                         </div>
+
+                        <!-- Reset filters -->
+                        <button type="button" id="payslipResetButton"
+                                class="btn btn-light border d-inline-flex align-items-center ms-2">
+                            <i class="ti ti-refresh me-1"></i> Reset
+                        </button>
 
                     </div>
                 </div>
@@ -2471,6 +2477,32 @@
 
         $("#payslipSearch").on("keyup", function () {
             payslipTable.search(this.value).draw();
+        });
+
+        // Reset all payslip filters and restore the default table view
+        $("#payslipResetButton").on("click", function () {
+            selectedSalaryRange = "all";
+            selectedMonth = "all";
+            selectedStartDate = null;
+            selectedEndDate = null;
+            selectedChartYear = "all";
+
+            $("#payslipSearch").val("");
+            $("#payslipDateRange").val("");
+            $("#payslipSalaryButton").text("Salary Range");
+            $("#payslipMonthButton").text("Month");
+            $("#payslipSortButton").text("Sort By : Recently Added");
+            $("#select-all").prop("checked", false);
+            $("#payslipTable tbody .payslip-row-check").prop("checked", false);
+
+            var datePicker = $("#payslipDateRange").data("daterangepicker");
+            if (datePicker) {
+                datePicker.setStartDate(moment());
+                datePicker.setEndDate(moment());
+            }
+
+            payslipTable.search("").order([[10, "desc"]]).page("first").draw();
+            renderPayslipChart("all");
         });
 
         $(".payslip-salary-option").on("click", function () {
