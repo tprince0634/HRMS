@@ -833,7 +833,6 @@
 
                         <li>
                             <a href="${pageContext.request.contextPath}/admin/payslip-report">
-                                <i class="ti ti-file-invoice"></i>
                                 <span>Payslip Report</span>
                             </a>
                         </li>

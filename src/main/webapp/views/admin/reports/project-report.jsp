@@ -1130,11 +1130,7 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Daily Report</span>
-                            </a>
-                        </li>
+
 
                     </ul>
 
@@ -2354,6 +2350,8 @@
 
 <script src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
 
+<!-- Required dependency for Date Range Picker -->
+<script src="${pageContext.request.contextPath}/assets/js/moment.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/daterangepicker/daterangepicker.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/jquery.dataTables.min.js"></script>

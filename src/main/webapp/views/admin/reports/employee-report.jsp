@@ -641,22 +641,24 @@
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/admin/payslip-report">
                                 <span>Payslip Report</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
-                                <span>Task Report</span>
+                            <a href="${pageContext.request.contextPath}/admin/project-report">
+                                <span>Project Report</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
-                                <span>Daily Report</span>
+                            <a href="${pageContext.request.contextPath}/admin/task-report">
+                                <span>Task Report</span>
                             </a>
                         </li>
+
+
 
                     </ul>
 
@@ -910,16 +912,8 @@
                                     <a href="javascript:void(0);" class="dropdown-toggle btn btn-sm fs-12 btn-white d-inline-flex align-items-center" data-bs-toggle="dropdown">
                                         This Year
                                     </a>
-                                    <ul class="dropdown-menu  dropdown-menu-end p-2">
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item rounded-1">2024</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item rounded-1">2023</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item rounded-1">2022</a>
-                                        </li>
+                                    <ul id="employeeYearFilterMenu" class="dropdown-menu dropdown-menu-end p-2">
+                                        <!-- Years are populated automatically from employee joining dates. -->
                                     </ul>
                                 </div>
                             </div>
@@ -989,6 +983,11 @@
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+                        <div class="dropdown me-3">
+                            <button type="button" id="employeeResetFilters" class="btn btn-white d-inline-flex align-items-center">
+                                <i class="ti ti-refresh me-1"></i>Reset
+                            </button>
                         </div>
                         <div class="dropdown">
                             <a href="javascript:void(0);" id="employeeSortButton"
@@ -1166,44 +1165,178 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var chartElement = document.querySelector("#employee-reports");
+        var yearMenu = document.querySelector("#employeeYearFilterMenu");
+        var yearButton = yearMenu ? yearMenu.parentElement.querySelector(".dropdown-toggle") : null;
 
         if (!chartElement || typeof ApexCharts === "undefined") {
             return;
         }
 
-        var activeEmployees = Number("${activeEmployees}");
-        var inactiveEmployees = Number("${inactiveEmployees}");
+        var tableElement = document.querySelector(".datatable");
+        if (!tableElement || !jQuery || !jQuery.fn.DataTable) {
+            return;
+        }
 
-        var options = {
-            chart: {
-                type: "bar",
-                height: 300,
-                toolbar: {
+        var employeeTable = jQuery(tableElement).DataTable();
+        var employeeRows = [];
+
+        /*
+         * Read all employee rows and keep their joining year + status.
+         * This makes the year dropdown dynamic instead of hard-coded.
+         */
+        employeeTable.rows().every(function () {
+            var row = this.node();
+            if (!row) {
+                return;
+            }
+
+            var dateCell = row.cells[5];
+            var statusCell = row.cells[6];
+            var rawDate = dateCell ? dateCell.getAttribute("data-joining-date") : "";
+            var date = rawDate ? new Date(rawDate) : null;
+
+            if (!date || isNaN(date.getTime())) {
+                return;
+            }
+
+            var status = statusCell
+                ? String(statusCell.textContent || "").replace(/\s+/g, " ").trim().toLowerCase()
+                : "";
+
+            employeeRows.push({
+                year: date.getFullYear(),
+                status: status
+            });
+        });
+
+        if (!employeeRows.length) {
+            return;
+        }
+
+        var years = employeeRows.map(function (employee) {
+            return employee.year;
+        });
+
+        var minYear = Math.min.apply(null, years);
+        var maxYear = Math.max.apply(null, years);
+        var currentYear = new Date().getFullYear();
+
+        /* Include the current year when it is newer than the latest employee year. */
+        maxYear = Math.max(maxYear, currentYear);
+
+        /* Build every year in the range, including years with zero employees. */
+        var allYears = [];
+        for (var year = maxYear; year >= minYear; year--) {
+            allYears.push(year);
+        }
+
+        if (yearMenu) {
+            yearMenu.innerHTML = "";
+
+            allYears.forEach(function (year) {
+                var li = document.createElement("li");
+                var link = document.createElement("a");
+
+                link.href = "javascript:void(0);";
+                link.className = "dropdown-item rounded-1 employee-year-filter";
+                link.setAttribute("data-year", String(year));
+                link.textContent = String(year);
+
+                li.appendChild(link);
+                yearMenu.appendChild(li);
+            });
+        }
+
+        var chart;
+
+        function getYearCounts(selectedYear) {
+            var active = 0;
+            var inactive = 0;
+
+            employeeRows.forEach(function (employee) {
+                if (employee.year !== selectedYear) {
+                    return;
+                }
+
+                if (employee.status === "active") {
+                    active++;
+                } else if (employee.status === "inactive") {
+                    inactive++;
+                }
+            });
+
+            return [active, inactive];
+        }
+
+        function renderEmployeeChart(selectedYear) {
+            var counts = getYearCounts(selectedYear);
+
+            var options = {
+                chart: {
+                    type: "bar",
+                    height: 300,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                series: [{
+                    name: "Employees",
+                    data: counts
+                }],
+                xaxis: {
+                    categories: ["Active Employees", "Inactive Employees"]
+                },
+                dataLabels: {
+                    enabled: true
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 4,
+                        columnWidth: "45%"
+                    }
+                },
+                legend: {
                     show: false
                 }
-            },
-            series: [{
-                name: "Employees",
-                data: [activeEmployees, inactiveEmployees]
-            }],
-            xaxis: {
-                categories: ["Active Employees", "Inactive Employees"]
-            },
-            dataLabels: {
-                enabled: true
-            },
-            plotOptions: {
-                bar: {
-                    borderRadius: 4,
-                    columnWidth: "45%"
-                }
-            },
-            legend: {
-                show: false
-            }
-        };
+            };
 
-        new ApexCharts(chartElement, options).render();
+            if (chart) {
+                chart.updateOptions(options);
+            } else {
+                chart = new ApexCharts(chartElement, options);
+                chart.render();
+            }
+        }
+
+        var defaultYear = allYears.indexOf(currentYear) !== -1
+            ? currentYear
+            : allYears[0];
+
+        if (yearButton) {
+            yearButton.textContent = String(defaultYear);
+        }
+
+        renderEmployeeChart(defaultYear);
+
+        if (yearMenu) {
+            yearMenu.addEventListener("click", function (event) {
+                var yearLink = event.target.closest(".employee-year-filter");
+                if (!yearLink) {
+                    return;
+                }
+
+                var selectedYear = parseInt(yearLink.getAttribute("data-year"), 10);
+                if (isNaN(selectedYear)) {
+                    return;
+                }
+
+                if (yearButton) {
+                    yearButton.textContent = String(selectedYear);
+                }
+
+                renderEmployeeChart(selectedYear);
+            });
+        }
     });
 </script>
 
@@ -1260,47 +1393,35 @@
         // DESIGNATION FILTER
         $(document).on("click", ".designation-filter", function () {
 
-            var value = $(this).data("value") || "";
+            window.employeeDesignationFilter =
+                String($(this).attr("data-value") || "").trim();
 
             $("#designationFilterButton").text(
-                value ? value : "Designation"
+                window.employeeDesignationFilter
+                    ? window.employeeDesignationFilter
+                    : "Designation"
             );
 
-            if (value) {
-                employeeTable
-                    .column(7)
-                    .search(
-                        "^" + $.fn.dataTable.util.escapeRegex(value) + "$",
-                        true,
-                        false
-                    )
-                    .draw();
-            } else {
-                employeeTable.column(7).search("").draw();
-            }
+            // Redraw table so the custom designation filter is applied.
+            employeeTable.draw();
         });
 
         // STATUS FILTER
         $(document).on("click", ".status-filter", function () {
 
-            var value = $(this).data("value") || "";
+            window.employeeStatusFilter =
+                String($(this).attr("data-value") || "").trim();
 
             $("#statusFilterButton").text(
-                value ? value : "Select Status"
+                window.employeeStatusFilter
+                    ? window.employeeStatusFilter
+                    : "Select Status"
             );
 
-            if (value) {
-                employeeTable
-                    .column(6)
-                    .search(
-                        "^" + $.fn.dataTable.util.escapeRegex(value) + "$",
-                        true,
-                        false
-                    )
-                    .draw();
-            } else {
-                employeeTable.column(6).search("").draw();
-            }
+            employeeTable
+                .column(6)
+                .search("")
+                .draw();
         });
 
         // SORT
@@ -1341,6 +1462,116 @@
         var employeeTable = tableElement.DataTable();
 
         /*
+         * Employee report dropdown filters.
+         *
+         * Read the actual rendered cell text instead of relying on
+         * DataTables' HTML/search representation. This keeps the
+         * Designation and Status filters reliable while preserving
+         * the existing search, date range and sorting functionality.
+         */
+        window.employeeDesignationFilter = "";
+        window.employeeStatusFilter = "";
+        window.employeeDateRangeApplied = false;
+
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+
+            if (settings.nTable !== tableElement[0]) {
+                return true;
+            }
+
+            var row = employeeTable.row(dataIndex).node();
+
+            if (!row) {
+                return true;
+            }
+
+            var designationCell = row.cells[7];
+            var statusCell = row.cells[6];
+
+            /*
+             * Read designation from the hidden helper column first.
+             * If that value is empty, also check the designation shown
+             * under the employee name.
+             */
+            var designation =
+                designationCell
+                    ? (designationCell.textContent || "")
+                    : "";
+
+            if (!designation.trim() && row.cells[1]) {
+                var designationSpan = row.cells[1].querySelector("span");
+                if (designationSpan) {
+                    designation = designationSpan.textContent || "";
+                }
+            }
+
+            var status =
+                statusCell
+                    ? (statusCell.textContent || "")
+                    : "";
+
+            /* Normalize spaces and case before comparing. */
+            function normalizeDesignation(value) {
+                return String(value == null ? "" : value)
+                    .replace(/\u00a0/g, " ")
+                    .replace(/\s+/g, " ")
+                    .trim()
+                    .toLowerCase();
+            }
+
+            var selectedDesignation =
+                normalizeDesignation(window.employeeDesignationFilter);
+
+            var employeeDesignation =
+                normalizeDesignation(designation);
+
+            /*
+             * DESIGNATION FILTER
+             *
+             * Example:
+             * Software Developer
+             * software developer
+             * Software   Developer
+             *
+             * All are treated as the same designation.
+             */
+            if (selectedDesignation &&
+                employeeDesignation !== selectedDesignation) {
+
+                /*
+                 * As an extra safeguard, check DataTables' own column
+                 * value. This handles cases where the DOM helper cell
+                 * is altered by the template/DataTables rendering.
+                 */
+                var dataDesignation =
+                    normalizeDesignation(data[7]);
+
+                if (dataDesignation !== selectedDesignation) {
+                    return false;
+                }
+            }
+
+            var selectedStatus =
+                String(window.employeeStatusFilter || "")
+                    .replace(/\s+/g, " ")
+                    .trim()
+                    .toLowerCase();
+
+            status =
+                String(status || "")
+                    .replace(/\s+/g, " ")
+                    .trim()
+                    .toLowerCase();
+
+            if (selectedStatus &&
+                status !== selectedStatus) {
+                return false;
+            }
+
+            return true;
+        });
+
+        /*
          * Joining Date range filter
          *
          * DataTables receives the visible Joining Date column as:
@@ -1357,7 +1588,11 @@
 
             var selectedRange = $("#employeeDateRange").val();
 
-            if (!selectedRange || selectedRange.indexOf(" - ") === -1) {
+            // Do not apply a date filter until the user explicitly
+            // selects a date range from the date picker.
+            if (!window.employeeDateRangeApplied ||
+                !selectedRange ||
+                selectedRange.indexOf(" - ") === -1) {
                 return true;
             }
 
@@ -1441,6 +1676,11 @@
                 }
             });
 
+            // Ignore any date value inserted by the generic SmartHR template
+            // until the user explicitly applies a date range.
+            $("#employeeDateRange").val("");
+            window.employeeDateRangeApplied = false;
+
             $("#employeeDateRange").on("apply.daterangepicker", function (ev, picker) {
 
                 $(this).val(
@@ -1449,12 +1689,14 @@
                     picker.endDate.format("DD/MM/YYYY")
                 );
 
+                window.employeeDateRangeApplied = true;
                 employeeTable.draw();
             });
 
             $("#employeeDateRange").on("cancel.daterangepicker", function () {
 
                 $(this).val("");
+                window.employeeDateRangeApplied = false;
                 employeeTable.draw();
             });
         }
@@ -1640,6 +1882,36 @@
     });
 </script>
 
+
+<script>
+    /* Employee Report Reset - only clears report filters and restores the default table state. */
+    document.addEventListener("DOMContentLoaded", function () {
+        var resetButton = document.getElementById("employeeResetFilters");
+
+        if (!resetButton || typeof jQuery === "undefined" || !jQuery.fn.DataTable) {
+            return;
+        }
+
+        resetButton.addEventListener("click", function () {
+            var tableElement = jQuery(".datatable");
+            if (!tableElement.length) return;
+
+            var employeeTable = tableElement.DataTable();
+            window.employeeDesignationFilter = "";
+            window.employeeStatusFilter = "";
+            window.employeeDateRangeApplied = false;
+
+            jQuery("#employeeDateRange").val("");
+            jQuery("#designationFilterButton").text("Designation");
+            jQuery("#statusFilterButton").text("Select Status");
+            jQuery("#employeeSortButton").text("Sort By : Recently Added");
+
+            employeeTable.search("");
+            employeeTable.columns().search("");
+            employeeTable.order([5, "desc"]).draw();
+        });
+    });
+</script>
 </body>
 
 </html>

@@ -23,37 +23,7 @@ END $$
 DELIMITER ;
 
 
-<-----------EmployeeReport--------->
 
-DELIMITER //
-
-CREATE PROCEDURE get_all_employees()
-BEGIN
-    SELECT
-        u.UserId,
-        u.FirstName,
-        u.LastName,
-        u.Email,
-        u.PhoneNumber,
-        u.RoleId,
-        r.RoleName,
-        u.DepartmentId,
-        d.Name AS DepartmentName,
-        u.DesignationtId,
-        des.Name AS DesignationName,
-        u.DateOfJoining,
-        u.Status
-    FROM `User` u
-    LEFT JOIN `Role` r
-        ON u.RoleId = r.RoleId
-    LEFT JOIN `Departments` d
-        ON u.DepartmentId = d.DepartmentId
-    LEFT JOIN `Designations` des
-        ON u.DesignationtId = des.DesignationId
-    ORDER BY u.UserId DESC;
-END //
-
-DELIMITER ;
 
 
 
@@ -1761,6 +1731,359 @@ BEGIN
 
 END $$
 DELIMITER ;
+
+
+
+
+
+
+
+<-----------------------------------Reports Section All Stored Procedures--------------------------------------->
+
+
+
+<-------------------Employee Report-------------------->
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_employees()
+BEGIN
+    SELECT
+        u.UserId,
+        u.FirstName,
+        u.LastName,
+        u.Email,
+        u.PhoneNumber,
+        u.RoleId,
+        r.RoleName,
+        u.DepartmentId,
+        d.Name AS DepartmentName,
+        u.DesignationtId,
+        des.Name AS DesignationName,
+        u.DateOfJoining,
+        u.Status
+    FROM `User` u
+    LEFT JOIN `Role` r
+        ON u.RoleId = r.RoleId
+    LEFT JOIN `Departments` d
+        ON u.DepartmentId = d.DepartmentId
+    LEFT JOIN `Designations` des
+        ON u.DesignationtId = des.DesignationId
+    ORDER BY u.UserId DESC;
+END //
+
+DELIMITER ;
+
+
+
+<----------------------------Attendance Report------------------------------------------>
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_attendance()
+BEGIN
+    SELECT
+        a.AttendanceId,
+        a.UserId,
+        u.FirstName,
+        u.LastName,
+        u.Email,
+        a.Date,
+        a.CheckIn,
+        a.CheckOut,
+        a.LunchIn,
+        a.LunchOut,
+        a.WorkingHours,
+        a.ProductionHours,
+        a.OvertimeHours,
+        a.BreakHours,
+        a.Late,
+        a.Status
+    FROM Attendance a
+    LEFT JOIN `User` u
+        ON a.UserId = u.UserId
+    ORDER BY a.Date DESC, a.AttendanceId DESC;
+END //
+
+DELIMITER ;
+
+CALL get_all_attendance();
+
+
+
+
+
+<-----------------Leave Report---------------------->
+
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_leave_requests()
+BEGIN
+
+    SELECT
+        lr.LeaveRequestId,
+        lr.UserId,
+        u.FirstName,
+        u.LastName,
+        u.Email,
+
+        lr.LeaveTypeId,
+        mlt.LeaveType,
+
+        lr.StartDate,
+        lr.EndDate,
+        lr.NumberOfDays,
+        lr.Reason,
+        lr.ApprovedBy,
+        lr.Status,
+        lr.StatusHistory
+
+    FROM leaverequests lr
+
+    LEFT JOIN `user` u
+        ON lr.UserId = u.UserId
+
+    LEFT JOIN masterleavetypes mlt
+        ON lr.LeaveTypeId = mlt.LeaveTypeId
+
+    ORDER BY lr.StartDate DESC,
+             lr.LeaveRequestId DESC;
+
+END //
+
+DELIMITER ;
+
+CALL get_all_leave_requests();
+
+
+
+<-------------------Payslip Report----------------------->
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_payslips()
+BEGIN
+
+    SELECT
+        p.PayslipId,
+        p.UserId AS EmployeeId,
+
+        CONCAT(
+            COALESCE(u.FirstName, ''),
+            ' ',
+            COALESCE(u.LastName, '')
+        ) AS EmployeeName,
+
+        d.Name AS Department,
+        des.Name AS Designation,
+
+        p.Month,
+        p.Year,
+
+        COALESCE(es.TotalSalary, 0) AS TotalSalary,
+        COALESCE(e.TotalEarnings, 0) AS Earnings,
+        COALESCE(ed.TotalDeductions, 0) AS Deductions,
+        COALESCE(es.NetSalary, 0) AS NetPay,
+
+        p.PayslipPath,
+        p.GeneratedOn
+
+    FROM payslips p
+
+    LEFT JOIN `User` u
+        ON p.UserId = u.UserId
+
+    LEFT JOIN Departments d
+        ON u.DepartmentId = d.DepartmentId
+
+    LEFT JOIN Designations des
+        ON u.DesignationtId = des.DesignationId
+
+    LEFT JOIN employeesalaries es
+        ON es.SalaryId = (
+            SELECT es2.SalaryId
+            FROM employeesalaries es2
+            WHERE es2.UserId = p.UserId
+            ORDER BY es2.SalaryId DESC
+            LIMIT 1
+        )
+
+    LEFT JOIN (
+        SELECT
+            ee.SalaryId,
+            SUM(ee.EarningAmount) AS TotalEarnings
+        FROM employeeearnings ee
+        GROUP BY ee.SalaryId
+    ) e
+        ON e.SalaryId = es.SalaryId
+
+    LEFT JOIN (
+        SELECT
+            ed.SalaryId,
+            SUM(ed.DeductionAmount) AS TotalDeductions
+        FROM employeedeductions ed
+        GROUP BY ed.SalaryId
+    ) ed
+        ON ed.SalaryId = es.SalaryId
+
+    ORDER BY p.Year DESC, p.Month DESC, p.PayslipId DESC;
+
+END //
+
+DELIMITER ;
+
+CALL get_all_payslips();
+
+
+
+
+<--------------------Project Report---------------------------->
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_projects()
+BEGIN
+
+    SELECT
+        p.ProjectId,
+        p.ProjectName,
+        p.ClientName,
+        p.Description,
+        p.StartDate,
+        p.EndDate,
+        p.Priority,
+        p.ProjectValue,
+        p.PriceType,
+        p.FilePath,
+        p.LogoPath,
+        p.Status,
+        p.ManagerName,
+
+        COUNT(t.ProjectId) AS TotalTasks,
+
+        SUM(
+            CASE
+                WHEN t.Status = 'Completed'
+                THEN 1
+                ELSE 0
+            END
+        ) AS CompletedTasks,
+
+        SUM(
+            CASE
+                WHEN t.Status = 'Pending'
+                THEN 1
+                ELSE 0
+            END
+        ) AS PendingTasks,
+
+        SUM(
+            CASE
+                WHEN t.Status = 'Inprogress'
+                THEN 1
+                ELSE 0
+            END
+        ) AS InProgressTasks,
+
+        SUM(
+            CASE
+                WHEN t.Status = 'Onhold'
+                THEN 1
+                ELSE 0
+            END
+        ) AS OnHoldTasks,
+
+        SUM(
+            CASE
+                WHEN t.Deadline < NOW()
+                     AND t.Status <> 'Completed'
+                THEN 1
+                ELSE 0
+            END
+        ) AS OverdueTasks
+
+    FROM allprojects p
+
+    LEFT JOIN task t
+        ON t.ProjectId = p.ProjectId
+
+    GROUP BY
+        p.ProjectId,
+        p.ProjectName,
+        p.ClientName,
+        p.Description,
+        p.StartDate,
+        p.EndDate,
+        p.Priority,
+        p.ProjectValue,
+        p.PriceType,
+        p.FilePath,
+        p.LogoPath,
+        p.Status,
+        p.ManagerName
+
+    ORDER BY p.ProjectId DESC;
+
+END //
+
+DELIMITER ;
+
+call get_all_payslips();
+
+SELECT COUNT(*) FROM allprojects;
+
+SELECT COUNT(*) FROM task;
+
+SHOW INDEX FROM task;
+
+SELECT DISTINCT Status FROM allprojects;
+SELECT DISTINCT Status FROM task;
+
+CALL get_all_projects();
+
+
+
+
+<------------------Task Report---------------------->
+
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE get_all_tasks()
+BEGIN
+    SELECT
+        t.TaskId,
+        t.ProjectId,
+        t.Title,
+        t.Description,
+        t.Status,
+        t.Priority,
+        t.FilePath,
+        t.Deadline,
+        p.ProjectName
+    FROM task t
+    LEFT JOIN allprojects p
+        ON t.ProjectId = p.ProjectId
+    ORDER BY t.Deadline DESC, t.TaskId DESC;
+END //
+
+DELIMITER ;
+
+CALL get_all_tasks();
+
+
+
 
 
 

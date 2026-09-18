@@ -86,6 +86,139 @@
             display: flex;
             align-items: center;
         }
+
+
+        /* Task Report UI CSS - CSS only */
+        .main-wrapper .content {
+            background: #f7f8fb;
+        }
+
+        .main-wrapper .page-header h3,
+        .main-wrapper .page-header h2 {
+            color: #17345f;
+            font-weight: 700;
+        }
+
+        /* Summary cards */
+        .main-wrapper .card {
+            border: 1px solid #e5eaf2;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(31, 52, 79, 0.06);
+            background: #fff;
+        }
+
+        .main-wrapper .card .card-body {
+            padding: 24px;
+        }
+
+        .main-wrapper .row > .col-lg-6 > .row > .col-lg-6 .card {
+            min-height: 150px;
+            height: calc(100% - 24px);
+            margin-bottom: 24px;
+        }
+
+        .main-wrapper .row > .col-lg-6 > .row > .col-lg-6 .card h5 {
+            margin: 6px 0 0;
+            color: #0b1f3a;
+            font-size: 34px;
+            line-height: 1.1;
+            font-weight: 700;
+        }
+
+        .main-wrapper .row > .col-lg-6 > .row > .col-lg-6 .card .fs-14 {
+            color: #61718a;
+            font-size: 16px !important;
+        }
+
+        .main-wrapper .data-attributes {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 84px;
+            height: 60px;
+            margin: 0 0 0 auto;
+            border-radius: 50%;
+            background: #edf3ff;
+            color: #456083;
+            font-size: 13px;
+        }
+
+        /* Chart and task list cards */
+        .main-wrapper .card-header {
+            padding: 20px 24px;
+            background: #fff;
+            border-bottom: 1px solid #edf0f5;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .main-wrapper #taskReportTable {
+            margin-bottom: 0;
+        }
+
+        .main-wrapper #taskReportTable thead th {
+            background: #f5f7fb;
+            color: #53657e;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 14px 16px;
+            border-bottom: 1px solid #e5eaf2;
+            white-space: nowrap;
+        }
+
+        .main-wrapper #taskReportTable tbody td {
+            padding: 15px 16px;
+            color: #34445c;
+            vertical-align: middle;
+            border-color: #edf0f5;
+        }
+
+        .main-wrapper #taskReportTable tbody tr:hover {
+            background: #f8faff;
+        }
+
+        .main-wrapper .dataTables_filter input,
+        .main-wrapper .dataTables_length select {
+            border: 1px solid #dce3ee;
+            border-radius: 8px;
+            padding: 8px 12px;
+            background: #fff;
+        }
+
+        .main-wrapper .dataTables_paginate .paginate_button {
+            border-radius: 7px !important;
+            border: 1px solid transparent !important;
+            margin: 0 2px;
+        }
+
+        .main-wrapper .dataTables_paginate .paginate_button.current {
+            background: #1f5eff !important;
+            color: #fff !important;
+            border-color: #1f5eff !important;
+        }
+
+        @media (max-width: 991.98px) {
+            .main-wrapper .row > .col-lg-6 > .row > .col-lg-6 .card {
+                min-height: 135px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .main-wrapper .card .card-body,
+            .main-wrapper .card-header {
+                padding: 16px;
+            }
+
+            .main-wrapper .row > .col-lg-6 > .row > .col-lg-6 .card h5 {
+                font-size: 28px;
+            }
+
+            .main-wrapper .data-attributes {
+                width: 68px;
+                height: 52px;
+                font-size: 12px;
+            }
+        }
+
     </style>
 
 </head>
@@ -538,11 +671,7 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Daily Report</span>
-                            </a>
-                        </li>
+
 
                     </ul>
 
