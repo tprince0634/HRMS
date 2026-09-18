@@ -1,4 +1,5 @@
 package org.example.dao;
+
 import org.example.interfaces.RoleDAO;
 import org.example.model.Role;
 import org.example.util.DBConnection;
@@ -62,7 +63,6 @@ public class RoleDAOImpl implements RoleDAO {
                                 rs.getString("ModifiedBy")
                         );
 
-
                         // =========================
                         // CREATED AT
                         // =========================
@@ -76,7 +76,6 @@ public class RoleDAOImpl implements RoleDAO {
                                     createdAt.toLocalDateTime()
                             );
                         }
-
 
                         // =========================
                         // MODIFIED AT
@@ -107,6 +106,113 @@ public class RoleDAOImpl implements RoleDAO {
 
 
     // =========================================================
+    // GET ALL ROLES WITH STATUS
+    // =========================================================
+
+    @Override
+    public List<Role> getAllRolesWithStatus() throws SQLException {
+
+        List<Role> roles = new ArrayList<>();
+
+        String sql = "{CALL sp_get_all_roles_with_status()}";
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                CallableStatement statement =
+                        connection.prepareCall(sql)
+        ) {
+
+            boolean hasResultSet = statement.execute();
+
+            if (hasResultSet) {
+
+                try (ResultSet rs = statement.getResultSet()) {
+
+                    while (rs.next()) {
+
+                        Role role = new Role();
+
+                        // =========================
+                        // ROLE ID
+                        // =========================
+
+                        role.setRoleId(
+                                rs.getInt("RoleId")
+                        );
+
+                        // =========================
+                        // ROLE NAME
+                        // =========================
+
+                        role.setRoleName(
+                                rs.getString("RoleName")
+                        );
+
+                        // =========================
+                        // STATUS
+                        // =========================
+
+                        role.setStatus(
+                                rs.getString("Status")
+                        );
+
+                        // =========================
+                        // CREATED BY
+                        // =========================
+
+                        role.setCreatedBy(
+                                rs.getString("CreatedBy")
+                        );
+
+                        // =========================
+                        // MODIFIED BY
+                        // =========================
+
+                        role.setModifiedBy(
+                                rs.getString("ModifiedBy")
+                        );
+
+                        // =========================
+                        // CREATED AT
+                        // =========================
+
+                        Timestamp createdAt =
+                                rs.getTimestamp("CreatedAt");
+
+                        if (createdAt != null) {
+
+                            role.setCreatedAt(
+                                    createdAt.toLocalDateTime()
+                            );
+                        }
+
+                        // =========================
+                        // MODIFIED AT
+                        // =========================
+
+                        Timestamp modifiedAt =
+                                rs.getTimestamp("ModifiedAt");
+
+                        if (modifiedAt != null) {
+
+                            role.setModifiedAt(
+                                    modifiedAt.toLocalDateTime()
+                            );
+                        }
+
+                        roles.add(role);
+                    }
+                }
+            }
+        }
+
+        return roles;
+    }
+
+
+    // =========================================================
     // ADD ROLE
     // =========================================================
 
@@ -128,9 +234,7 @@ public class RoleDAOImpl implements RoleDAO {
         ) {
 
             statement.setString(1, roleName);
-
             statement.setString(2, status);
-
             statement.setString(3, createdBy);
 
             statement.execute();
@@ -169,11 +273,8 @@ public class RoleDAOImpl implements RoleDAO {
         ) {
 
             statement.setInt(1, roleId);
-
             statement.setString(2, roleName);
-
             statement.setString(3, status);
-
             statement.setString(4, modifiedBy);
 
             statement.execute();

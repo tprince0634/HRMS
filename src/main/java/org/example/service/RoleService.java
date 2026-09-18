@@ -3,22 +3,34 @@ package org.example.service;
 import org.example.dao.RoleDAOImpl;
 import org.example.model.Role;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class RoleService {
+
     private final RoleDAOImpl roleDAO;
 
     public RoleService() {
-       this.roleDAO  = new RoleDAOImpl();
+        roleDAO = new RoleDAOImpl();
     }
 
-    public List<Role> getAllRoles() {
-        return roleDAO.getAllRoles();
+    // =========================================================
+    // GET ALL ROLES WITH STATUS
+    // =========================================================
+
+    public List<Role> getAllRolesWithStatus() throws SQLException {
+        return roleDAO.getAllRolesWithStatus();
     }
 
-    public boolean addRole(String roleName,
-                           String status,
-                           String createdBy) {
+    // =========================================================
+    // ADD ROLE
+    // =========================================================
+
+    public boolean addRole(
+            String roleName,
+            String status,
+            String createdBy
+    ) {
 
         return roleDAO.addRole(
                 roleName,
@@ -27,10 +39,16 @@ public class RoleService {
         );
     }
 
-    public boolean updateRole(int roleId,
-                              String roleName,
-                              String status,
-                              String modifiedBy) {
+    // =========================================================
+    // UPDATE ROLE
+    // =========================================================
+
+    public boolean updateRole(
+            int roleId,
+            String roleName,
+            String status,
+            String modifiedBy
+    ) {
 
         return roleDAO.updateRole(
                 roleId,
@@ -40,7 +58,12 @@ public class RoleService {
         );
     }
 
+    // =========================================================
+    // DELETE ROLE
+    // =========================================================
+
     public boolean deleteRole(int roleId) {
+
         return roleDAO.deleteRole(roleId);
     }
 }

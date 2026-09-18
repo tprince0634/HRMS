@@ -1,0 +1,73 @@
+DROP PROCEDURE IF EXISTS sp_get_all_roles_with_status;
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_get_all_roles_with_status()
+BEGIN
+
+    SELECT
+        RoleId,
+        RoleName,
+        Status,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+    FROM `role`
+    ORDER BY RoleId ASC;
+
+END $$
+
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS sp_get_active_departments;
+
+DELIMITER $$
+CREATE PROCEDURE sp_get_active_departments()
+BEGIN
+    SELECT
+        DepartmentId,
+        Name,
+        NoOfEmployee,
+        status,
+        CreatedAt,
+        CreatedBy,
+        ModifiedBy,
+        ModifiedAt
+    FROM departments
+    WHERE status = 'Active'
+    ORDER BY DepartmentId DESC;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS sp_login_user $$
+
+CREATE PROCEDURE sp_login_user(
+    IN p_email VARCHAR(255),
+    IN p_password VARCHAR(255)
+)
+BEGIN
+
+    SELECT
+        u.UserId,
+        u.Email,
+        u.FirstName,
+        u.LastName,
+        u.RoleId,
+        r.RoleName,
+        u.Status
+    FROM `User` u
+    JOIN `Role` r
+        ON u.RoleId = r.RoleId
+    WHERE u.Email = p_email
+      AND u.PasswordHash = p_password;
+
+END $$
+
+DELIMITER ;
+
+

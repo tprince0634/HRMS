@@ -2,6 +2,7 @@ package org.example.interfaces;
 
 import org.example.model.Role;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface RoleDAO {
@@ -10,4 +11,5 @@ public interface RoleDAO {
     public boolean addRole(String roleName, String status, String createdBy);
     public boolean updateRole(int roleId, String roleName, String status, String modifiedBy);
     boolean deleteRole(int roleId);
+    List<Role> getAllRolesWithStatus() throws SQLException;
 }

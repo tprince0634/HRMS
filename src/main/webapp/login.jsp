@@ -56,7 +56,6 @@
                                             <p style="color:red;"><%= request.getAttribute("error") %></p>
                                             <% } %>
 
-
                                             <%
                                                 String errorMessage = (String) request.getAttribute("errorMessage");
                                                 if (errorMessage != null) {

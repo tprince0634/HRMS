@@ -4,7 +4,6 @@
 
 <%
     String contextPath = request.getContextPath();
-
     List<Role> roles =
             (List<Role>) request.getAttribute("roles");
 %>
@@ -584,6 +583,9 @@
 
         </div>
 
+        <!-- SIDEBAR -->
+        <%@ include file="/partials/sidebar/sidebar.jsp" %>
+
         <!-- ADMIN PROFILE -->
         <div class="modern-profile p-3 pb-0">
 
@@ -606,492 +608,6 @@
             </div>
 
         </div>
-
-        <!-- SIDEBAR MENU -->
-        <div class="sidebar-menu">
-
-            <ul>
-
-                <li class="menu-title">
-                    <span>MAIN MENU</span>
-                </li>
-
-                <!-- DASHBOARD -->
-                <li>
-                    <a href="${pageContext.request.contextPath}/Admin/dashboard">
-                        <i class="ti ti-smart-home"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-
-                <!-- EMPLOYEES -->
-                <li class="submenu active">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-users"></i>
-                        <span>Employees</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/AddDepartment">
-                                <span>Add Department</span>
-                            </a>
-                        </li>
-
-
-                        <li class="active">
-                            <a href="${pageContext.request.contextPath}/Employee/Role">
-                                <span>Add Role</span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/AddDesignation">
-                                <span>Add Designation</span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/EmployeeList">
-                                <span>Employee List</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/EmployeeGrid">
-                                <span>Employee Grid</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/EmployeeDetails">
-                                <span>Employee Details</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- ATTENDANCE -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-calendar-check"></i>
-                        <span>Attendance</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <span>Leaves</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <span>Apply Leave</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <span>Leave Details</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <span>Leave Approval</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Attendance (Admin)</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Timesheet</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- EVENTS -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-calendar-event"></i>
-                        <span>Events</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Add Event</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Add Master Event</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Event List</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- PAYROLL -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-cash"></i>
-                        <span>Payroll</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Add Employee Salary</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Master Payroll</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Employee Salary List</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Generate Payslips Monthly</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Transaction History</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- TRAINING -->
-                <!-- TRAINING -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-school"></i>
-                        <span>Training</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Trainer List</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Trainers</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/training-type">
-                                <span>Training Type</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-                <!-- DOCUMENTS -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-file-description"></i>
-                        <span>Documents</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li class="submenu">
-
-                            <a href="javascript:void(0);">
-                                <span>Upload Documents</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-
-                            <ul>
-
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <span>Upload Document</span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <span>Document List</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Generate Letter</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- MASTER DOCUMENT -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-files"></i>
-                        <span>Master Document</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Master Document</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Master Document List</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- PERFORMANCE & GOAL -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-chart-line"></i>
-                        <span>Performance &amp; Goal</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Performance</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Goals</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Appraisal</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Performance Report</span></a></li>
-                    </ul>
-                </li>
-
-                <!-- PROJECTS -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-briefcase"></i>
-                        <span>Projects</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Project</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Tasks</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Task Board</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- REPORTS -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-report-analytics"></i>
-                        <span>Reports</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/admin/employee-report">
-                                <span>Employee Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/admin/attendance-report">
-                                <span>Attendance Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Leave Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Payslip Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Task Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Daily Report</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- PROMOTIONS -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-trending-up"></i>
-                        <span>Promotions</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Add Promotion</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Promotion List</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Promotion History</span></a></li>
-                    </ul>
-                </li>
-
-                <!-- RESIGNATION -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-logout-2"></i>
-                        <span>Resignation</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Resignation Request</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Resignation List</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Exit Details</span></a></li>
-                    </ul>
-                </li>
-
-                <!-- TERMINATION -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-user-x"></i>
-                        <span>Termination</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Add Termination</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Termination List</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Termination History</span></a></li>
-                    </ul>
-                </li>
-
-                <!-- HELP & SUPPORT -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-headset"></i>
-                        <span>Help &amp; Supports</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Help Center</span></a></li>
-                        <li><a href="javascript:void(0);"><span>FAQs</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Contact Support</span></a></li>
-                    </ul>
-                </li>
-
-                <!-- TICKETS -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-ticket"></i>
-                        <span>Tickets</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Create Ticket</span></a></li>
-                        <li><a href="javascript:void(0);"><span>My Tickets</span></a></li>
-                        <li><a href="javascript:void(0);"><span>All Tickets</span></a></li>
-                    </ul>
-                </li>
-
-                <!-- LOGOUT -->
-                <li class="mt-2">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-logout"></i>
-                        <span>Logout</span>
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
 
     <!-- PAGE WRAPPER -->
     <div class="page-wrapper">
@@ -1372,14 +888,10 @@
                              ================================================= -->
 
                         <tbody id="roleTable">
-
-
                         <%
                             if (roles != null && !roles.isEmpty()) {
-
                                 for (Role role : roles) {
                         %>
-
 
                         <tr>
 
@@ -1428,13 +940,10 @@
                             <!-- CREATED BY -->
 
                             <td>
-
                                 <%= role.getCreatedBy() != null
                                         ? role.getCreatedBy()
                                         : "null" %>
-
                             </td>
-
 
                             <!-- MODIFIED BY -->
 
@@ -1689,7 +1198,6 @@
 
                         <div class="modal-footer">
 
-
                             <button
                                     type="button"
                                     class="btn btn-light me-2"
@@ -1705,7 +1213,6 @@
                                     class="btn btn-primary">
 
                                 Add Role
-
                             </button>
 
 
@@ -1736,7 +1243,6 @@
 
             <div class="modal-dialog modal-dialog-centered">
 
-
                 <div class="modal-content">
 
 
@@ -1762,12 +1268,9 @@
                     <!-- FORM -->
 
                     <form
-                            action="<%= contextPath %>/Employee/Role"
-                            method="post">
-
+                            action="<%= contextPath %>/Employee/Role" method="post">
 
                         <!-- ACTION -->
-
                         <input
                                 type="hidden"
                                 name="action"

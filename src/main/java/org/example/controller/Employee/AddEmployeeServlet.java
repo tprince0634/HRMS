@@ -1,15 +1,25 @@
 package org.example.controller.Employee;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 
 import org.example.service.UserServiceImpl;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024,      // 1 MB
+        maxFileSize = 5 * 1024 * 1024,         // 5 MB
+        maxRequestSize = 10 * 1024 * 1024      // 10 MB
+)
 @WebServlet("/Employee/AddEmployee")
 public class AddEmployeeServlet extends HttpServlet {
 
@@ -17,7 +27,6 @@ public class AddEmployeeServlet extends HttpServlet {
 
     @Override
     public void init() {
-
         userService = new UserServiceImpl();
     }
 
@@ -50,14 +59,20 @@ public class AddEmployeeServlet extends HttpServlet {
             String phoneNumber =
                     request.getParameter("phoneNumber");
 
+
             // =================================================
-            // ROLE / DEPARTMENT / DESIGNATION
+            // ROLE
             // =================================================
 
             int roleId =
                     Integer.parseInt(
                             request.getParameter("roleId")
                     );
+
+
+            // =================================================
+            // DEPARTMENT
+            // =================================================
 
             String departmentValue =
                     request.getParameter("departmentId");
@@ -68,6 +83,11 @@ public class AddEmployeeServlet extends HttpServlet {
                             ? null
                             : Integer.parseInt(departmentValue);
 
+
+            // =================================================
+            // DESIGNATION
+            // =================================================
+
             String designationValue =
                     request.getParameter("designationId");
 
@@ -76,6 +96,7 @@ public class AddEmployeeServlet extends HttpServlet {
                             designationValue.isBlank()
                             ? null
                             : Integer.parseInt(designationValue);
+
 
             // =================================================
             // DATES
@@ -86,6 +107,7 @@ public class AddEmployeeServlet extends HttpServlet {
 
             String dateOfBirth =
                     request.getParameter("dateOfBirth");
+
 
             // =================================================
             // OTHER INFORMATION
@@ -106,33 +128,141 @@ public class AddEmployeeServlet extends HttpServlet {
             String status =
                     request.getParameter("status");
 
+
             // =================================================
             // PROFILE PICTURE
             // =================================================
 
-            String profilePicture =
-                    "default-profile.png";
+            String profilePicture = "avatar-02.jpg";
+
+            Part profilePart =
+                    request.getPart("profileImage");
+
+
+            if (profilePart != null &&
+                    profilePart.getSize() > 0) {
+
+                String submittedFileName =
+                        profilePart.getSubmittedFileName();
+
+                String originalFileName =
+                        Paths.get(submittedFileName)
+                                .getFileName()
+                                .toString();
+
+
+                // ---------------------------------------------
+                // Validate extension
+                // ---------------------------------------------
+
+                String lowerFileName =
+                        originalFileName.toLowerCase();
+
+                if (!lowerFileName.endsWith(".jpg") &&
+                        !lowerFileName.endsWith(".jpeg") &&
+                        !lowerFileName.endsWith(".png") &&
+                        !lowerFileName.endsWith(".webp")) {
+
+                    request.setAttribute(
+                            "error",
+                            "Only JPG, JPEG, PNG and WEBP images are allowed."
+                    );
+
+                    request.getRequestDispatcher(
+                            "/WEB-INF/views/EmployeeList.jsp"
+                    ).forward(request, response);
+
+                    return;
+                }
+
+
+                // ---------------------------------------------
+                // Generate unique filename
+                // ---------------------------------------------
+
+                String extension =
+                        originalFileName.substring(
+                                originalFileName.lastIndexOf(".")
+                        );
+
+                String uniqueFileName =
+                        "employee_" +
+                                System.currentTimeMillis() +
+                                extension;
+
+
+                // ---------------------------------------------
+                // Upload directory
+                // ---------------------------------------------
+
+                String uploadPath =
+                        getServletContext()
+                                .getRealPath(
+                                        "/assets/img/profiles"
+                                );
+
+
+                File uploadDirectory =
+                        new File(uploadPath);
+
+
+                if (!uploadDirectory.exists()) {
+                    uploadDirectory.mkdirs();
+                }
+
+
+                // ---------------------------------------------
+                // Save actual image
+                // ---------------------------------------------
+
+                File savedFile =
+                        new File(
+                                uploadDirectory,
+                                uniqueFileName
+                        );
+
+                profilePart.write(
+                        savedFile.getAbsolutePath()
+                );
+
+
+                // ---------------------------------------------
+                // Store ONLY filename in database
+                // ---------------------------------------------
+
+                profilePicture =
+                        uniqueFileName;
+            }
+
 
             // =================================================
             // CREATED BY
             // =================================================
 
-            String createdBy =
-                    (String) request.getSession()
-                            .getAttribute("userEmail");
+            HttpSession session =
+                    request.getSession(false);
+
+            String createdBy = null;
+
+            if (session != null) {
+
+                createdBy =
+                        (String) session.getAttribute(
+                                "userEmail"
+                        );
+            }
 
             if (createdBy == null) {
                 createdBy = "Admin";
             }
 
+
             // =================================================
             // PASSWORD
             // =================================================
 
-            // If your existing registration already hashes
-            // passwords, USE THE SAME HASHING METHOD HERE.
-
             String passwordHash = password;
+
 
             // =================================================
             // SAVE EMPLOYEE
@@ -159,6 +289,11 @@ public class AddEmployeeServlet extends HttpServlet {
                             createdBy
                     );
 
+
+            // =================================================
+            // SUCCESS
+            // =================================================
+
             if (saved) {
 
                 response.sendRedirect(
@@ -166,17 +301,23 @@ public class AddEmployeeServlet extends HttpServlet {
                                 + "/Employee/EmployeeList"
                 );
 
-            } else {
-
-                request.setAttribute(
-                        "error",
-                        "Employee could not be added."
-                );
-
-                request.getRequestDispatcher(
-                        "/WEB-INF/views/EmployeeList.jsp"
-                ).forward(request, response);
+                return;
             }
+
+
+            // =================================================
+            // FAILURE
+            // =================================================
+
+            request.setAttribute(
+                    "error",
+                    "Employee could not be added."
+            );
+
+            request.getRequestDispatcher(
+                    "/WEB-INF/views/EmployeeList.jsp"
+            ).forward(request, response);
+
 
         } catch (Exception e) {
 

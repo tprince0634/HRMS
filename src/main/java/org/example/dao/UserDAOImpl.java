@@ -40,6 +40,7 @@ public class UserDAOImpl  implements UserDao {
                 user.setEmail(rs.getString("Email"));
                 user.setRoleId(rs.getInt("RoleId"));
                 user.setRoleName(rs.getString("RoleName"));
+                user.setStatus(rs.getString("Status"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,9 +146,7 @@ public class UserDAOImpl  implements UserDao {
             String status,
             String createdBy
     ) throws SQLException {
-
         String sql = "{CALL add_employee(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-
         try (
                 Connection connection = DBConnection.getConnection();
                 CallableStatement statement =
@@ -197,7 +196,6 @@ public class UserDAOImpl  implements UserDao {
 
     @Override
     public List<Map<String, Object>> getAllRoles() throws SQLException {
-
         List<Map<String, Object>> roles = new ArrayList<>();
 
         String sql = "{CALL sp_get_all_roles()}";
@@ -211,10 +209,8 @@ public class UserDAOImpl  implements UserDao {
             while (rs.next()) {
 
                 Map<String, Object> role = new HashMap<>();
-
                 role.put("RoleId", rs.getInt("RoleId"));
                 role.put("RoleName", rs.getString("RoleName"));
-
                 roles.add(role);
             }
         }
@@ -229,31 +225,25 @@ public class UserDAOImpl  implements UserDao {
 
     @Override
     public List<Map<String, Object>> getAllDepartments() throws SQLException {
-
         List<Map<String, Object>> departments = new ArrayList<>();
 
         String sql = "{CALL sp_get_all_departments()}";
-
         try (
                 Connection con = DBConnection.getConnection();
                 CallableStatement statement = con.prepareCall(sql);
                 ResultSet rs = statement.executeQuery()
         ) {
-
             while (rs.next()) {
-
                 Map<String, Object> department = new HashMap<>();
 
                 department.put(
                         "DepartmentId",
                         rs.getInt("DepartmentId")
                 );
-
                 department.put(
                         "Name",
                         rs.getString("Name")
                 );
-
                 departments.add(department);
             }
         }
@@ -295,6 +285,12 @@ public class UserDAOImpl  implements UserDao {
                         rs.getString("Name")
                 );
 
+                // ADD THIS
+                designation.put(
+                        "status",
+                        rs.getString("status")
+                );
+
                 designations.add(designation);
             }
         }
@@ -304,47 +300,177 @@ public class UserDAOImpl  implements UserDao {
 
 
 
+
+
     // ============================================================
 // GET ALL MANAGERS
 // ============================================================
 
     @Override
-    public List<Map<String, Object>> getAllManagers() throws SQLException {
+    public List<Map<String, Object>> getAllManagers() {
 
         List<Map<String, Object>> managers = new ArrayList<>();
 
-        String sql = "{CALL get_all_managers()}";
-
         try (
                 Connection con = DBConnection.getConnection();
-                CallableStatement statement = con.prepareCall(sql);
-                ResultSet rs = statement.executeQuery()
+                CallableStatement cs =
+                        con.prepareCall("{CALL get_all_managers()}");
+                ResultSet rs = cs.executeQuery()
         ) {
 
             while (rs.next()) {
 
                 Map<String, Object> manager = new HashMap<>();
 
-                manager.put(
-                        "UserId",
-                        rs.getInt("UserId")
-                );
-
-                manager.put(
-                        "FirstName",
-                        rs.getString("FirstName")
-                );
-
-                manager.put(
-                        "LastName",
-                        rs.getString("LastName")
-                );
+                manager.put("UserId", rs.getInt("UserId"));
+                manager.put("FirstName", rs.getString("FirstName"));
+                manager.put("LastName", rs.getString("LastName"));
 
                 managers.add(manager);
             }
-        }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return managers;
     }
 
+
+    @Override
+    public List<Map<String, Object>> getAllActiveDepartments() {
+
+        List<Map<String, Object>> departments = new ArrayList<>();
+
+        String sql = "{CALL sp_get_active_departments()}";
+
+        try (
+                Connection connection = DBConnection.getConnection();
+                CallableStatement statement = connection.prepareCall(sql);
+                ResultSet rs = statement.executeQuery()
+        ) {
+
+            while (rs.next()) {
+
+                Map<String, Object> department = new HashMap<>();
+
+                department.put("DepartmentId",
+                        rs.getInt("DepartmentId"));
+
+                department.put("Name",
+                        rs.getString("Name"));
+
+                department.put("NoOfEmployee",
+                        rs.getInt("NoOfEmployee"));
+
+                department.put("Status",
+                        rs.getString("status"));
+
+                department.put("CreatedAt",
+                        rs.getTimestamp("CreatedAt"));
+
+                department.put("CreatedBy",
+                        rs.getString("CreatedBy"));
+
+                department.put("ModifiedBy",
+                        rs.getString("ModifiedBy"));
+
+                department.put("ModifiedAt",
+                        rs.getTimestamp("ModifiedAt"));
+
+                departments.add(department);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return departments;
+    }
+
+    @Override
+    public User getEmployeeById(int userId) {
+        User user = null;
+        String sql = """
+            SELECT
+                UserId,
+                FirstName,
+                LastName,
+                Email,
+                PhoneNumber,
+                Status
+            FROM `user`
+            WHERE UserId = ?
+            """;
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+
+            ps.setInt(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+
+                    user = new User();
+
+                    user.setUserId(rs.getInt("UserId"));
+                    user.setFirstName(rs.getString("FirstName"));
+                    user.setLastName(rs.getString("LastName"));
+                    user.setEmail(rs.getString("Email"));
+                    user.setPhoneNumber(rs.getString("PhoneNumber"));
+                    user.setStatus(rs.getString("Status"));
+                }
+            }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+
+
+    @Override
+    public void updateEmployee(
+            int userId,
+            String firstName,
+            String lastName,
+            String email,
+            String phoneNumber,
+            String status
+    ) {
+
+        String sql = """
+            UPDATE `user`
+            SET
+                FirstName = ?,
+                LastName = ?,
+                Email = ?,
+                PhoneNumber = ?,
+                Status = ?
+            WHERE UserId = ?
+            """;
+
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+
+            ps.setString(1, firstName);
+            ps.setString(2, lastName);
+            ps.setString(3, email);
+            ps.setString(4, phoneNumber);
+            ps.setString(5, status);
+            ps.setInt(6, userId);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+    }
 }

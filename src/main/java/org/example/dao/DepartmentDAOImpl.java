@@ -4,11 +4,7 @@ import org.example.interfaces.DepartmentDAO;
 import org.example.model.Department;
 import org.example.util.DBConnection;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +16,8 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 
     @Override
     public List<Department> getAllDepartments() {
-
         List<Department> departments = new ArrayList<>();
-
         String sql = "{CALL sp_get_all_departments()}";
-
         try (
                 Connection connection = DBConnection.getConnection();
                 CallableStatement statement =
@@ -223,4 +216,28 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             return false;
         }
     }
+
+
+
+    @Override
+    public List<Department> getAllActiveDepartments() {
+        List<Department> departments = new ArrayList<>();
+        String sql = "SELECT DepartmentId, Name FROM Departments WHERE Status = 'Active'";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Department department = new Department();
+                department.setDepartmentId(rs.getInt("DepartmentId"));
+                department.setName(rs.getString("Name"));
+                departments.add(department);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return departments;
+    }
+
+
+
 }

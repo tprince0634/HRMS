@@ -19,7 +19,6 @@ public class DepartmentService {
     // =====================================================
 
     public List<Department> getAllDepartments() {
-
         return departmentDAO.getAllDepartments();
     }
 
@@ -73,5 +72,9 @@ public class DepartmentService {
         return departmentDAO.deleteDepartment(
                 departmentId
         );
+    }
+
+    public List<Department> getAllActiveDepartments() {
+        return departmentDAO.getAllActiveDepartments();
     }
 }

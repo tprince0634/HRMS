@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpSession;
 import org.example.model.User;
 import org.example.service.AuthService;
 import org.example.service.AuthServiceImpl;
-
 import java.io.IOException;
 
 @WebServlet("/login")
@@ -24,79 +23,133 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
+            throws ServletException, IOException {
+
         request.getRequestDispatcher("/login.jsp")
                 .forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Get login details
+        // =========================================
+        // 1. GET LOGIN DETAILS
+        // =========================================
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Authenticate user
+        // =========================================
+        // 2. AUTHENTICATE USER
+        // =========================================
+
         User user = authService.authenticate(email, password);
 
-        // Login failed
+
+        // =========================================
+        // 3. LOGIN FAILED
+        // =========================================
+
         if (user == null) {
-            request.setAttribute("errorMessage", "Invalid email or password!");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.setAttribute(
+                    "errorMessage", "Invalid email or password!"
+            );
+            request.getRequestDispatcher("/login.jsp")
+                    .forward(request, response);
             return;
         }
 
-        // Login successful
+        // 4. CHECK USER STATUS
+//     =========================================
+
+        if (!"ACTIVE".equalsIgnoreCase(user.getStatus())) {
+            request.setAttribute(
+                    "errorMessage",
+                    "Your account is inactive. Please contact the administrator."
+            );
+            request.getRequestDispatcher("/login.jsp")
+                    .forward(request, response);
+            return;
+        }
+
+
+
+        // =========================================
+        // 4. GET ROLE
+        // =========================================
+
+        String role = user.getRoleName();
+        // Safety check
+        if (role == null || role.trim().isEmpty()) {
+            request.setAttribute(
+                    "errorMessage", "User role is not assigned!"
+            );
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+
+            return;
+        }
+        role = role.trim();
+
+        // =========================================
+        // 5. CREATE SESSION
+        // =========================================
+
         HttpSession session = request.getSession();
+
+        // =========================================
+        // 6. STORE USER INFORMATION IN SESSION
+        // =========================================
+
         session.setAttribute("userId", user.getUserId());
         session.setAttribute("userEmail", user.getEmail());
-        session.setAttribute("userRole", user.getRoleName());
+        session.setAttribute("userRole", role);
         session.setAttribute("firstName", user.getFirstName());
         session.setAttribute("lastName", user.getLastName());
 
-        // Get role
-        String role = user.getRoleName();
+        // Store complete User object also
+        session.setAttribute("loggedInUser", user);
 
-        // ==========================
-        // ADMIN
-        // ==========================
+        // =========================================
+        // 7. ROLE BASED REDIRECTION
+        // =========================================
+
         if ("Admin".equalsIgnoreCase(role)) {
             response.sendRedirect(
-                    request.getContextPath() +
-                            "/Admin/dashboard"
+                    request.getContextPath()
+                            + "/Admin/dashboard"
             );
-        }
 
-        // ==========================
-        // MANAGER
-        // ==========================
-        else if ("Manager".equalsIgnoreCase(role)) {
-            response.sendRedirect(
-                    request.getContextPath() +
-                            "/Manager/dashboard"
-            );
-        }
-
-        // ==========================
-        // EMPLOYEE
-        // ==========================
-        else if ("Employee".equalsIgnoreCase(role)) {
-            response.sendRedirect(
-                    request.getContextPath() +
-                            "/Employee/dashboard"
-            );
-        }
-
-        // ==========================
-        // UNKNOWN ROLE
-        // ==========================
-        else {
+        } else if ("Manager".equalsIgnoreCase(role)) {
 
             response.sendRedirect(
-                    request.getContextPath() +
-                            "/index.jsp"
+                    request.getContextPath()
+                            + "/Manager/dashboard"
             );
+
+        } else if ("Employee".equalsIgnoreCase(role)) {
+
+            response.sendRedirect(
+                    request.getContextPath()
+                            + "/Employee/dashboard"
+            );
+
+        } else {
+
+            // Unknown role
+            session.invalidate();
+
+            request.setAttribute(
+                    "errorMessage",
+                    "Invalid user role!"
+            );
+
+            request.getRequestDispatcher("/login.jsp")
+                    .forward(request, response);
         }
+
     }
 }

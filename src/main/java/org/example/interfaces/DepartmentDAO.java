@@ -24,4 +24,6 @@ public interface DepartmentDAO {
     boolean deleteDepartment(
             int departmentId
     );
+
+    List<Department> getAllActiveDepartments();
 }

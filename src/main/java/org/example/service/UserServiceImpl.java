@@ -1,6 +1,8 @@
 package org.example.service;
 
 import org.example.dao.UserDAOImpl;
+import org.example.model.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -10,7 +12,10 @@ public class UserServiceImpl {
 
     private UserDAOImpl userDAO;
 
-    // Constructor
+    // ============================================================
+    // CONSTRUCTOR
+    // ============================================================
+
     public UserServiceImpl() {
         this.userDAO = new UserDAOImpl();
     }
@@ -22,6 +27,7 @@ public class UserServiceImpl {
     public List<Map<String, Object>> getAllEmployees() {
 
         try {
+
             return userDAO.getAllEmployees();
 
         } catch (SQLException e) {
@@ -29,7 +35,8 @@ public class UserServiceImpl {
             e.printStackTrace();
 
             throw new RuntimeException(
-                    "Unable to fetch employees", e
+                    "Unable to fetch employees",
+                    e
             );
         }
     }
@@ -42,7 +49,7 @@ public class UserServiceImpl {
             String firstName,
             String lastName,
             String email,
-            String passwordHash,
+            String password,
             String phoneNumber,
             int roleId,
             Integer departmentId,
@@ -57,6 +64,12 @@ public class UserServiceImpl {
             String status,
             String createdBy
     ) {
+
+        // Hash the plain-text password before storing it
+        String passwordHash = BCrypt.hashpw(
+                password,
+                BCrypt.gensalt(12)
+        );
 
         try {
 
@@ -85,56 +98,102 @@ public class UserServiceImpl {
             e.printStackTrace();
 
             throw new RuntimeException(
-                    "Unable to add employee", e
+                    "Unable to add employee",
+                    e
             );
         }
     }
 
+    // ============================================================
+    // GET ALL ROLES
+    // ============================================================
+
     public List<Map<String, Object>> getAllRoles() {
 
         try {
+
             return userDAO.getAllRoles();
 
         } catch (SQLException e) {
+
             e.printStackTrace();
-            throw new RuntimeException("Unable to fetch roles", e);
+
+            throw new RuntimeException(
+                    "Unable to fetch roles",
+                    e
+            );
         }
     }
 
+    // ============================================================
+    // GET ALL DEPARTMENTS
+    // Used for Department Management
+    // Fetches Active + Inactive
+    // ============================================================
 
     public List<Map<String, Object>> getAllDepartments() {
 
         try {
+
             return userDAO.getAllDepartments();
 
         } catch (SQLException e) {
+
             e.printStackTrace();
-            throw new RuntimeException("Unable to fetch departments", e);
+
+            throw new RuntimeException(
+                    "Unable to fetch departments",
+                    e
+            );
         }
     }
 
+    // ============================================================
+    // GET ACTIVE DEPARTMENTS
+    // Used for Employee Add/Edit dropdown
+    // Fetches ONLY Active departments
+    // ============================================================
+
+    public List<Map<String, Object>> getAllActiveDepartments() throws SQLException {
+        return userDAO.getAllActiveDepartments();
+    }
+
+    // ============================================================
+    // GET ALL DESIGNATIONS
+    // ============================================================
 
     public List<Map<String, Object>> getAllDesignations() {
 
         try {
+
             return userDAO.getAllDesignations();
 
         } catch (SQLException e) {
+
             e.printStackTrace();
-            throw new RuntimeException("Unable to fetch designations", e);
+
+            throw new RuntimeException(
+                    "Unable to fetch designations",
+                    e
+            );
         }
     }
 
+    // ============================================================
+    // GET ALL MANAGERS
+    // ============================================================
 
     public List<Map<String, Object>> getAllManagers() {
+        return userDAO.getAllManagers();
 
-        try {
-            return userDAO.getAllManagers();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Unable to fetch managers", e);
-        }
     }
 
+
+    public void updateEmployee(int userId, String firstName, String lastName, String email, String phoneNumber, String status) {
+        userDAO.updateEmployee(userId, firstName, lastName, email, phoneNumber, status);
+    }
+
+    public User getEmployeeById(int userId) {
+        return userDAO.getEmployeeById(userId);
+    }
 }

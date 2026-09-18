@@ -24,31 +24,6 @@ public class AdminDashboardServlet extends HttpServlet {
                          HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Get existing session
-        HttpSession session = request.getSession(false);
-
-        // Check login
-        if (session == null ||
-                session.getAttribute("userId") == null) {
-
-            response.sendRedirect(
-                    request.getContextPath() + "/login"
-            );
-            return;
-        }
-
-        // Check role
-        String userRole =
-                (String) session.getAttribute("userRole");
-
-        if (userRole == null ||
-                !"Admin".equalsIgnoreCase(userRole)) {
-
-            response.sendRedirect(
-                    request.getContextPath() + "/login"
-            );
-            return;
-        }
 
         // Dashboard data
         request.setAttribute(

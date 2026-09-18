@@ -38,4 +38,17 @@ public interface UserDao {
     List<Map<String, Object>> getAllDesignations() throws SQLException;
 
     List<Map<String, Object>> getAllManagers() throws SQLException;
+
+    List<Map<String, Object>> getAllActiveDepartments();
+
+    User getEmployeeById(int userId);
+
+    void updateEmployee(
+            int userId,
+            String firstName,
+            String lastName,
+            String email,
+            String phoneNumber,
+            String status
+    );
 }

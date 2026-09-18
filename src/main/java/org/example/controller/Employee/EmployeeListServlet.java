@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.servlet.http.HttpSession;
+import org.example.model.Designation;
 import org.example.service.UserServiceImpl;
 
 import java.io.IOException;
@@ -41,17 +43,15 @@ public class EmployeeListServlet extends HttpServlet {
             // FETCH DROPDOWN DATA FROM DATABASE
             // =================================================
 
-            List<Map<String, Object>> roles =
-                    userService.getAllRoles();
+            List<Map<String, Object>> roles = userService.getAllRoles();
 
-            List<Map<String, Object>> departments =
-                    userService.getAllDepartments();
 
-            List<Map<String, Object>> designations =
-                    userService.getAllDesignations();
+            List<Map<String, Object>> departments = userService.getAllActiveDepartments();
+            request.setAttribute("departments", departments);
 
-            List<Map<String, Object>> managers =
-                    userService.getAllManagers();
+            List<Map<String, Object>> designations = userService.getAllDesignations();
+
+            List<Map<String, Object>> managers = userService.getAllManagers();
 
             // =================================================
             // SEND DATA TO JSP

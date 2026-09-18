@@ -28,7 +28,6 @@ public class DepartmentServlet extends HttpServlet {
         departmentService = new DepartmentService();
     }
 
-
     // =====================================================
     // GET
     // =====================================================
@@ -39,14 +38,8 @@ public class DepartmentServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
 
-        List<Department> departments =
-                departmentService.getAllDepartments();
-
-        request.setAttribute(
-                "departments",
-                departments
-        );
-
+        List<Department> departments = departmentService.getAllDepartments();
+        request.setAttribute("departments", departments);
         request.getRequestDispatcher(
                 "/views/admin/department.jsp"
         ).forward(
@@ -127,15 +120,11 @@ public class DepartmentServlet extends HttpServlet {
         // =================================================
 
         else if ("delete".equals(action)) {
-
             String id =
                     request.getParameter("departmentId");
-
             if (id != null && !id.isBlank()) {
-
                 int departmentId =
                         Integer.parseInt(id);
-
                 departmentService.deleteDepartment(
                         departmentId
                 );

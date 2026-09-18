@@ -10,6 +10,7 @@ import org.example.model.Role;
 import org.example.service.RoleService;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/Employee/Role")
@@ -26,7 +27,12 @@ public class RoleServlet extends HttpServlet {
                          HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Role> roles = roleService.getAllRoles();
+        List<Role> roles = null;
+        try {
+            roles = roleService.getAllRolesWithStatus();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         request.setAttribute("roles", roles);
         request.getRequestDispatcher(
                 "/views/admin/role.jsp"

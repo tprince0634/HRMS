@@ -278,525 +278,8 @@
 <div class="main-wrapper">
 
 
-
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar">
-
-        <div class="sidebar-logo">
-
-            <a href="${pageContext.request.contextPath}/admin/dashboard"
-               class="logo logo-normal">
-                <img src="${pageContext.request.contextPath}/assets/img/logo.svg"
-                     alt="HRMS Logo">
-            </a>
-
-            <a href="${pageContext.request.contextPath}/admin/dashboard"
-               class="logo-small">
-                <img src="${pageContext.request.contextPath}/assets/img/logo-small.svg"
-                     alt="HRMS Logo">
-            </a>
-
-            <a href="${pageContext.request.contextPath}/admin/dashboard"
-               class="dark-logo">
-                <img src="${pageContext.request.contextPath}/assets/img/logo-white.svg"
-                     alt="HRMS Logo">
-            </a>
-
-        </div>
-
-        <!-- ADMIN PROFILE -->
-        <div class="modern-profile p-3 pb-0">
-
-            <div class="text-center rounded bg-light p-3 mb-4 user-profile">
-
-                <div class="avatar avatar-lg online mb-3">
-                    <img src="${pageContext.request.contextPath}/assets/img/profiles/avatar-02.jpg"
-                         alt="Admin Profile"
-                         class="img-fluid rounded-circle">
-                </div>
-
-                <h6 class="fs-12 fw-normal mb-1">
-                    Admin
-                </h6>
-
-                <p class="fs-10 mb-0">
-                    Administrator
-                </p>
-
-            </div>
-
-        </div>
-
-        <!-- SIDEBAR MENU -->
-        <div class="sidebar-menu">
-
-            <ul>
-
-                <li class="menu-title">
-                    <span>MAIN MENU</span>
-                </li>
-
-                <!-- DASHBOARD -->
-                <li class="active">
-                    <a href="${pageContext.request.contextPath}/Admin/dashboard">
-                        <i class="ti ti-smart-home"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-
-                <!-- EMPLOYEES -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-users"></i>
-                        <span>Employees</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/AddDepartment">
-                                <span>Add Department</span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/Role">
-                                <span>Add Role</span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/AddDesignation">
-                                <span>Add Designation</span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/EmployeeList">
-                                <span>Employee List</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/EmployeeGrid">
-                                <span>Employee Grid</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/Employee/EmployeeDetails">
-                                <span>Employee Details</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- ATTENDANCE -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-calendar-check"></i>
-                        <span>Attendance</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <span>Leaves</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <span>Apply Leave</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <span>Leave Details</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <span>Leave Approval</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Attendance (Admin)</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Timesheet</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- EVENTS -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-calendar-event"></i>
-                        <span>Events</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <!-- ADD EVENT -->
-                        <li>
-                            <a href="${pageContext.request.contextPath}/admin/events?action=add">
-                                <span>Add Event</span>
-                            </a>
-                        </li>
-
-                        <!-- ADD MASTER EVENT -->
-                        <li>
-                            <a href="${pageContext.request.contextPath}/admin/event-types">
-                                <span>Add Master Event</span>
-                            </a>
-                        </li>
-
-                        <!-- EVENT LIST -->
-                        <li>
-                            <a href="${pageContext.request.contextPath}/admin/events?action=list">
-                                <span>Event List</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
-
-                <!-- PAYROLL -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-cash"></i>
-                        <span>Payroll</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Add Employee Salary</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Master Payroll</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Employee Salary List</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Generate Payslips Monthly</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Transaction History</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- TRAINING -->
-                <!-- TRAINING -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-school"></i>
-                        <span>Training</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/trainerList">
-                                <span>Trainer List</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Trainers</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/training-type">
-                                <span>Training Type</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-                <!-- DOCUMENTS -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-file-description"></i>
-                        <span>Documents</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li class="submenu">
-
-                            <a href="javascript:void(0);">
-                                <span>Upload Documents</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-
-                            <ul>
-
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/uploadFile">
-                                        <span>Upload Document</span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/documentList">
-                                        <span>Document List</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Generate Letter</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- MASTER DOCUMENT -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-files"></i>
-                        <span>Master Document</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Master Document</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Master Document List</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- PERFORMANCE & GOAL -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-chart-line"></i>
-                        <span>Performance &amp; Goal</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Performance</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Goals</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Appraisal</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Performance Report</span></a></li>
-                    </ul>
-                </li>
-
-                <!-- PROJECTS -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-briefcase"></i>
-                        <span>Projects</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Project</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Tasks</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Task Board</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- REPORTS -->
-                <li class="submenu">
-
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-report-analytics"></i>
-                        <span>Reports</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/admin/employee-report">
-                                <span>Employee Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="${pageContext.request.contextPath}/admin/attendance-report">
-                                <span>Attendance Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Leave Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Payslip Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Task Report</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span>Daily Report</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <!-- PROMOTIONS -->
-                <li>
-                    <a href="${pageContext.request.contextPath}/promotion">
-                        <i class="ti ti-trending-up"></i>
-                        <span>Promotions</span>
-                    </a>
-                </li>
-
-                <!-- RESIGNATION -->
-                <li>
-                    <a href="${pageContext.request.contextPath}/resignation">
-                        <i class="ti ti-logout-2"></i>
-                        <span>Resignation</span>
-                    </a>
-                </li>
-                <!-- TERMINATION -->
-                <li>
-                    <a href="${pageContext.request.contextPath}/termination">
-                        <i class="ti ti-user-x"></i>
-                        <span>Termination</span>
-                    </a>
-                </li>
-
-                <!-- HELP & SUPPORT -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-headset"></i>
-                        <span>Help &amp; Supports</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Help Center</span></a></li>
-                        <li><a href="javascript:void(0);"><span>FAQs</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Contact Support</span></a></li>
-                    </ul>
-                </li>
-
-                <!-- TICKETS -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-ticket"></i>
-                        <span>Tickets</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Create Ticket</span></a></li>
-                        <li><a href="javascript:void(0);"><span>My Tickets</span></a></li>
-                        <li><a href="javascript:void(0);"><span>All Tickets</span></a></li>
-                    </ul>
-                </li>
-
-                <!-- LOGOUT -->
-                <li class="mt-2">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-logout"></i>
-                        <span>Logout</span>
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
-
-
+    <%@ include file="/partials/sidebar/sidebar.jsp" %>
 
     <!-- =====================================================
          PAGE WRAPPER
@@ -850,15 +333,12 @@
 
 
                 <!-- ADD EMPLOYEE -->
-
                 <div class="mt-3 mt-md-0">
-
                     <button type="button"
                             class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
                         <i class="ti ti-plus me-1"></i>
                         Add Employee
                     </button>
-
                 </div>
 
             </div>
@@ -1081,10 +561,9 @@
 
 
                         <!-- START DATE -->
-
                         <div class="col-lg-2 col-md-6">
 
-                            <label class="form-label">
+                            <label for="startDate" class="form-label">
                                 Start Date
                             </label>
 
@@ -1095,12 +574,10 @@
 
                         </div>
 
-
                         <!-- END DATE -->
-
                         <div class="col-lg-2 col-md-6">
 
-                            <label class="form-label">
+                            <label for="endDate" class="form-label">
                                 End Date
                             </label>
 
@@ -1133,7 +610,6 @@
                                         var="employee">
 
                                     <c:if test="${not empty employee.designationName}">
-
                                         <option value="${employee.designationName}">
                                                 ${employee.designationName}
                                         </option>
@@ -1263,6 +739,10 @@
                                 Status
                             </th>
 
+                            <th>
+                                Action
+                            </th>
+
                         </tr>
 
                         </thead>
@@ -1302,7 +782,6 @@
                                                 class="employee-avatar"
 
                                                 src="${pageContext.request.contextPath}/assets/img/profiles/${employee.profilePicture}"
-
                                                 onerror="this.src='${pageContext.request.contextPath}/assets/img/profiles/avatar-02.jpg'"
 
                                                 alt="Employee">
@@ -1402,6 +881,23 @@
                                 </td>
 
 
+                                <!-- ACTION -->
+
+                                <td>
+
+                                    <button
+                                            type="button"
+                                            class="btn btn-sm btn-outline-primary"
+                                            onclick="openEditEmployeeModal('${employee.userId}')">
+
+                                        <i class="ti ti-edit me-1"></i>
+                                        Edit
+
+                                    </button>
+
+                                </td>
+
+
                             </tr>
 
 
@@ -1455,6 +951,7 @@
             <!-- FORM -->
 
             <form method="post"
+                  enctype="multipart/form-data"
                   action="${pageContext.request.contextPath}/Employee/AddEmployee">
 
 
@@ -1478,10 +975,13 @@
 
                         <input type="file"
                                id="profileImage"
+                               name="profileImage"
                                class="form-control"
-                               accept="image/*"
+                               accept="image/jpeg,image/png,image/jpg,image/webp"
                                style="max-width:300px;margin:auto;"
-                               onchange="previewProfile(event)">
+                               onchange="previewProfile(event)"
+                               required>
+
 
                     </div>
 
@@ -1553,6 +1053,7 @@
                         </div>
 
 
+
                         <!-- JOINING DATE -->
 
                         <div class="col-md-6">
@@ -1563,7 +1064,9 @@
 
                             <input type="date"
                                    name="dateOfJoining"
+                                   id="dateOfJoining"
                                    class="form-control"
+                                   max="<%= java.time.LocalDate.now() %>"
                                    required>
 
                         </div>
@@ -1594,9 +1097,7 @@
                             </label>
 
                             <select class="form-select" name="roleId" required>
-
                                 <option value="">Select Role</option>
-
                                 <c:forEach var="role" items="${roles}">
                                     <option value="${role.RoleId}">
                                             ${role.RoleName}
@@ -1610,23 +1111,17 @@
                         <!-- DEPARTMENT -->
 
                         <div class="col-md-6">
-
                             <label class="form-label">
                                 Department
                             </label>
-
                             <select class="form-select" name="departmentId" required>
-
                                 <option value="">Select Department</option>
-
                                 <c:forEach var="department" items="${departments}">
                                     <option value="${department.DepartmentId}">
                                             ${department.Name}
                                     </option>
                                 </c:forEach>
-
                             </select>
-
                         </div>
 
 
@@ -1638,17 +1133,16 @@
                                 Manager
                             </label>
 
-                            <select class="form-select" name="reportingManager">
+                            <select class="form-select"
+                                    name="reportingManager"
+                                    required>
                                 <option value="">Select Manager</option>
-
                                 <c:forEach var="manager" items="${managers}">
                                     <option value="${manager.UserId}">
                                             ${manager.FirstName} ${manager.LastName}
                                     </option>
                                 </c:forEach>
-
                             </select>
-
                         </div>
 
 
@@ -1662,16 +1156,19 @@
 
                             <select class="form-select" name="designationId" required>
 
-                                <option value="">Select Designation</option>
+                                <option value="">
+                                    Select Designation
+                                </option>
 
                                 <c:forEach var="designation" items="${designations}">
-                                    <option value="${designation.DesignationId}">
-                                            ${designation.Name}
-                                    </option>
+                                    <c:if test="${designation.status eq 'Active'}">
+                                        <option value="${designation.DesignationId}">
+                                                ${designation.Name}
+                                        </option>
+                                    </c:if>
                                 </c:forEach>
 
                             </select>
-
                         </div>
 
 
@@ -1818,6 +1315,180 @@
 
 
 <!-- =========================================================
+     EDIT EMPLOYEE MODAL
+     ========================================================= -->
+
+<div class="modal fade"
+     id="editEmployeeModal"
+     tabindex="-1"
+     aria-labelledby="editEmployeeModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-xl">
+
+        <div class="modal-content">
+
+            <!-- HEADER -->
+
+            <div class="modal-header">
+
+                <h5 class="modal-title"
+                    id="editEmployeeModalLabel">
+                    Edit Employee
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                </button>
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <form method="post"
+                  action="${pageContext.request.contextPath}/Employee/EditEmployee">
+
+                <input type="hidden"
+                       name="userId"
+                       id="editUserId">
+
+                <div class="modal-body">
+
+                    <div class="row g-3">
+
+                        <!-- FIRST NAME -->
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                First Name *
+                            </label>
+
+                            <input type="text"
+                                   name="firstName"
+                                   id="editFirstName"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+                        <!-- LAST NAME -->
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Last Name *
+                            </label>
+
+                            <input type="text"
+                                   name="lastName"
+                                   id="editLastName"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Email *
+                            </label>
+
+                            <input type="email"
+                                   name="email"
+                                   id="editEmail"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Phone Number *
+                            </label>
+
+                            <input type="text"
+                                   name="phoneNumber"
+                                   id="editPhoneNumber"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Status *
+                            </label>
+
+                            <select name="status"
+                                    id="editStatus"
+                                    class="form-select"
+                                    required>
+
+                                <option value="Active">
+                                    Active
+                                </option>
+
+                                <option value="Inactive">
+                                    Inactive
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FOOTER -->
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+
+                        Cancel
+
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="ti ti-device-floppy me-1"></i>
+                        Update Employee
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
      JAVASCRIPT
      ========================================================= -->
 
@@ -1832,15 +1503,75 @@
 
 
     // ============================================================
+    // EDIT EMPLOYEE
+    // ============================================================
+
+
+
+
+    function openEditEmployeeModal(userId) {
+
+        fetch(
+            '${pageContext.request.contextPath}/Employee/EditEmployee?userId='
+            + encodeURIComponent(userId)
+        )
+            .then(function(response) {
+
+                if (!response.ok) {
+                    throw new Error("Unable to fetch employee details");
+                }
+
+                return response.json();
+            })
+            .then(function(employee) {
+
+                document.getElementById("editUserId").value =
+                    employee.userId;
+
+                document.getElementById("editFirstName").value =
+                    employee.firstName || "";
+
+                document.getElementById("editLastName").value =
+                    employee.lastName || "";
+
+                document.getElementById("editEmail").value =
+                    employee.email || "";
+
+                document.getElementById("editPhoneNumber").value =
+                    employee.phoneNumber || "";
+
+                document.getElementById("editStatus").value =
+                    employee.status || "Active";
+
+
+                const modalElement =
+                    document.getElementById("editEmployeeModal");
+
+                const modal =
+                    bootstrap.Modal.getOrCreateInstance(modalElement);
+
+                modal.show();
+
+            })
+            .catch(function(error) {
+
+                console.error(error);
+
+                alert("Unable to load employee details.");
+
+            });
+
+    }
+
+
+    // ============================================================
     // SEARCH + FILTER
     // ============================================================
 
     function filterEmployees() {
 
         const search =
-            document.getElementById("searchEmployee")
-                .value
-                .toLowerCase();
+            document.getElementById("searchEmployee").value.toLowerCase();
 
         const startDate =
             document.getElementById("startDate").value;
@@ -1849,19 +1580,35 @@
             document.getElementById("endDate").value;
 
         const designation =
-            document.getElementById("designationFilter")
-                .value
-                .toLowerCase();
+            document.getElementById("designationFilter").value.toLowerCase();
 
         const status =
-            document.getElementById("statusFilter")
-                .value
-                .toLowerCase();
+            document.getElementById("statusFilter").value.toLowerCase();
 
+
+        // ============================================================
+        // DATE VALIDATION
+        // ============================================================
+
+        if (startDate && endDate && endDate < startDate) {
+
+            alert("End Date cannot be earlier than Start Date.");
+
+            return;
+        }
+
+
+        // ============================================================
+        // GET EMPLOYEE ROWS
+        // ============================================================
 
         const rows =
             document.querySelectorAll(".employee-row");
 
+
+        // ============================================================
+        // FILTER EMPLOYEES
+        // ============================================================
 
         rows.forEach(function(row) {
 
@@ -1880,11 +1627,16 @@
             const rowStatus =
                 row.dataset.status.toLowerCase();
 
+            const joining =
+                row.dataset.joining;
+
 
             let show = true;
 
 
+            // ========================================================
             // SEARCH
+            // ========================================================
 
             if (
                 search &&
@@ -1892,38 +1644,37 @@
                 !email.includes(search) &&
                 !phone.includes(search)
             ) {
-
                 show = false;
             }
 
 
+            // ========================================================
             // DESIGNATION
+            // ========================================================
 
             if (
                 designation &&
                 rowDesignation !== designation
             ) {
-
                 show = false;
             }
 
 
+            // ========================================================
             // STATUS
+            // ========================================================
 
             if (
                 status &&
                 rowStatus !== status
             ) {
-
                 show = false;
             }
 
 
-            // DATE
-
-            const joining =
-                row.dataset.joining;
-
+            // ========================================================
+            // START DATE
+            // ========================================================
 
             if (startDate && joining) {
 
@@ -1933,6 +1684,10 @@
             }
 
 
+            // ========================================================
+            // END DATE
+            // ========================================================
+
             if (endDate && joining) {
 
                 if (joining.substring(0, 10) > endDate) {
@@ -1941,13 +1696,15 @@
             }
 
 
+            // ========================================================
+            // SHOW / HIDE
+            // ========================================================
+
             row.style.display =
                 show ? "" : "none";
 
         });
-
     }
-
 
     // ============================================================
     // SORT
@@ -2047,6 +1804,7 @@
 </script>
 
 <script>
+
     (function () {
 
         function initHRMSSidebar() {
