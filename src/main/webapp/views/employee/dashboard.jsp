@@ -441,15 +441,13 @@
 
                 <!-- Tickets -->
                 <li>
-
-                    <a href="javascript:void(0);">
+                    <a href="${pageContext.request.contextPath}/employee/tickets?action=list">
 
                         <i class="ti ti-ticket"></i>
 
                         <span>Tickets</span>
 
                     </a>
-
                 </li>
 
 

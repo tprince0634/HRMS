@@ -1,3 +1,4 @@
+```
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -874,6 +875,13 @@
                                             </span>
                                         </div>
 
+                                        <div style="margin-top:10px;">
+                                            <a href="${pageContext.request.contextPath}/admin/events?action=edit&id=${event.id}&from=events"
+                                               style="display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border:1px solid #e5e7eb;border-radius:6px;color:#6b7280;text-decoration:none;font-size:10px;font-weight:700;">
+                                                <i class="fa-solid fa-pen-to-square"></i> Edit
+                                            </a>
+                                        </div>
+
                                         <c:choose>
                                             <c:when test="${event.status eq 'Active'}">
                                                 <span class="status-pill">
@@ -926,6 +934,81 @@
         </div>
     </c:forEach>
 </div>
+
+<!-- EDIT EVENT MODAL -->
+<c:if test="${not empty event}">
+<div id="editEventModal" class="event-modal show" aria-hidden="false">
+    <div class="event-modal-content">
+        <div class="event-modal-header">
+            <div class="modal-heading-wrap">
+                <div class="modal-icon">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+                <div>
+                    <h2 class="modal-heading">Edit Event</h2>
+                    <p class="modal-subheading">Update event details</p>
+                </div>
+            </div>
+            <button type="button" class="modal-close"
+                    onclick="cancelEditEvent()" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <form method="post"
+              action="${pageContext.request.contextPath}/admin/events"
+              class="event-form">
+            <input type="hidden" name="action" value="update">
+            <input type="hidden" name="id" value="${event.id}">
+            <input type="hidden" name="returnPage" value="events">
+
+            <div class="form-group">
+                <label for="editEventTitle">Event Title <span class="required-mark">*</span></label>
+                <input type="text" id="editEventTitle" name="title"
+                       class="form-control" maxlength="150"
+                       value="<c:out value='${event.title}'/>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editEventDate">Event Date <span class="required-mark">*</span></label>
+                <input type="date" id="editEventDate" name="date"
+                       class="form-control"
+                       value="<c:out value='${event.date}'/>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editEventTypeId">Event Type <span class="required-mark">*</span></label>
+                <select id="editEventTypeId" name="eventTypeId" class="form-control" required>
+                    <option value="">Select Event Type</option>
+                    <c:forEach var="type" items="${eventTypes}">
+                        <option value="${type.id}"
+                            ${type.id == event.eventTypeId ? 'selected' : ''}>
+                            <c:out value="${type.name}"/>
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="editEventStatus">Status</label>
+                <select id="editEventStatus" name="status" class="form-control" required>
+                    <option value="Active" ${event.status eq 'Active' ? 'selected' : ''}>Active</option>
+                    <option value="Inactive" ${event.status eq 'Inactive' ? 'selected' : ''}>Inactive</option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="cancelEditEvent()">
+                    Cancel
+                </button>
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-check"></i>&nbsp; Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</c:if>
 
 <!-- ADD EVENT MODAL -->
 <div id="addEventModal" class="event-modal" aria-hidden="true">
@@ -1082,6 +1165,10 @@
         }
     });
 
+    function cancelEditEvent() {
+        window.location.href = "${pageContext.request.contextPath}/admin/events";
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
 
         /* ACTIVE EVENT COUNT */
@@ -1162,3 +1249,5 @@
 
 </body>
 </html>
+
+```

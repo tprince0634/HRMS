@@ -6,10 +6,6 @@ import org.example.util.DBConnection;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
-
-import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,6 +40,64 @@ public class UserDAOImpl  implements UserDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return user;
+    }
+
+    @Override
+    public User findById(int userId) {
+
+        User user = null;
+
+        String sql =
+                "SELECT u.UserId, " +
+                        "       u.FirstName, " +
+                        "       u.LastName, " +
+                        "       u.Email, " +
+                        "       u.DepartmentId, " +
+                        "       d.Name AS DepartmentName " +
+                        "FROM User u " +
+                        "LEFT JOIN Departments d " +
+                        "       ON u.DepartmentId = d.DepartmentId " +
+                        "WHERE u.UserId = ?";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, userId);
+
+            try (ResultSet rs = statement.executeQuery()) {
+
+                if (rs.next()) {
+
+                    user = new User();
+
+                    user.setUserId(
+                            rs.getInt("UserId")
+                    );
+
+                    user.setFirstName(
+                            rs.getString("FirstName")
+                    );
+
+                    user.setLastName(
+                            rs.getString("LastName")
+                    );
+
+                    user.setEmail(
+                            rs.getString("Email")
+                    );
+
+                    user.setDepartmentId(
+                            rs.getInt("DepartmentId")
+                    );
+
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return user;
     }
 

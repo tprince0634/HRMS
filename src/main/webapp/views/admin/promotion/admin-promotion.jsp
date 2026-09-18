@@ -1,51 +1,101 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="SmartHR Promotion">
-    <meta name="robots" content="noindex, nofollow">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+    <meta name="description"
+          content="SmartHR Promotion">
+
+    <meta name="robots"
+          content="noindex, nofollow">
+
     <title>SmartHR - Promotion</title>
 
-    <link rel="shortcut icon" type="image/x-icon"
+
+    <!-- FAVICON -->
+
+    <link rel="shortcut icon"
+          type="image/x-icon"
           href="${pageContext.request.contextPath}/assets/img/favicon.png">
+
+
+    <!-- THEME -->
 
     <script src="${pageContext.request.contextPath}/assets/js/theme-script.js"></script>
 
+
+    <!-- BOOTSTRAP -->
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css">
+
+
+    <!-- ICONS -->
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/plugins/icons/feather/feather.css">
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/plugins/tabler-icons/tabler-icons.css">
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/plugins/fontawesome/css/fontawesome.min.css">
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/plugins/fontawesome/css/all.min.css">
+
+
+    <!-- DATE PICKER -->
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/bootstrap-datetimepicker.min.css">
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/plugins/daterangepicker/daterangepicker.css">
+
+
+    <!-- DATATABLE -->
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/dataTables.bootstrap5.min.css">
+
+
+    <!-- SELECT2 -->
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/plugins/select2/css/select2.min.css">
+
+
+    <!-- MAIN CSS -->
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/style.css">
+
 </head>
+
 
 <body>
 
+
 <div class="main-wrapper">
 
-    <!-- ================= HEADER ================= -->
+
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
 
     <div class="header">
+
         <div class="main-header">
+
 
             <div class="header-left">
 
@@ -57,6 +107,7 @@
 
                 </a>
 
+
                 <a href="${pageContext.request.contextPath}/index.jsp"
                    class="dark-logo">
 
@@ -66,6 +117,7 @@
                 </a>
 
             </div>
+
 
             <a id="mobile_btn"
                class="mobile_btn"
@@ -79,9 +131,11 @@
 
             </a>
 
+
             <div class="header-user">
 
                 <div class="nav user-menu nav-list">
+
 
                     <div class="me-auto d-flex align-items-center"
                          id="header-search">
@@ -94,25 +148,34 @@
 
                         </a>
 
+
                         <div class="input-group input-group-flat d-inline-flex me-1">
 
                             <span class="input-icon-addon">
+
                                 <i class="ti ti-search"></i>
+
                             </span>
+
 
                             <input type="text"
                                    class="form-control"
                                    placeholder="Search in HRMS">
 
+
                             <span class="input-group-text">
+
                                 <kbd>CTRL + /</kbd>
+
                             </span>
 
                         </div>
 
                     </div>
 
+
                     <div class="d-flex align-items-center">
+
 
                         <a href="javascript:void(0);"
                            class="btn btn-menubar me-1">
@@ -121,6 +184,7 @@
 
                         </a>
 
+
                         <a href="javascript:void(0);"
                            class="btn btn-menubar me-1">
 
@@ -128,12 +192,14 @@
 
                         </a>
 
+
                         <a href="javascript:void(0);"
                            class="btn btn-menubar me-1">
 
                             <i class="ti ti-bell"></i>
 
                         </a>
+
 
                         <a href="javascript:void(0);"
                            class="avatar avatar-sm">
@@ -151,140 +217,41 @@
             </div>
 
         </div>
-    </div>
-
-    <!-- ================= SIDEBAR ================= -->
-
-    <div class="sidebar" id="sidebar">
-
-        <div class="sidebar-inner slimscroll">
-
-            <div id="sidebar-menu"
-                 class="sidebar-menu">
-
-                <ul>
-
-                    <li class="menu-title">
-                        <span>MAIN MENU</span>
-                    </li>
-
-                    <li>
-
-                        <a href="${pageContext.request.contextPath}/admin-dashboard">
-
-                            <i class="ti ti-layout-dashboard"></i>
-
-                            <span>Dashboard</span>
-
-                        </a>
-
-                    </li>
-
-                    <li class="menu-title">
-                        <span>HRM</span>
-                    </li>
-
-                    <li>
-
-                        <a href="${pageContext.request.contextPath}/employees">
-
-                            <i class="ti ti-users"></i>
-
-                            <span>Employees</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="${pageContext.request.contextPath}/holidays">
-
-                            <i class="ti ti-calendar-event"></i>
-
-                            <span>Holidays</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="javascript:void(0);">
-
-                            <i class="ti ti-school"></i>
-
-                            <span>Performance</span>
-
-                            <span class="menu-arrow"></span>
-
-                        </a>
-
-                    </li>
-
-                    <li class="active">
-
-                        <a href="${pageContext.request.contextPath}/promotion">
-
-                            <i class="ti ti-speakerphone"></i>
-
-                            <span>Promotion</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="${pageContext.request.contextPath}/resignation">
-
-                            <i class="ti ti-user-x"></i>
-
-                            <span>Resignation</span>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <a href="${pageContext.request.contextPath}/termination">
-
-                            <i class="ti ti-user-off"></i>
-
-                            <span>Termination</span>
-
-                        </a>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
 
     </div>
 
-    <!-- ================= PAGE WRAPPER ================= -->
 
-    <div class="page-wrapper">
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================== -->
+
+    <%@ include file="../adminSidebar.jsp" %>
+
+<div class="page-wrapper">
+
 
         <div class="content">
 
-            <!-- ================= BREADCRUMB ================= -->
+
+            <!-- PAGE HEADER -->
 
             <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+
 
                 <div class="my-auto mb-2">
 
                     <h2 class="mb-1">
+
                         Promotion
+
                     </h2>
+
 
                     <nav>
 
                         <ol class="breadcrumb mb-0">
+
 
                             <li class="breadcrumb-item">
 
@@ -296,9 +263,13 @@
 
                             </li>
 
+
                             <li class="breadcrumb-item">
+
                                 Performance
+
                             </li>
+
 
                             <li class="breadcrumb-item active"
                                 aria-current="page">
@@ -307,13 +278,16 @@
 
                             </li>
 
+
                         </ol>
 
                     </nav>
 
                 </div>
 
+
                 <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+
 
                     <div class="mb-2">
 
@@ -329,6 +303,7 @@
                         </a>
 
                     </div>
+
 
                     <div class="head-icons ms-2">
 
@@ -348,14 +323,16 @@
 
             </div>
 
-            <!-- ================= SUCCESS MESSAGE ================= -->
+
+
+            <!-- SUCCESS -->
 
             <c:if test="${not empty sessionScope.successMessage}">
 
                 <div class="alert alert-success alert-dismissible fade show"
                      role="alert">
 
-                    ${sessionScope.successMessage}
+                    <c:out value="${sessionScope.successMessage}"/>
 
                     <button type="button"
                             class="btn-close"
@@ -369,14 +346,16 @@
 
             </c:if>
 
-            <!-- ================= ERROR MESSAGE ================= -->
+
+
+            <!-- ERROR -->
 
             <c:if test="${not empty sessionScope.errorMessage}">
 
                 <div class="alert alert-danger alert-dismissible fade show"
                      role="alert">
 
-                    ${sessionScope.errorMessage}
+                    <c:out value="${sessionScope.errorMessage}"/>
 
                     <button type="button"
                             class="btn-close"
@@ -390,7 +369,51 @@
 
             </c:if>
 
-            <!-- ================= PROMOTION LIST ================= -->
+
+
+            <!-- EMPLOYEE ERROR -->
+
+            <c:if test="${not empty employeeLoadError}">
+
+                <div class="alert alert-warning alert-dismissible fade show"
+                     role="alert">
+
+                    <c:out value="${employeeLoadError}"/>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+
+            </c:if>
+
+
+
+            <!-- DESIGNATION ERROR -->
+
+            <c:if test="${not empty designationLoadError}">
+
+                <div class="alert alert-warning alert-dismissible fade show"
+                     role="alert">
+
+                    <c:out value="${designationLoadError}"/>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+
+            </c:if>
+
+
+
+            <!-- =================================================
+                 PROMOTION LIST
+            ================================================== -->
 
             <div class="row">
 
@@ -398,13 +421,19 @@
 
                     <div class="card">
 
+
                         <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
 
+
                             <h5 class="d-flex align-items-center">
+
                                 Promotion List
+
                             </h5>
 
+
                             <div class="d-flex align-items-center flex-wrap row-gap-3">
+
 
                                 <div class="input-icon position-relative me-2">
 
@@ -414,11 +443,13 @@
 
                                     </span>
 
+
                                     <input type="text"
                                            class="form-control date-range bookingrange"
                                            placeholder="dd-mm-yyyy - dd-mm-yyyy">
 
                                 </div>
+
 
                                 <div class="dropdown">
 
@@ -427,35 +458,75 @@
                                        data-bs-toggle="dropdown">
 
                                         <p class="fs-12 d-inline-flex me-1 mb-0">
+
                                             Sort By :
+
                                         </p>
 
-                                        Last 7 Days
+
+                                        <span class="promotion-sort-label">
+
+                                            Last 7 Days
+
+                                        </span>
 
                                     </a>
 
+
                                     <ul class="dropdown-menu dropdown-menu-end p-3">
 
+
                                         <li>
+
                                             <a href="javascript:void(0);"
-                                               class="dropdown-item rounded-1">
+                                               class="dropdown-item rounded-1 promotion-sort"
+                                               data-sort="date-desc">
+
+                                                Last 7 Days
+
+                                            </a>
+
+                                        </li>
+
+
+                                        <li>
+
+                                            <a href="javascript:void(0);"
+                                               class="dropdown-item rounded-1 promotion-sort"
+                                               data-sort="recent">
+
                                                 Recently Added
+
                                             </a>
+
                                         </li>
 
+
                                         <li>
+
                                             <a href="javascript:void(0);"
-                                               class="dropdown-item rounded-1">
+                                               class="dropdown-item rounded-1 promotion-sort"
+                                               data-sort="asc">
+
                                                 Ascending
+
                                             </a>
+
                                         </li>
 
+
                                         <li>
+
                                             <a href="javascript:void(0);"
-                                               class="dropdown-item rounded-1">
+                                               class="dropdown-item rounded-1 promotion-sort"
+                                               data-sort="desc">
+
                                                 Descending
+
                                             </a>
+
                                         </li>
+
 
                                     </ul>
 
@@ -465,15 +536,22 @@
 
                         </div>
 
+
+
                         <div class="card-body p-0">
 
                             <div class="table-responsive">
 
-                                <table class="table datatable">
+
+                                <table class="table datatable"
+                                       id="promotionTable">
+
 
                                     <thead class="thead-light">
 
+
                                     <tr>
+
 
                                         <th>
 
@@ -487,32 +565,58 @@
 
                                         </th>
 
-                                        <th>Promoted Employee</th>
 
-                                        <th>Department</th>
+                                        <th>
+                                            Promoted Employee
+                                        </th>
 
-                                        <th>Designation From</th>
 
-                                        <th>Designation To</th>
+                                        <th>
+                                            Department
+                                        </th>
 
-                                        <th>Promotion Date</th>
+
+                                        <th>
+                                            Designation From
+                                        </th>
+
+
+                                        <th>
+                                            Designation To
+                                        </th>
+
+
+                                        <th>
+                                            Promotion Date
+                                        </th>
+
 
                                         <th></th>
+
 
                                     </tr>
 
                                     </thead>
 
+
+
                                     <tbody>
+
 
                                     <c:choose>
 
+
                                         <c:when test="${not empty promotions}">
+
 
                                             <c:forEach var="promotion"
                                                        items="${promotions}">
 
+
                                                 <tr>
+
+
+                                                    <!-- CHECKBOX -->
 
                                                     <td>
 
@@ -527,9 +631,14 @@
 
                                                     </td>
 
+
+
+                                                    <!-- EMPLOYEE -->
+
                                                     <td>
 
                                                         <div class="d-flex align-items-center">
+
 
                                                             <a href="javascript:void(0);"
                                                                class="avatar avatar-md me-2">
@@ -540,15 +649,18 @@
 
                                                             </a>
 
+
                                                             <h6 class="fw-medium mb-0">
+
 
                                                                 <c:choose>
 
                                                                     <c:when test="${not empty userMap[promotion.userId]}">
 
-                                                                        ${userMap[promotion.userId].name}
+                                                                        <c:out value="${userMap[promotion.userId]}"/>
 
                                                                     </c:when>
+
 
                                                                     <c:otherwise>
 
@@ -558,21 +670,27 @@
 
                                                                 </c:choose>
 
+
                                                             </h6>
 
                                                         </div>
 
                                                     </td>
 
+
+
+                                                    <!-- DEPARTMENT -->
+
                                                     <td>
 
                                                         <c:choose>
 
-                                                            <c:when test="${not empty userMap[promotion.userId].department}">
+                                                            <c:when test="${not empty departmentMap[promotion.userId]}">
 
-                                                                ${userMap[promotion.userId].department}
+                                                                <c:out value="${departmentMap[promotion.userId]}"/>
 
                                                             </c:when>
+
 
                                                             <c:otherwise>
 
@@ -584,13 +702,29 @@
 
                                                     </td>
 
-                                                    <td>
-                                                        ${promotion.designationFrom}
-                                                    </td>
+
+
+                                                    <!-- DESIGNATION FROM -->
 
                                                     <td>
-                                                        ${promotion.designationTo}
+
+                                                        <c:out value="${promotion.designationFrom}"/>
+
                                                     </td>
+
+
+
+                                                    <!-- DESIGNATION TO -->
+
+                                                    <td>
+
+                                                        <c:out value="${promotion.designationTo}"/>
+
+                                                    </td>
+
+
+
+                                                    <!-- DATE -->
 
                                                     <td>
 
@@ -602,9 +736,16 @@
 
                                                     </td>
 
+
+
+                                                    <!-- ACTION -->
+
                                                     <td>
 
                                                         <div class="action-icon d-inline-flex">
+
+
+                                                            <!-- EDIT -->
 
                                                             <a href="${pageContext.request.contextPath}/promotion?action=edit&id=${promotion.promotionId}"
                                                                class="me-2"
@@ -613,6 +754,9 @@
                                                                 <i class="ti ti-edit"></i>
 
                                                             </a>
+
+
+                                                            <!-- DELETE -->
 
                                                             <a href="#"
                                                                title="Delete"
@@ -624,17 +768,23 @@
 
                                                             </a>
 
+
                                                         </div>
 
                                                     </td>
 
+
                                                 </tr>
+
 
                                             </c:forEach>
 
+
                                         </c:when>
 
+
                                         <c:otherwise>
+
 
                                             <tr>
 
@@ -647,33 +797,44 @@
 
                                             </tr>
 
+
                                         </c:otherwise>
 
+
                                     </c:choose>
+
 
                                     </tbody>
 
                                 </table>
 
+
                             </div>
 
                         </div>
 
+
+
                         <div class="card-footer d-flex align-items-center justify-content-between">
+
 
                             <div>
 
                                 Showing
 
                                 <strong>
+
                                     ${empty promotions ? 0 : promotions.size()}
+
                                 </strong>
 
                                 entries
 
                             </div>
 
+
                         </div>
+
 
                     </div>
 
@@ -681,15 +842,21 @@
 
             </div>
 
+
         </div>
 
-        <!-- ================= FOOTER ================= -->
+
+
+        <!-- FOOTER -->
 
         <div class="footer d-sm-flex align-items-center justify-content-between bg-white border-top p-3">
 
             <p class="mb-0">
+
                 2014 - 2025 &copy; SmartHR.
+
             </p>
+
 
             <p>
 
@@ -697,7 +864,9 @@
 
                 <a href="#"
                    class="text-primary">
+
                     Dreams
+
                 </a>
 
             </p>
@@ -706,20 +875,29 @@
 
     </div>
 
-    <!-- ================= ADD PROMOTION MODAL ================= -->
+
+
+    <!-- =========================================================
+         ADD PROMOTION MODAL
+    ========================================================== -->
 
     <div class="modal fade"
-         id="new_promotion">
+         id="new_promotion"
+         tabindex="-1">
 
         <div class="modal-dialog modal-dialog-centered modal-md">
 
             <div class="modal-content">
 
+
                 <div class="modal-header">
 
                     <h4 class="modal-title">
+
                         Add Promotion
+
                     </h4>
+
 
                     <button type="button"
                             class="btn-close custom-btn-close"
@@ -732,69 +910,63 @@
 
                 </div>
 
+
+
                 <form action="${pageContext.request.contextPath}/promotion"
                       method="post">
+
 
                     <input type="hidden"
                            name="action"
                            value="add">
 
+
+
                     <div class="modal-body pb-0">
+
 
                         <div class="row">
 
-                            <!-- Employee -->
+
+                            <!-- EMPLOYEE -->
 
                             <div class="col-md-12">
 
                                 <div class="mb-3">
 
+
                                     <label class="form-label">
+
                                         Promotion For
+
                                     </label>
 
-                                    <select class="select form-control"
+
+                                    <select class="select form-control promotion-select"
                                             name="userId"
                                             required>
 
+
                                         <option value="">
-                                            Select
+
+                                            Select Employee
+
                                         </option>
 
-                                        <c:choose>
 
-                                            <c:when test="${not empty employees}">
+                                        <c:forEach var="entry"
+                                                   items="${userMap}">
 
-                                                <c:forEach var="employee"
-                                                           items="${employees}">
 
-                                                    <option value="${employee.userId}">
+                                            <option value="${entry.key}">
 
-                                                        ${employee.firstName}
-                                                        ${employee.lastName}
+                                                <c:out value="${entry.value}"/>
 
-                                                    </option>
+                                            </option>
 
-                                                </c:forEach>
 
-                                            </c:when>
+                                        </c:forEach>
 
-                                            <c:otherwise>
-
-                                                <c:forEach var="promotion"
-                                                           items="${promotions}">
-
-                                                    <option value="${promotion.userId}">
-
-                                                        User #${promotion.userId}
-
-                                                    </option>
-
-                                                </c:forEach>
-
-                                            </c:otherwise>
-
-                                        </c:choose>
 
                                     </select>
 
@@ -802,55 +974,126 @@
 
                             </div>
 
-                            <!-- Designation From -->
+
+
+                            <!-- =================================================
+                                 DESIGNATION FROM
+                            ================================================== -->
 
                             <div class="col-md-12">
 
                                 <div class="mb-3">
 
+
                                     <label class="form-label">
+
                                         Designation From
+
                                     </label>
 
-                                    <input type="text"
-                                           class="form-control"
-                                           name="designationFrom"
-                                           required>
+
+                                    <select class="select form-control promotion-select"
+                                            name="designationFrom"
+                                            required>
+
+
+                                        <option value="">
+
+                                            Select Designation
+
+                                        </option>
+
+
+                                        <c:forEach var="designation"
+                                                   items="${designations}">
+
+
+                                            <option value="${designation.name}">
+
+                                                <c:out value="${designation.name}"/>
+
+                                            </option>
+
+
+                                        </c:forEach>
+
+
+                                    </select>
 
                                 </div>
 
                             </div>
 
-                            <!-- Designation To -->
+
+
+                            <!-- =================================================
+                                 DESIGNATION TO
+                            ================================================== -->
 
                             <div class="col-md-12">
 
                                 <div class="mb-3">
 
+
                                     <label class="form-label">
+
                                         Designation To
+
                                     </label>
 
-                                    <input type="text"
-                                           class="form-control"
-                                           name="designationTo"
-                                           required>
+
+                                    <select class="select form-control promotion-select"
+                                            name="designationTo"
+                                            required>
+
+
+                                        <option value="">
+
+                                            Select Designation
+
+                                        </option>
+
+
+                                        <c:forEach var="designation"
+                                                   items="${designations}">
+
+
+                                            <option value="${designation.name}">
+
+                                                <c:out value="${designation.name}"/>
+
+                                            </option>
+
+
+                                        </c:forEach>
+
+
+                                    </select>
 
                                 </div>
 
                             </div>
 
-                            <!-- Promotion Date -->
+
+
+                            <!-- =================================================
+                                 PROMOTION DATE
+                            ================================================== -->
 
                             <div class="col-md-12">
 
                                 <div class="mb-3">
 
+
                                     <label class="form-label">
+
                                         Promotion Date
+
                                     </label>
+
 
                                     <div class="input-icon-end position-relative">
+
 
                                         <input type="text"
                                                name="date"
@@ -859,11 +1102,13 @@
                                                autocomplete="off"
                                                required>
 
+
                                         <span class="input-icon-addon">
 
                                             <i class="ti ti-calendar text-gray-7"></i>
 
                                         </span>
+
 
                                     </div>
 
@@ -871,11 +1116,15 @@
 
                             </div>
 
+
                         </div>
 
                     </div>
 
+
+
                     <div class="modal-footer">
+
 
                         <button type="button"
                                 class="btn btn-white border me-2"
@@ -885,6 +1134,7 @@
 
                         </button>
 
+
                         <button type="submit"
                                 class="btn btn-primary">
 
@@ -892,7 +1142,9 @@
 
                         </button>
 
+
                     </div>
+
 
                 </form>
 
@@ -902,22 +1154,35 @@
 
     </div>
 
-    <!-- ================= EDIT PROMOTION MODAL ================= -->
+
+
+    <!-- =========================================================
+         EDIT PROMOTION MODAL
+    ========================================================== -->
 
     <c:if test="${not empty editPromotion}">
 
+
         <div class="modal fade"
-             id="edit_promotion">
+             id="edit_promotion"
+             tabindex="-1">
+
 
             <div class="modal-dialog modal-dialog-centered modal-md">
 
+
                 <div class="modal-content">
+
 
                     <div class="modal-header">
 
+
                         <h4 class="modal-title">
+
                             Edit Promotion
+
                         </h4>
+
 
                         <button type="button"
                                 class="btn-close custom-btn-close"
@@ -930,72 +1195,74 @@
 
                     </div>
 
+
+
                     <form action="${pageContext.request.contextPath}/promotion"
                           method="post">
+
 
                         <input type="hidden"
                                name="action"
                                value="update">
 
+
                         <input type="hidden"
                                name="promotionId"
                                value="${editPromotion.promotionId}">
 
+
+
                         <div class="modal-body pb-0">
+
 
                             <div class="row">
 
-                                <!-- Employee -->
+
+                                <!-- EMPLOYEE -->
 
                                 <div class="col-md-12">
 
                                     <div class="mb-3">
 
+
                                         <label class="form-label">
+
                                             Promotion For
+
                                         </label>
 
-                                        <select class="select form-control"
+
+                                        <select class="select form-control promotion-select"
                                                 name="userId"
                                                 required>
 
+
                                             <option value="">
-                                                Select
+
+                                                Select Employee
+
                                             </option>
 
-                                            <c:choose>
 
-                                                <c:when test="${not empty employees}">
+                                            <c:forEach var="entry"
+                                                       items="${userMap}">
 
-                                                    <c:forEach var="employee"
-                                                               items="${employees}">
 
-                                                        <option value="${employee.userId}"
-                                                                <c:if test="${employee.userId == editPromotion.userId}">
-                                                                    selected
-                                                                </c:if>>
+                                                <option value="${entry.key}"
 
-                                                            ${employee.firstName}
-                                                            ${employee.lastName}
+                                                    <c:if test="${entry.key == editPromotion.userId}">
 
-                                                        </option>
+                                                        selected
 
-                                                    </c:forEach>
+                                                    </c:if>>
 
-                                                </c:when>
+                                                    <c:out value="${entry.value}"/>
 
-                                                <c:otherwise>
+                                                </option>
 
-                                                    <option value="${editPromotion.userId}"
-                                                            selected>
 
-                                                        User #${editPromotion.userId}
+                                            </c:forEach>
 
-                                                    </option>
-
-                                                </c:otherwise>
-
-                                            </c:choose>
 
                                         </select>
 
@@ -1003,57 +1270,136 @@
 
                                 </div>
 
-                                <!-- Designation From -->
+
+
+                                <!-- =================================================
+                                     DESIGNATION FROM
+                                ================================================== -->
 
                                 <div class="col-md-12">
 
                                     <div class="mb-3">
 
+
                                         <label class="form-label">
+
                                             Designation From
+
                                         </label>
 
-                                        <input type="text"
-                                               class="form-control"
-                                               name="designationFrom"
-                                               value="${editPromotion.designationFrom}"
-                                               required>
+
+                                        <select class="select form-control promotion-select"
+                                                name="designationFrom"
+                                                required>
+
+
+                                            <option value="">
+
+                                                Select Designation
+
+                                            </option>
+
+
+                                            <c:forEach var="designation"
+                                                       items="${designations}">
+
+
+                                                <option value="${designation.name}"
+
+                                                    <c:if test="${designation.name == editPromotion.designationFrom}">
+
+                                                        selected
+
+                                                    </c:if>>
+
+                                                    <c:out value="${designation.name}"/>
+
+                                                </option>
+
+
+                                            </c:forEach>
+
+
+                                        </select>
 
                                     </div>
 
                                 </div>
 
-                                <!-- Designation To -->
+
+
+                                <!-- =================================================
+                                     DESIGNATION TO
+                                ================================================== -->
 
                                 <div class="col-md-12">
 
                                     <div class="mb-3">
 
+
                                         <label class="form-label">
+
                                             Designation To
+
                                         </label>
 
-                                        <input type="text"
-                                               class="form-control"
-                                               name="designationTo"
-                                               value="${editPromotion.designationTo}"
-                                               required>
+
+                                        <select class="select form-control promotion-select"
+                                                name="designationTo"
+                                                required>
+
+
+                                            <option value="">
+
+                                                Select Designation
+
+                                            </option>
+
+
+                                            <c:forEach var="designation"
+                                                       items="${designations}">
+
+
+                                                <option value="${designation.name}"
+
+                                                    <c:if test="${designation.name == editPromotion.designationTo}">
+
+                                                        selected
+
+                                                    </c:if>>
+
+                                                    <c:out value="${designation.name}"/>
+
+                                                </option>
+
+
+                                            </c:forEach>
+
+
+                                        </select>
 
                                     </div>
 
                                 </div>
 
-                                <!-- Promotion Date -->
+
+
+                                <!-- PROMOTION DATE -->
 
                                 <div class="col-md-12">
 
                                     <div class="mb-3">
 
+
                                         <label class="form-label">
+
                                             Promotion Date
+
                                         </label>
+
 
                                         <div class="input-icon-end position-relative">
+
 
                                             <input type="text"
                                                    name="date"
@@ -1063,11 +1409,13 @@
                                                    autocomplete="off"
                                                    required>
 
+
                                             <span class="input-icon-addon">
 
                                                 <i class="ti ti-calendar text-gray-7"></i>
 
                                             </span>
+
 
                                         </div>
 
@@ -1075,11 +1423,15 @@
 
                                 </div>
 
+
                             </div>
 
                         </div>
 
+
+
                         <div class="modal-footer">
+
 
                             <button type="button"
                                     class="btn btn-white border me-2"
@@ -1089,6 +1441,7 @@
 
                             </button>
 
+
                             <button type="submit"
                                     class="btn btn-primary">
 
@@ -1096,9 +1449,12 @@
 
                             </button>
 
+
                         </div>
 
+
                     </form>
+
 
                 </div>
 
@@ -1106,35 +1462,59 @@
 
         </div>
 
+
+        <!-- AUTO OPEN EDIT MODAL -->
+
         <script>
 
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener(
+                "DOMContentLoaded",
+                function () {
 
-                var modalElement =
-                    document.getElementById("edit_promotion");
+                    var modalElement =
+                        document.getElementById(
+                            "edit_promotion"
+                        );
 
-                if (modalElement) {
 
-                    new bootstrap.Modal(modalElement).show();
+                    if (modalElement) {
+
+                        var editModal =
+                            new bootstrap.Modal(
+                                modalElement
+                            );
+
+                        editModal.show();
+
+                    }
 
                 }
-
-            });
+            );
 
         </script>
 
+
     </c:if>
 
-    <!-- ================= DELETE MODAL ================= -->
+
+
+    <!-- =========================================================
+         DELETE MODAL
+    ========================================================== -->
 
     <div class="modal fade"
-         id="delete_modal">
+         id="delete_modal"
+         tabindex="-1">
+
 
         <div class="modal-dialog modal-dialog-centered">
 
+
             <div class="modal-content">
 
+
                 <div class="modal-body text-center">
+
 
                     <span class="avatar avatar-xl bg-transparent-danger text-danger mb-3">
 
@@ -1142,9 +1522,13 @@
 
                     </span>
 
+
                     <h4 class="mb-1">
+
                         Confirm Delete
+
                     </h4>
+
 
                     <p class="mb-3">
 
@@ -1153,7 +1537,9 @@
 
                     </p>
 
+
                     <div class="d-flex justify-content-center">
+
 
                         <button type="button"
                                 class="btn btn-light me-3"
@@ -1163,17 +1549,22 @@
 
                         </button>
 
+
+
                         <form action="${pageContext.request.contextPath}/promotion"
                               method="post"
                               id="deletePromotionForm">
+
 
                             <input type="hidden"
                                    name="action"
                                    value="delete">
 
+
                             <input type="hidden"
                                    name="promotionId"
                                    id="deletePromotionId">
+
 
                             <button type="submit"
                                     class="btn btn-danger">
@@ -1181,6 +1572,7 @@
                                 Yes, Delete
 
                             </button>
+
 
                         </form>
 
@@ -1194,9 +1586,15 @@
 
     </div>
 
+
 </div>
 
-<!-- ================= JAVASCRIPT ================= -->
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
+
 
 <script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 
@@ -1222,85 +1620,523 @@
 
 <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 
+
+
 <script>
 
-    $(document).ready(function () {
+$(document).ready(function () {
 
-        /*
-         * Promotion Date Picker
-         *
-         * Format:
-         * dd-mm-yyyy
-         *
-         * Example:
-         * 24-09-2026
-         */
 
-        if ($.fn.datetimepicker) {
+    /* =========================================================
+       SELECT2
+    ========================================================== */
 
-            $('.datetimepicker').datetimepicker({
-                format: 'DD-MM-YYYY',
-                useCurrent: false,
-                icons: {
-                    time: 'ti ti-clock',
-                    date: 'ti ti-calendar',
-                    up: 'ti ti-chevron-up',
-                    down: 'ti ti-chevron-down',
-                    previous: 'ti ti-chevron-left',
-                    next: 'ti ti-chevron-right',
-                    today: 'ti ti-calendar-event',
-                    clear: 'ti ti-trash',
-                    close: 'ti ti-x'
-                }
+    if ($.fn.select2) {
+
+        $('.promotion-select').each(function () {
+
+            var $select = $(this);
+
+            /*
+             * Destroy existing Select2 if already initialized
+             */
+            if ($select.hasClass("select2-hidden-accessible")) {
+
+                $select.select2('destroy');
+
+            }
+
+            $select.select2({
+
+                width: '100%',
+
+                dropdownParent:
+                    $select.closest('.modal')
+
             });
+
+        });
+
+    }
+
+
+
+    /* =========================================================
+       PROMOTION DATE PICKER
+    ========================================================== */
+
+    if ($.fn.datetimepicker) {
+
+        $('.datetimepicker').datetimepicker({
+
+            format: 'DD-MM-YYYY',
+
+            useCurrent: false,
+
+            icons: {
+
+                time: 'ti ti-clock',
+
+                date: 'ti ti-calendar',
+
+                up: 'ti ti-chevron-up',
+
+                down: 'ti ti-chevron-down',
+
+                previous: 'ti ti-chevron-left',
+
+                next: 'ti ti-chevron-right',
+
+                today: 'ti ti-calendar-event',
+
+                clear: 'ti ti-trash',
+
+                close: 'ti ti-x'
+
+            }
+
+        });
+
+    }
+
+
+
+    /* =========================================================
+       DATATABLE
+    ========================================================== */
+
+    var promotionTable = null;
+
+
+    if ($.fn.DataTable) {
+
+
+        if (
+            $.fn.dataTable.isDataTable(
+                '#promotionTable'
+            )
+        ) {
+
+            promotionTable =
+                $('#promotionTable').DataTable();
 
         }
 
-        /*
-         * Delete Promotion
-         */
+        else {
 
-        document
-            .querySelectorAll('[data-bs-target="#delete_modal"]')
-            .forEach(function (button) {
+            promotionTable =
+                $('#promotionTable').DataTable({
 
-                button.addEventListener("click", function () {
+                    pageLength: 10,
 
-                    document.getElementById("deletePromotionId").value =
-                        button.getAttribute("data-id");
+                    lengthMenu: [
+
+                        [10, 25, 50, 100],
+
+                        [10, 25, 50, 100]
+
+                    ],
+
+                    order: [
+
+                        [5, 'desc']
+
+                    ],
+
+                    columnDefs: [
+
+                        {
+                            orderable: false,
+                            targets: [0, 6]
+                        }
+
+                    ]
 
                 });
 
-            });
+        }
+
+    }
+
+
+
+    /* =========================================================
+       DATE RANGE FILTER
+    ========================================================== */
+
+    var filterStart = null;
+
+    var filterEnd = null;
+
+
+    if ($.fn.daterangepicker) {
+
+
+        $('.bookingrange').daterangepicker({
+
+            autoUpdateInput: true,
+
+            startDate:
+                moment().subtract(
+                    6,
+                    'days'
+                ),
+
+            endDate:
+                moment(),
+
+            locale: {
+
+                format: 'MM/DD/YYYY',
+
+                separator: ' - ',
+
+                cancelLabel: 'Clear'
+
+            }
+
+        },
+
+
+        function (start, end) {
+
+            filterStart =
+                start.clone().startOf('day');
+
+            filterEnd =
+                end.clone().endOf('day');
+
+
+            if (promotionTable) {
+
+                promotionTable.draw();
+
+            }
+
+        });
+
 
         /*
-         * Select All Promotions
+         * Initial last 7 days
          */
+        filterStart =
+            moment()
+                .subtract(6, 'days')
+                .startOf('day');
 
-        var selectAll =
-            document.getElementById("select-all");
 
-        if (selectAll) {
+        filterEnd =
+            moment()
+                .endOf('day');
 
-            selectAll.addEventListener("change", function () {
+    }
 
-                document
-                    .querySelectorAll('input[name="selectedPromotion"]')
-                    .forEach(function (checkbox) {
 
-                        checkbox.checked =
-                            selectAll.checked;
 
-                    });
+    /* =========================================================
+       DATATABLE CUSTOM DATE FILTER
+    ========================================================== */
 
-            });
+    $.fn.dataTable.ext.search.push(
+
+        function (
+            settings,
+            data
+        ) {
+
+
+            if (!promotionTable) {
+
+                return true;
+
+            }
+
+
+            if (
+                settings.nTable !==
+                document.getElementById(
+                    'promotionTable'
+                )
+            ) {
+
+                return true;
+
+            }
+
+
+            if (
+                !filterStart ||
+                !filterEnd
+            ) {
+
+                return true;
+
+            }
+
+
+            var dateText =
+                $('<div>')
+                    .html(data[5] || '')
+                    .text()
+                    .trim();
+
+
+            if (!dateText) {
+
+                return false;
+
+            }
+
+
+            var promotionDate =
+                moment(
+
+                    dateText,
+
+                    [
+                        'D-M-YYYY',
+                        'DD-MM-YYYY',
+                        'D-MM-YYYY',
+                        'DD-M-YYYY'
+                    ],
+
+                    true
+
+                );
+
+
+            if (!promotionDate.isValid()) {
+
+                return false;
+
+            }
+
+
+            promotionDate.startOf('day');
+
+
+            return (
+
+                promotionDate.valueOf()
+                    >= filterStart.valueOf()
+
+                &&
+
+                promotionDate.valueOf()
+                    <= filterEnd.valueOf()
+
+            );
 
         }
 
-    });
+    );
+
+
+
+    /* =========================================================
+       SORT DROPDOWN
+    ========================================================== */
+
+    $('.promotion-sort').on(
+        'click',
+        function () {
+
+
+            if (!promotionTable) {
+
+                return;
+
+            }
+
+
+            var sortType =
+                $(this).data('sort');
+
+
+            var label =
+                $(this).text().trim();
+
+
+            if (sortType === 'asc') {
+
+
+                /*
+                 * Oldest -> Newest
+                 */
+                promotionTable
+                    .order([5, 'asc'])
+                    .draw();
+
+            }
+
+
+            else if (sortType === 'desc') {
+
+
+                /*
+                 * Newest -> Oldest
+                 */
+                promotionTable
+                    .order([5, 'desc'])
+                    .draw();
+
+            }
+
+
+            else if (sortType === 'recent') {
+
+
+                promotionTable
+                    .order([5, 'desc'])
+                    .draw();
+
+            }
+
+
+            else {
+
+
+                /*
+                 * Last 7 Days
+                 */
+
+                filterStart =
+                    moment()
+                        .subtract(
+                            6,
+                            'days'
+                        )
+                        .startOf('day');
+
+
+                filterEnd =
+                    moment()
+                        .endOf('day');
+
+
+                if ($.fn.daterangepicker) {
+
+
+                    var rangePicker =
+                        $('.bookingrange')
+                            .data(
+                                'daterangepicker'
+                            );
+
+
+                    if (rangePicker) {
+
+                        rangePicker
+                            .setStartDate(
+                                filterStart
+                            );
+
+
+                        rangePicker
+                            .setEndDate(
+                                filterEnd
+                            );
+
+                    }
+
+                }
+
+
+                promotionTable
+                    .order([5, 'desc'])
+                    .draw();
+
+            }
+
+
+            $('.promotion-sort-label')
+                .text(label);
+
+        }
+
+    );
+
+
+
+    /* =========================================================
+       DELETE PROMOTION
+    ========================================================== */
+
+    document
+        .querySelectorAll(
+            '[data-bs-target="#delete_modal"]'
+        )
+        .forEach(
+            function (button) {
+
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+
+                        var promotionId =
+                            button.getAttribute(
+                                "data-id"
+                            );
+
+
+                        document.getElementById(
+                            "deletePromotionId"
+                        ).value =
+                            promotionId;
+
+                    }
+                );
+
+            }
+        );
+
+
+
+    /* =========================================================
+       SELECT ALL
+    ========================================================== */
+
+    var selectAll =
+        document.getElementById(
+            "select-all"
+        );
+
+
+    if (selectAll) {
+
+
+        selectAll.addEventListener(
+            "change",
+            function () {
+
+
+                document
+                    .querySelectorAll(
+                        'input[name="selectedPromotion"]'
+                    )
+                    .forEach(
+                        function (checkbox) {
+
+
+                            checkbox.checked =
+                                selectAll.checked;
+
+                        }
+                    );
+
+            }
+        );
+
+    }
+
+
+});
 
 </script>
 
-</body>
-</html>
 
+</body>
+
+</html>

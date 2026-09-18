@@ -24,79 +24,170 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(
+            HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+
         request.getRequestDispatcher("/login.jsp")
                 .forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Get login details
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String email =
+                request.getParameter("email");
 
-        // Authenticate user
-        User user = authService.authenticate(email, password);
+        String password =
+                request.getParameter("password");
 
-        // Login failed
+
+        // =========================================
+        // AUTHENTICATE
+        // =========================================
+
+        User user =
+                authService.authenticate(
+                        email,
+                        password
+                );
+
+
+        // =========================================
+        // LOGIN FAILED
+        // =========================================
+
         if (user == null) {
-            request.setAttribute("errorMessage", "Invalid email or password!");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+
+            request.setAttribute(
+                    "errorMessage",
+                    "Invalid email or password!"
+            );
+
+            request.getRequestDispatcher(
+                    "/login.jsp"
+            ).forward(
+                    request,
+                    response
+            );
+
             return;
         }
 
-        // Login successful
-        HttpSession session = request.getSession();
-        session.setAttribute("userId", user.getUserId());
-        session.setAttribute("userEmail", user.getEmail());
-        session.setAttribute("userRole", user.getRoleName());
-        session.setAttribute("firstName", user.getFirstName());
-        session.setAttribute("lastName", user.getLastName());
 
-        // Get role
-        String role = user.getRoleName();
+        // =========================================
+        // LOGIN SUCCESS
+        // =========================================
 
-        // ==========================
+        HttpSession oldSession =
+                request.getSession(false);
+
+        if (oldSession != null) {
+            oldSession.invalidate();
+        }
+
+
+        HttpSession session =
+                request.getSession(true);
+
+
+        // =========================================
+        // SESSION DATA
+        // =========================================
+
+        session.setAttribute(
+                "userId",
+                user.getUserId()
+        );
+
+        session.setAttribute(
+                "userEmail",
+                user.getEmail()
+        );
+
+        session.setAttribute(
+                "userRole",
+                user.getRoleName()
+        );
+
+        session.setAttribute(
+                "firstName",
+                user.getFirstName()
+        );
+
+        session.setAttribute(
+                "lastName",
+                user.getLastName()
+        );
+
+
+        // =========================================
+        // ROLE
+        // =========================================
+
+        String role =
+                user.getRoleName();
+
+
+        // =========================================
         // ADMIN
-        // ==========================
+        // =========================================
+
         if ("Admin".equalsIgnoreCase(role)) {
+
             response.sendRedirect(
-                    request.getContextPath() +
-                            "/Admin/dashboard"
+                    request.getContextPath()
+                            + "/Admin/dashboard"
             );
+
         }
 
-        // ==========================
+
+        // =========================================
         // MANAGER
-        // ==========================
+        // =========================================
+
         else if ("Manager".equalsIgnoreCase(role)) {
+
             response.sendRedirect(
-                    request.getContextPath() +
-                            "/Manager/dashboard"
+                    request.getContextPath()
+                            + "/Manager/dashboard"
             );
+
         }
 
-        // ==========================
+
+        // =========================================
         // EMPLOYEE
-        // ==========================
+        // =========================================
+
         else if ("Employee".equalsIgnoreCase(role)) {
+
             response.sendRedirect(
-                    request.getContextPath() +
-                            "/Employee/dashboard"
+                    request.getContextPath()
+                            + "/Employee/dashboard"
             );
+
         }
 
-        // ==========================
+
+        // =========================================
         // UNKNOWN ROLE
-        // ==========================
+        // =========================================
+
         else {
 
+            session.invalidate();
+
             response.sendRedirect(
-                    request.getContextPath() +
-                            "/index.jsp"
+                    request.getContextPath()
+                            + "/login"
             );
         }
     }
+
 }

@@ -90,78 +90,115 @@ public class TerminationServlet extends HttpServlet {
                           HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action");
+        request.setCharacterEncoding("UTF-8");
+
+        String action = trim(request.getParameter("action"));
 
         try {
 
-            if ("add".equalsIgnoreCase(action)) {
+            switch (action.toLowerCase()) {
 
-                Termination termination = buildTermination(request);
+                case "add": {
+                    Termination termination = buildTermination(request);
+                    boolean success = terminationService.addTermination(termination);
 
-                boolean success =
-                        terminationService.addTermination(termination);
+                    if (success) {
+                        request.getSession().setAttribute(
+                                "successMessage",
+                                "Termination added successfully."
+                        );
+                    } else {
+                        request.getSession().setAttribute(
+                                "errorMessage",
+                                "Failed to add termination. Please check the employee and database."
+                        );
+                    }
+                    break;
+                }
 
-                setMessage(request, success,
-                        "Termination added successfully.",
-                        "Failed to add termination.");
+                case "update": {
+                    int terminationId = parseInt(
+                            request.getParameter("terminationId")
+                    );
 
-            } else if ("update".equalsIgnoreCase(action)) {
+                    if (terminationId <= 0) {
+                        throw new IllegalArgumentException(
+                                "Invalid termination ID."
+                        );
+                    }
 
-                Termination termination = buildTermination(request);
+                    Termination termination = buildTermination(request);
+                    termination.setTerminationId(terminationId);
 
-                termination.setTerminationId(
-                        parseInt(request.getParameter("terminationId"))
-                );
+                    boolean success = terminationService.updateTermination(termination);
 
-                boolean success =
-                        terminationService.updateTermination(termination);
+                    if (success) {
+                        request.getSession().setAttribute(
+                                "successMessage",
+                                "Termination updated successfully."
+                        );
+                    } else {
+                        request.getSession().setAttribute(
+                                "errorMessage",
+                                "Failed to update termination."
+                        );
+                    }
+                    break;
+                }
 
-                setMessage(request, success,
-                        "Termination updated successfully.",
-                        "Failed to update termination.");
+                case "delete": {
+                    int terminationId = parseInt(
+                            request.getParameter("terminationId")
+                    );
 
-            } else if ("delete".equalsIgnoreCase(action)) {
+                    if (terminationId <= 0) {
+                        throw new IllegalArgumentException(
+                                "Invalid termination ID."
+                        );
+                    }
 
-                int terminationId =
-                        parseInt(request.getParameter("terminationId"));
+                    boolean success = terminationService.deleteTermination(terminationId);
 
-                boolean success =
-                        terminationService.deleteTermination(terminationId);
+                    if (success) {
+                        request.getSession().setAttribute(
+                                "successMessage",
+                                "Termination deleted successfully."
+                        );
+                    } else {
+                        request.getSession().setAttribute(
+                                "errorMessage",
+                                "Failed to delete termination."
+                        );
+                    }
+                    break;
+                }
 
-                setMessage(request, success,
-                        "Termination deleted successfully.",
-                        "Failed to delete termination.");
-
+                default:
+                    throw new IllegalArgumentException(
+                            "Invalid termination action."
+                    );
             }
 
         } catch (IllegalArgumentException e) {
 
-            request.setAttribute("error",
-                    e.getMessage());
+            request.getSession().setAttribute(
+                    "errorMessage",
+                    e.getMessage()
+            );
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            request.setAttribute(
-                    "error",
+            request.getSession().setAttribute(
+                    "errorMessage",
                     "Something went wrong while processing termination."
             );
         }
 
-        // PRG pattern: redirect after successful POST.
-        if (request.getAttribute("error") == null) {
-            response.sendRedirect(
-                    request.getContextPath() + "/termination"
-            );
-            return;
-        }
-
-        loadTerminations(request);
-
-        request.getRequestDispatcher(
-                "/views/admin/Termination/admin-termination.jsp"
-        ).forward(request, response);
+        response.sendRedirect(
+                request.getContextPath() + "/termination"
+        );
     }
 
     private Termination buildTermination(HttpServletRequest request) {

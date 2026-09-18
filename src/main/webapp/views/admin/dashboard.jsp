@@ -1,4 +1,6 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,15 +57,17 @@
            ========================= */
 
         .sidebar {
-            height: 100vh !important;
+            height: calc(100vh - 60px) !important;
+            max-height: calc(100vh - 60px) !important;
             overflow-y: auto !important;
             overflow-x: hidden !important;
             scrollbar-width: thin;
             scrollbar-color: #cfd4dc transparent;
+            -webkit-overflow-scrolling: touch;
         }
 
         .sidebar::-webkit-scrollbar {
-            width: 5px;
+            width: 6px;
         }
 
         .sidebar::-webkit-scrollbar-track {
@@ -77,11 +81,11 @@
 
         .sidebar-menu {
             height: auto !important;
+            max-height: none !important;
             overflow: visible !important;
-            padding-bottom: 20px;
+            padding-bottom: 30px !important;
         }
 
-        /* Remove browser default bullets/indentation */
         .sidebar-menu ul {
             list-style: none !important;
             margin: 0 !important;
@@ -92,7 +96,6 @@
             list-style: none !important;
         }
 
-        /* Main menu links */
         .sidebar-menu > ul > li > a {
             display: flex;
             align-items: center;
@@ -106,28 +109,21 @@
             background: #f3f6fb;
         }
 
-        .sidebar-menu > ul > li.active > a {
-            background: #fff4ec;
-            color: #f97316;
-        }
-
-        .sidebar-menu > ul > li.active > a i {
-            color: #f97316;
-        }
-
-        /* All submenu levels stay hidden until their parent is active */
+        /* Submenus: controlled only by .open */
         .sidebar-menu li.submenu > ul {
             display: none !important;
             width: 100%;
             background: transparent;
         }
 
+        .sidebar-menu li.submenu.open > ul,
         .sidebar-menu li.submenu.active > ul {
             display: block !important;
         }
 
         .sidebar-menu li.submenu > a {
             cursor: pointer;
+            user-select: none;
         }
 
         .sidebar-menu li.submenu > a .menu-arrow {
@@ -135,11 +131,11 @@
             transition: transform .2s ease;
         }
 
+        .sidebar-menu li.submenu.open > a .menu-arrow,
         .sidebar-menu li.submenu.active > a .menu-arrow {
             transform: rotate(90deg);
         }
 
-        /* First-level submenu items */
         .sidebar-menu li.submenu > ul > li > a {
             display: flex;
             align-items: center;
@@ -156,7 +152,6 @@
             color: #0d6efd;
         }
 
-        /* Nested submenu */
         .sidebar-menu li.submenu > ul > li.submenu > a {
             padding-left: 48px !important;
         }
@@ -166,7 +161,6 @@
             font-size: 12.5px;
         }
 
-        /* Menu title */
         .sidebar-menu .menu-title {
             padding: 18px 20px 8px !important;
         }
@@ -178,7 +172,74 @@
             color: #98a2b3;
         }
 
-        /* HR action links */
+        .sidebar-menu > ul > li.active > a {
+            background: #fff4ec;
+            color: #f97316;
+        }
+
+        .sidebar-menu > ul > li.active > a i {
+            color: #f97316;
+        }
+
+        /* Desktop collapsed sidebar */
+        @media (min-width: 992px) {
+            body.mini-sidebar .sidebar {
+                width: 80px !important;
+            }
+
+            body.mini-sidebar .sidebar .sidebar-logo .logo-normal,
+            body.mini-sidebar .sidebar .sidebar-logo .dark-logo,
+            body.mini-sidebar .sidebar .modern-profile,
+            body.mini-sidebar .sidebar .menu-title,
+            body.mini-sidebar .sidebar-menu > ul > li > a > span:not(.menu-arrow) {
+                display: none !important;
+            }
+
+            body.mini-sidebar .sidebar-menu > ul > li > a {
+                justify-content: center !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            body.mini-sidebar .sidebar-menu > ul > li > a i {
+                margin-right: 0 !important;
+            }
+
+            body.mini-sidebar .sidebar-menu li.submenu > ul {
+                display: none !important;
+            }
+
+            body.mini-sidebar .page-wrapper {
+                margin-left: 80px !important;
+            }
+        }
+
+        /* Mobile sidebar */
+        @media (max-width: 991px) {
+            .sidebar {
+                height: 100vh !important;
+                max-height: 100vh !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            body.sidebar-opened .sidebar {
+                left: 0 !important;
+                visibility: visible !important;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .sidebar-menu > ul > li > a {
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+
+            .page-wrapper .card {
+                border-radius: 8px;
+            }
+        }
+
         .sidebar-menu > ul > li > a[href*="/promotion"] i {
             color: #7c3aed;
         }
@@ -203,7 +264,6 @@
             background: #fff0f0;
         }
 
-        /* Profile */
         .modern-profile .user-profile {
             border: 1px solid #edf0f5;
             box-shadow: 0 3px 12px rgba(16, 24, 40, .04);
@@ -213,7 +273,6 @@
             object-fit: cover;
         }
 
-        /* Dashboard */
         .page-wrapper {
             background: #f7f8fa;
         }
@@ -256,23 +315,6 @@
 
         .emp-stack .progress {
             height: 8px;
-        }
-
-        @media (max-width: 991px) {
-            .sidebar {
-                height: 100vh !important;
-            }
-        }
-
-        @media (max-width: 767px) {
-            .page-wrapper .card {
-                border-radius: 8px;
-            }
-
-            .sidebar-menu > ul > li > a {
-                margin-left: 5px;
-                margin-right: 5px;
-            }
         }
     </style>
 </head>
@@ -563,38 +605,23 @@
 
                     <ul>
 
-<<<<<<< HEAD
                         <!-- ADD EVENT -->
                         <li>
                             <a href="${pageContext.request.contextPath}/admin/events?action=add">
-=======
-                        <li>
-                            <a href="javascript:void(0);">
->>>>>>> 1b752f30964ad6578c4233c2bf3ff167e25f6a04
                                 <span>Add Event</span>
                             </a>
                         </li>
 
-<<<<<<< HEAD
                         <!-- ADD MASTER EVENT -->
                         <li>
                             <a href="${pageContext.request.contextPath}/admin/event-types">
-=======
-                        <li>
-                            <a href="javascript:void(0);">
->>>>>>> 1b752f30964ad6578c4233c2bf3ff167e25f6a04
                                 <span>Add Master Event</span>
                             </a>
                         </li>
 
-<<<<<<< HEAD
                         <!-- EVENT LIST -->
                         <li>
                             <a href="${pageContext.request.contextPath}/admin/events?action=list">
-=======
-                        <li>
-                            <a href="javascript:void(0);">
->>>>>>> 1b752f30964ad6578c4233c2bf3ff167e25f6a04
                                 <span>Event List</span>
                             </a>
                         </li>
@@ -602,7 +629,6 @@
                     </ul>
 
                 </li>
-
                 <!-- PAYROLL -->
                 <li class="submenu">
 
@@ -648,7 +674,6 @@
 
                 </li>
 
-                <!-- TRAINING -->
                 <!-- TRAINING -->
                 <li class="submenu">
 
@@ -856,47 +881,38 @@
 
                 </li>
 
-                <!-- PROMOTIONS -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-trending-up"></i>
-                        <span>Promotions</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Add Promotion</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Promotion List</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Promotion History</span></a></li>
-                    </ul>
-                </li>
+               <!-- PROMOTIONS -->
+               <li>
+                   <a href="${pageContext.request.contextPath}/promotion">
+                       <i class="ti ti-trending-up"></i>
+                       <span>Promotions</span>
+                   </a>
+               </li>
 
-                <!-- RESIGNATION -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-logout-2"></i>
-                        <span>Resignation</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Resignation Request</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Resignation List</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Exit Details</span></a></li>
-                    </ul>
-                </li>
+               <!-- RESIGNATION -->
+               <li>
+                   <a href="${pageContext.request.contextPath}/resignation">
+                       <i class="ti ti-logout-2"></i>
+                       <span>Resignation</span>
+                   </a>
+               </li>
 
-                <!-- TERMINATION -->
-                <li class="submenu">
-                    <a href="javascript:void(0);">
-                        <i class="ti ti-user-x"></i>
-                        <span>Termination</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="javascript:void(0);"><span>Add Termination</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Termination List</span></a></li>
-                        <li><a href="javascript:void(0);"><span>Termination History</span></a></li>
-                    </ul>
-                </li>
+               <!-- TERMINATION -->
+               <li>
+                   <a href="${pageContext.request.contextPath}/termination">
+                       <i class="ti ti-user-x"></i>
+                       <span>Termination</span>
+                   </a>
+               </li>
+
+               <!-- EXPERIENCE -->
+               <li>
+                   <a href="${pageContext.request.contextPath}/experience">
+                       <i class="ti ti-briefcase"></i>
+                       <span>Experience</span>
+                   </a>
+               </li>
+
 
                 <!-- HELP & SUPPORT -->
                 <li class="submenu">
@@ -920,9 +936,23 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
-                        <li><a href="javascript:void(0);"><span>Create Ticket</span></a></li>
-                        <li><a href="javascript:void(0);"><span>My Tickets</span></a></li>
-                        <li><a href="javascript:void(0);"><span>All Tickets</span></a></li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/tickets?action=add">
+                                <span>Create Ticket</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/tickets?action=my">
+                                <span>My Tickets</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/tickets?action=list">
+                                <span>All Tickets</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -2944,45 +2974,167 @@
 
 
 <script>
-    (function () {
-        function initHRMSSidebar() {
-            var sidebar = document.querySelector('.sidebar-menu');
-            if (!sidebar) return;
+(function () {
+    "use strict";
 
-            sidebar.addEventListener('click', function (event) {
-                var link = event.target.closest('li.submenu > a');
-                if (!link || !sidebar.contains(link)) return;
+    function initHRMSSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        if (!sidebar) return;
 
-                event.preventDefault();
-                event.stopPropagation();
+        if (sidebar.dataset.hrmssidebarReady === "true") return;
+        sidebar.dataset.hrmssidebarReady = "true";
 
-                var currentItem = link.parentElement;
-                var parentList = currentItem.parentElement;
-                var isOpen = currentItem.classList.contains('active');
+        var menu = sidebar.querySelector(".sidebar-menu");
+        if (!menu) return;
 
-                Array.prototype.forEach.call(parentList.children, function (item) {
-                    if (item !== currentItem && item.classList.contains('submenu')) {
-                        item.classList.remove('active');
+        function closeNestedMenus(item) {
+            Array.prototype.forEach.call(
+                item.querySelectorAll("li.submenu.open, li.submenu.active"),
+                function (nested) {
+                    if (nested !== item) {
+                        nested.classList.remove("open", "active");
+                        var nestedLink = nested.children[0];
+                        if (nestedLink && nestedLink.tagName === "A") {
+                            nestedLink.setAttribute("aria-expanded", "false");
+                        }
                     }
-                });
+                }
+            );
+        }
 
-                currentItem.classList.toggle('active', !isOpen);
+        function closeSiblingSubmenus(item) {
+            var parent = item.parentElement;
+            if (!parent) return;
+
+            Array.prototype.forEach.call(parent.children, function (child) {
+                if (
+                    child !== item &&
+                    child.classList &&
+                    child.classList.contains("submenu")
+                ) {
+                    child.classList.remove("open", "active");
+
+                    var childLink = child.children[0];
+                    if (childLink && childLink.tagName === "A") {
+                        childLink.setAttribute("aria-expanded", "false");
+                    }
+
+                    closeNestedMenus(child);
+                }
             });
         }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initHRMSSidebar);
-        } else {
-            initHRMSSidebar();
+        menu.addEventListener("click", function (event) {
+            var link = event.target.closest("li.submenu > a");
+            if (!link || !menu.contains(link)) return;
+
+            var item = link.parentElement;
+            var currentlyOpen =
+                item.classList.contains("open") ||
+                item.classList.contains("active");
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            closeSiblingSubmenus(item);
+
+            if (currentlyOpen) {
+                item.classList.remove("open", "active");
+                link.setAttribute("aria-expanded", "false");
+            } else {
+                item.classList.add("open", "active");
+                link.setAttribute("aria-expanded", "true");
+            }
+        });
+
+        // Open the correct submenu for the current page.
+        var currentPath = window.location.pathname.replace(/\/+$/, "");
+
+        Array.prototype.forEach.call(
+            menu.querySelectorAll("a[href]"),
+            function (anchor) {
+                var href = anchor.getAttribute("href");
+
+                if (
+                    !href ||
+                    href === "#" ||
+                    href.indexOf("javascript:") === 0
+                ) {
+                    return;
+                }
+
+                try {
+                    var url = new URL(href, window.location.origin);
+                    var path = url.pathname.replace(/\/+$/, "");
+
+                    if (path && path === currentPath) {
+                        var leaf = anchor.closest("li");
+                        if (leaf) leaf.classList.add("active");
+
+                        var parent = anchor.parentElement;
+                        while (parent && parent !== menu) {
+                            if (parent.classList.contains("submenu")) {
+                                parent.classList.add("open", "active");
+
+                                var parentLink = parent.children[0];
+                                if (
+                                    parentLink &&
+                                    parentLink.tagName === "A"
+                                ) {
+                                    parentLink.setAttribute(
+                                        "aria-expanded",
+                                        "true"
+                                    );
+                                }
+                            }
+                            parent = parent.parentElement;
+                        }
+                    }
+                } catch (e) {
+                    // Ignore malformed/non-standard href values.
+                }
+            }
+        );
+
+        // Mobile menu button.
+        var mobileBtn = document.getElementById("mobile_btn");
+        if (mobileBtn && mobileBtn.dataset.hrmssidebarBound !== "true") {
+            mobileBtn.dataset.hrmssidebarBound = "true";
+
+            mobileBtn.addEventListener("click", function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                document.body.classList.toggle("sidebar-opened");
+            });
         }
-    })();
+
+        // Desktop collapse button.
+        var toggleBtn = document.getElementById("toggle_btn");
+        if (toggleBtn && toggleBtn.dataset.hrmssidebarBound !== "true") {
+            toggleBtn.dataset.hrmssidebarBound = "true";
+
+            toggleBtn.addEventListener("click", function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (window.innerWidth >= 992) {
+                    document.body.classList.toggle("mini-sidebar");
+                }
+            });
+        }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            initHRMSSidebar,
+            { once: true }
+        );
+    } else {
+        initHRMSSidebar();
+    }
+})();
 </script>
 
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
-
-```
->>>>>>> 1b752f30964ad6578c4233c2bf3ff167e25f6a04

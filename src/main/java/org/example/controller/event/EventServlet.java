@@ -24,618 +24,226 @@ import java.util.Map;
 public class EventServlet extends HttpServlet {
 
     private EventServiceImpl eventService;
-
-    // Direct EventType DAO
     private EventTypeDAO eventTypeDAO;
-
 
     @Override
     public void init() throws ServletException {
-
         EventDAO eventDAO = new EventDAOImpl();
-
         eventService = new EventServiceImpl(eventDAO);
-
         eventTypeDAO = new EventTypeDAOImpl();
     }
 
-
-    // =====================================================
-    // GET
-    // =====================================================
-
     @Override
-    protected void doGet(
-            HttpServletRequest request,
-            HttpServletResponse response)
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
 
         try {
-
-            // =================================================
-// MAIN EVENT CALENDAR
-// =================================================
-
-            if (action == null) {
-
-                List<Event> events =
-                        eventService.getAllEvents();
-
-                List<EventType> eventTypes =
-                        eventTypeDAO.getAllEventTypes();
-
-                Map<Integer, String> eventTypeColors =
-                        new HashMap<>();
-
-                Map<Integer, String> eventTypeNames =
-                        new HashMap<>();
-
-                for (EventType type : eventTypes) {
-
-                    eventTypeColors.put(
-                            type.getId(),
-                            type.getColor()
-                    );
-
-                    eventTypeNames.put(
-                            type.getId(),
-                            type.getName()
-                    );
-                }
-
-                request.setAttribute(
-                        "events",
-                        events
-                );
-
-                request.setAttribute(
-                        "eventTypes",
-                        eventTypes
-                );
-
-                request.setAttribute(
-                        "eventTypeColors",
-                        eventTypeColors
-                );
-
-                request.setAttribute(
-                        "eventTypeNames",
-                        eventTypeNames
-                );
-
+            // Main calendar
+            if (action == null || "calendar".equals(action)) {
+                loadPageData(request);
                 request.getRequestDispatcher(
                         "/views/admin/event/admin-add-event.jsp"
                 ).forward(request, response);
-
                 return;
             }
 
-
-// =================================================
-// EVENT LIST / HOLIDAYS
-// =================================================
-
-            else if ("list".equals(action)) {
-
-                List<Event> events =
-                        eventService.getAllEvents();
-
-                List<EventType> eventTypes =
-                        eventTypeDAO.getAllEventTypes();
-
-                Map<Integer, String> eventTypeColors =
-                        new HashMap<>();
-
-                Map<Integer, String> eventTypeNames =
-                        new HashMap<>();
-
-                for (EventType type : eventTypes) {
-
-                    eventTypeColors.put(
-                            type.getId(),
-                            type.getColor()
-                    );
-
-                    eventTypeNames.put(
-                            type.getId(),
-                            type.getName()
-                    );
-                }
-
-                request.setAttribute(
-                        "events",
-                        events
-                );
-
-                request.setAttribute(
-                        "eventTypes",
-                        eventTypes
-                );
-
-                request.setAttribute(
-                        "eventTypeColors",
-                        eventTypeColors
-                );
-
-                request.setAttribute(
-                        "eventTypeNames",
-                        eventTypeNames
-                );
-
+            // Holiday/event list
+            if ("list".equals(action)) {
+                loadPageData(request);
                 request.getRequestDispatcher(
                         "/views/admin/event/admin-holidays.jsp"
                 ).forward(request, response);
-
                 return;
             }
 
-
-            // =================================================
-            // ADD PAGE
-            // =================================================
-
-            /*
-             * जर /admin/events?action=add manually open केलं
-             * तरी Event Types DB मधून fetch होतील.
-             */
-
-            else if ("add".equals(action)) {
-
-                List<Event> events =
-                        eventService.getAllEvents();
-
-
-                List<EventType> eventTypes =
-                        eventTypeDAO.getAllEventTypes();
-
-
-                Map<Integer, String> eventTypeColors =
-                        new HashMap<>();
-
-
-                Map<Integer, String> eventTypeNames =
-                        new HashMap<>();
-
-
-                for (EventType type : eventTypes) {
-
-                    eventTypeColors.put(
-                            type.getId(),
-                            type.getColor()
-                    );
-
-
-                    eventTypeNames.put(
-                            type.getId(),
-                            type.getName()
-                    );
-                }
-
-
-                request.setAttribute(
-                        "events",
-                        events
-                );
-
-
-                request.setAttribute(
-                        "eventTypes",
-                        eventTypes
-                );
-
-
-                request.setAttribute(
-                        "eventTypeColors",
-                        eventTypeColors
-                );
-
-
-                request.setAttribute(
-                        "eventTypeNames",
-                        eventTypeNames
-                );
-
-
+            // Add page / add modal page
+            if ("add".equals(action)) {
+                loadPageData(request);
                 request.getRequestDispatcher(
                         "/views/admin/event/admin-add-event.jsp"
                 ).forward(request, response);
-
                 return;
             }
 
+            // Edit event. The important part is 'from'.
+            if ("edit".equals(action)) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                Event event = eventService.getEventById(id);
 
-            // =================================================
-            // EDIT EVENT
-            // =================================================
+                loadPageData(request);
+                request.setAttribute("event", event);
 
-            else if ("edit".equals(action)) {
-
-                int id = Integer.parseInt(
-                        request.getParameter("id")
-                );
-
-
-                Event event =
-                        eventService.getEventById(id);
-
-
-                List<Event> events =
-                        eventService.getAllEvents();
-
-
-                List<EventType> eventTypes =
-                        eventTypeDAO.getAllEventTypes();
-
-
-                Map<Integer, String> eventTypeColors =
-                        new HashMap<>();
-
-
-                Map<Integer, String> eventTypeNames =
-                        new HashMap<>();
-
-
-                for (EventType type : eventTypes) {
-
-                    eventTypeColors.put(
-                            type.getId(),
-                            type.getColor()
-                    );
-
-
-                    eventTypeNames.put(
-                            type.getId(),
-                            type.getName()
-                    );
+                String from = request.getParameter("from");
+                if ("holidays".equalsIgnoreCase(from)) {
+                    request.setAttribute("editSource", "holidays");
+                    request.getRequestDispatcher(
+                            "/views/admin/event/admin-holidays.jsp"
+                    ).forward(request, response);
+                } else {
+                    request.setAttribute("editSource", "events");
+                    request.getRequestDispatcher(
+                            "/views/admin/event/admin-add-event.jsp"
+                    ).forward(request, response);
                 }
-
-
-                request.setAttribute(
-                        "event",
-                        event
-                );
-
-
-                request.setAttribute(
-                        "events",
-                        events
-                );
-
-
-                request.setAttribute(
-                        "eventTypes",
-                        eventTypes
-                );
-
-
-                request.setAttribute(
-                        "eventTypeColors",
-                        eventTypeColors
-                );
-
-
-                request.setAttribute(
-                        "eventTypeNames",
-                        eventTypeNames
-                );
-
-
-                request.getRequestDispatcher(
-                        "/views/admin/event/admin-add-event.jsp"
-                ).forward(request, response);
-
                 return;
             }
 
-
-            // =================================================
-            // DELETE EVENT
-            // =================================================
-
-            else if ("delete".equals(action)) {
-
-                int id = Integer.parseInt(
-                        request.getParameter("id")
-                );
-
-
+            // Delete event
+            if ("delete".equals(action)) {
+                int id = Integer.parseInt(request.getParameter("id"));
                 eventService.deleteEvent(id);
 
-
-                response.sendRedirect(
-                        request.getContextPath()
-                                + "/admin/events"
-                );
-
+                String from = request.getParameter("from");
+                if ("holidays".equalsIgnoreCase(from)) {
+                    response.sendRedirect(request.getContextPath()
+                            + "/admin/events?action=list");
+                } else {
+                    response.sendRedirect(request.getContextPath()
+                            + "/admin/events");
+                }
                 return;
             }
 
-        }
-        catch (BusinessException e) {
+            response.sendRedirect(request.getContextPath() + "/admin/events");
 
+        } catch (BusinessException e) {
             e.printStackTrace();
-
-            request.setAttribute(
-                    "errorMessage",
-                    e.getMessage()
-            );
-
-
+            request.setAttribute("errorMessage", e.getMessage());
+            loadPageData(request);
             request.getRequestDispatcher(
                     "/views/admin/event/admin-add-event.jsp"
             ).forward(request, response);
-        }
-        catch (NumberFormatException e) {
-
+        } catch (NumberFormatException e) {
             e.printStackTrace();
-
-            request.setAttribute(
-                    "errorMessage",
-                    "Invalid Event ID"
-            );
-
-
+            request.setAttribute("errorMessage", "Invalid Event ID");
+            loadPageData(request);
             request.getRequestDispatcher(
                     "/views/admin/event/admin-add-event.jsp"
             ).forward(request, response);
-        }
-        catch (Exception e) {
-
+        } catch (Exception e) {
             e.printStackTrace();
-
-            request.setAttribute(
-                    "errorMessage",
-                    "Something went wrong"
-            );
-
-
+            request.setAttribute("errorMessage", "Something went wrong");
+            loadPageData(request);
             request.getRequestDispatcher(
                     "/views/admin/event/admin-add-event.jsp"
             ).forward(request, response);
         }
     }
 
-
-    // =====================================================
-    // POST
-    // =====================================================
-
     @Override
-    protected void doPost(
-            HttpServletRequest request,
-            HttpServletResponse response)
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action =
-                request.getParameter("action");
-
+        String action = request.getParameter("action");
+        String returnPage = request.getParameter("returnPage");
 
         try {
-
-            // =================================================
-            // ADD EVENT
-            // =================================================
-
             if ("add".equals(action)) {
-
                 Event event = new Event();
+                event.setTitle(request.getParameter("title"));
+                event.setDate(request.getParameter("date"));
+                event.setEventTypeId(Integer.parseInt(
+                        request.getParameter("eventTypeId")));
+                event.setStatus(request.getParameter("status"));
 
-
-                event.setTitle(
-                        request.getParameter("title")
-                );
-
-
-                event.setDate(
-                        request.getParameter("date")
-                );
-
-
-                event.setEventTypeId(
-                        Integer.parseInt(
-                                request.getParameter(
-                                        "eventTypeId"
-                                )
-                        )
-                );
-
-
-                event.setStatus(
-                        request.getParameter("status")
-                );
-
-
-                // Save event in DB
                 eventService.addEvent(event);
-
-
-                // After adding → calendar
-                response.sendRedirect(
-                        request.getContextPath()
-                                + "/admin/events"
-                );
-
+                response.sendRedirect(request.getContextPath() + "/admin/events");
                 return;
             }
 
-
-            // =================================================
-            // UPDATE EVENT
-            // =================================================
-
-            else if ("update".equals(action)) {
-
+            if ("update".equals(action)) {
                 Event event = new Event();
-
-
-                event.setId(
-                        Integer.parseInt(
-                                request.getParameter("id")
-                        )
-                );
-
-
-                event.setTitle(
-                        request.getParameter("title")
-                );
-
-
-                event.setDate(
-                        request.getParameter("date")
-                );
-
-
-                event.setEventTypeId(
-                        Integer.parseInt(
-                                request.getParameter(
-                                        "eventTypeId"
-                                )
-                        )
-                );
-
-
-                event.setStatus(
-                        request.getParameter("status")
-                );
-
+                event.setId(Integer.parseInt(request.getParameter("id")));
+                event.setTitle(request.getParameter("title"));
+                event.setDate(request.getParameter("date"));
+                event.setEventTypeId(Integer.parseInt(
+                        request.getParameter("eventTypeId")));
+                event.setStatus(request.getParameter("status"));
 
                 eventService.updateEvent(event);
 
-
-                response.sendRedirect(
-                        request.getContextPath()
-                                + "/admin/events"
-                );
-
+                // Return to the page from which edit was opened.
+                if ("holidays".equalsIgnoreCase(returnPage)) {
+                    response.sendRedirect(request.getContextPath()
+                            + "/admin/events?action=list");
+                } else {
+                    response.sendRedirect(request.getContextPath()
+                            + "/admin/events");
+                }
                 return;
             }
 
-        }
-        catch (BusinessException e) {
+            response.sendRedirect(request.getContextPath() + "/admin/events");
 
+        } catch (BusinessException e) {
             e.printStackTrace();
+            request.setAttribute("errorMessage", e.getMessage());
+            reloadAfterPostError(request, response, returnPage);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Please enter valid values");
+            reloadAfterPostError(request, response, returnPage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Something went wrong");
+            reloadAfterPostError(request, response, returnPage);
+        }
+    }
 
-            request.setAttribute(
-                    "errorMessage",
-                    e.getMessage()
-            );
+    private void reloadAfterPostError(HttpServletRequest request,
+                                      HttpServletResponse response,
+                                      String returnPage)
+            throws ServletException, IOException {
+        loadPageData(request);
 
+        // If update failed, load the edited event again so the edit modal
+        // can remain open with the submitted values where possible.
+        String idParam = request.getParameter("id");
+        if ("update".equals(request.getParameter("action"))
+                && idParam != null && !idParam.isBlank()) {
+            try {
+                request.setAttribute("event",
+                        eventService.getEventById(Integer.parseInt(idParam)));
+            } catch (Exception ignored) {
+                // Keep the original error message.
+            }
+        }
 
-            // Important:
-            // POST error झाल्यास eventTypes पुन्हा fetch करा
-
-            loadPageData(request);
-
-
+        if ("holidays".equalsIgnoreCase(returnPage)) {
+            request.setAttribute("editSource", "holidays");
             request.getRequestDispatcher(
-                    "/views/admin/event/admin-add-event.jsp"
+                    "/views/admin/event/admin-holidays.jsp"
             ).forward(request, response);
-        }
-        catch (NumberFormatException e) {
-
-            e.printStackTrace();
-
-            request.setAttribute(
-                    "errorMessage",
-                    "Please enter valid values"
-            );
-
-
-            loadPageData(request);
-
-
-            request.getRequestDispatcher(
-                    "/views/admin/event/admin-add-event.jsp"
-            ).forward(request, response);
-        }
-        catch (Exception e) {
-
-            e.printStackTrace();
-
-            request.setAttribute(
-                    "errorMessage",
-                    "Something went wrong"
-            );
-
-
-            loadPageData(request);
-
-
+        } else {
+            request.setAttribute("editSource", "events");
             request.getRequestDispatcher(
                     "/views/admin/event/admin-add-event.jsp"
             ).forward(request, response);
         }
     }
 
-
-    // =====================================================
-    // LOAD PAGE DATA
-    // =====================================================
-
-    private void loadPageData(
-            HttpServletRequest request) {
-
+    private void loadPageData(HttpServletRequest request) {
         try {
+            List<Event> events = eventService.getAllEvents();
+            List<EventType> eventTypes = eventTypeDAO.getAllEventTypes();
 
-            List<Event> events =
-                    eventService.getAllEvents();
-
-
-            List<EventType> eventTypes =
-                    eventTypeDAO.getAllEventTypes();
-
-
-            Map<Integer, String> eventTypeColors =
-                    new HashMap<>();
-
-
-            Map<Integer, String> eventTypeNames =
-                    new HashMap<>();
-
+            Map<Integer, String> eventTypeColors = new HashMap<>();
+            Map<Integer, String> eventTypeNames = new HashMap<>();
 
             for (EventType type : eventTypes) {
-
-                eventTypeColors.put(
-                        type.getId(),
-                        type.getColor()
-                );
-
-
-                eventTypeNames.put(
-                        type.getId(),
-                        type.getName()
-                );
+                eventTypeColors.put(type.getId(), type.getColor());
+                eventTypeNames.put(type.getId(), type.getName());
             }
 
-
-            request.setAttribute(
-                    "events",
-                    events
-            );
-
-
-            request.setAttribute(
-                    "eventTypes",
-                    eventTypes
-            );
-
-
-            request.setAttribute(
-                    "eventTypeColors",
-                    eventTypeColors
-            );
-
-
-            request.setAttribute(
-                    "eventTypeNames",
-                    eventTypeNames
-            );
-
-        }
-        catch (Exception e) {
-
+            request.setAttribute("events", events);
+            request.setAttribute("eventTypes", eventTypes);
+            request.setAttribute("eventTypeColors", eventTypeColors);
+            request.setAttribute("eventTypeNames", eventTypeNames);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

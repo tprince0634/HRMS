@@ -8,21 +8,22 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ticket {
 
     private int ticketId;
+    private String ticketNo;
     private String ticketTitle;
     private String eventCategory;
     private String subject;
-    private int assignedBy;
-    private int assignedTo;
+    private Integer raisedBy;
+    private Integer assignedBy;
+    private Integer assignedTo;
     private String ticketDescription;
     private String priority;
     private String status;
     private String visibility;
     private LocalDateTime createdAt;
-
 }

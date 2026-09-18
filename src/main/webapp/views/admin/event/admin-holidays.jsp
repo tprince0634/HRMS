@@ -1,3 +1,4 @@
+```
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
@@ -94,46 +95,7 @@
 
 
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-
-        <div class="sidebar-inner slimscroll">
-
-            <div id="sidebar-menu" class="sidebar-menu">
-
-                <ul>
-
-                    <li>
-                        <a href="${pageContext.request.contextPath}/admin-dashboard">
-                            <i class="ti ti-layout-dashboard"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li class="submenu-open">
-                        <h6 class="submenu-hdr">HRMS</h6>
-
-                        <ul>
-
-                            <li class="active">
-                                <a href="${pageContext.request.contextPath}/admin/events">
-                                    <i class="ti ti-calendar-event"></i>
-                                    <span>Holidays</span>
-                                </a>
-                            </li>
-
-                        </ul>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
-    </div>
-    <!-- /Sidebar -->
-
+    <%@ include file="../adminSidebar.jsp" %>
 
     <!-- Page Wrapper -->
     <div class="page-wrapper">
@@ -336,7 +298,7 @@
                                             <!-- Event Type -->
                                             <td>
 
-                                                <c:out value="${event.eventTypeId}"/>
+                                                <c:out value="${eventTypeNames[event.eventTypeId]}"/>
 
                                             </td>
 
@@ -382,7 +344,7 @@
                                                 <div class="action-icon d-inline-flex">
 
                                                     <!-- Edit -->
-                                                    <a href="${pageContext.request.contextPath}/admin/events?action=edit&id=${event.id}"
+                                                    <a href="${pageContext.request.contextPath}/admin/events?action=edit&id=${event.id}&from=holidays"
                                                        class="me-2">
 
                                                         <i class="ti ti-edit"></i>
@@ -530,14 +492,15 @@
                             <div class="mb-3">
 
                                 <label class="form-label">
-                                    Event Type ID
+                                    Event Type
                                 </label>
 
-                                <input type="number"
-                                       name="eventTypeId"
-                                       class="form-control"
-                                       min="1"
-                                       required>
+                                <select name="eventTypeId" class="form-control" required>
+                                    <option value="">Select Event Type</option>
+                                    <c:forEach var="type" items="${eventTypes}">
+                                        <option value="${type.id}"><c:out value="${type.name}"/></option>
+                                    </c:forEach>
+                                </select>
 
                             </div>
 
@@ -648,6 +611,10 @@
                        name="id"
                        value="${event.id}">
 
+                <input type="hidden"
+                       name="returnPage"
+                       value="holidays">
+
 
                 <div class="modal-body pb-0">
 
@@ -709,15 +676,18 @@
                             <div class="mb-3">
 
                                 <label class="form-label">
-                                    Event Type ID
+                                    Event Type
                                 </label>
 
-                                <input type="number"
-                                       name="eventTypeId"
-                                       class="form-control"
-                                       min="1"
-                                       value="${event.eventTypeId}"
-                                       required>
+                                <select name="eventTypeId" class="form-control" required>
+                                    <option value="">Select Event Type</option>
+                                    <c:forEach var="type" items="${eventTypes}">
+                                        <option value="${type.id}"
+                                            ${type.id == event.eventTypeId ? 'selected' : ''}>
+                                            <c:out value="${type.name}"/>
+                                        </option>
+                                    </c:forEach>
+                                </select>
 
                             </div>
 
@@ -936,7 +906,7 @@
 
                 const deleteUrl =
                     "${pageContext.request.contextPath}/admin/events?action=delete&id="
-                    + eventId;
+                    + eventId + "&from=holidays";
 
 
                 confirmDeleteButton.setAttribute(
@@ -990,3 +960,5 @@
 
 </body>
 </html>
+
+```

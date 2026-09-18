@@ -7,7 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDao {
+
+
+
     User login(String email, String password);
+
+    User findById(int userId);
 
     public List<Map<String, Object>> getAllEmployees() throws SQLException;
 

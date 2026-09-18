@@ -24,185 +24,129 @@ public class EventTypeServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(
-            HttpServletRequest request,
-            HttpServletResponse response)
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
 
         try {
-
-            // =========================
-            // LIST EVENT TYPES
-            // =========================
-
-            if (action == null || action.equals("list")) {
-
-                List<EventType> eventTypes =
-                        eventTypeDAO.getAllEventTypes();
-
-                request.setAttribute(
-                        "eventTypes",
-                        eventTypes
-                );
-
-                request.getRequestDispatcher(
-                        "/views/admin/event/admin-addmasterevent.jsp"
-                ).forward(request, response);
+            // LIST / DEFAULT
+            if (action == null || "list".equals(action)) {
+                loadEventTypes(request);
+                forwardMaster(request, response);
+                return;
             }
 
-            // =========================
             // EDIT EVENT TYPE
-            // =========================
+            if ("edit".equals(action)) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                EventType eventType = eventTypeDAO.getEventTypeById(id);
 
-            else if ("edit".equals(action)) {
+                if (eventType == null) {
+                    request.setAttribute("errorMessage", "Event Type not found");
+                } else {
+                    request.setAttribute("eventType", eventType);
+                }
 
-                int id = Integer.parseInt(
-                        request.getParameter("id")
-                );
-
-                EventType eventType =
-                        eventTypeDAO.getEventTypeById(id);
-
-                List<EventType> eventTypes =
-                        eventTypeDAO.getAllEventTypes();
-
-                request.setAttribute(
-                        "eventType",
-                        eventType
-                );
-
-                request.setAttribute(
-                        "eventTypes",
-                        eventTypes
-                );
-
-                request.getRequestDispatcher(
-                        "/views/admin/event/admin-addmasterevent.jsp"
-                ).forward(request, response);
+                loadEventTypes(request);
+                forwardMaster(request, response);
+                return;
             }
 
-            // =========================
             // DELETE EVENT TYPE
-            // =========================
-
-            else if ("delete".equals(action)) {
-
-                int id = Integer.parseInt(
-                        request.getParameter("id")
-                );
-
+            if ("delete".equals(action)) {
+                int id = Integer.parseInt(request.getParameter("id"));
                 eventTypeDAO.deleteEventType(id);
-
-                response.sendRedirect(
-                        request.getContextPath()
-                                + "/admin/event-types"
-                );
+                response.sendRedirect(request.getContextPath() + "/admin/event-types");
+                return;
             }
+
+            response.sendRedirect(request.getContextPath() + "/admin/event-types");
 
         } catch (NumberFormatException e) {
-
-            request.setAttribute(
-                    "errorMessage",
-                    "Invalid Event Type ID"
-            );
-
-            request.getRequestDispatcher(
-                    "/views/admin/event/admin-addmasterevent.jsp"
-            ).forward(request, response);
-
-        } catch (Exception e) {
-
             e.printStackTrace();
-
-            request.setAttribute(
-                    "errorMessage",
-                    "Something went wrong"
-            );
-
-            request.getRequestDispatcher(
-                    "/views/admin/event/admin-addmasterevent.jsp"
-            ).forward(request, response);
+            request.setAttribute("errorMessage", "Invalid Event Type ID");
+            try {
+                loadEventTypes(request);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            forwardMaster(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Something went wrong");
+            try {
+                loadEventTypes(request);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            forwardMaster(request, response);
         }
     }
 
     @Override
-    protected void doPost(
-            HttpServletRequest request,
-            HttpServletResponse response)
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
 
         try {
-
-            // =========================
-            // ADD EVENT TYPE
-            // =========================
-
             if ("add".equals(action)) {
-
                 EventType eventType = new EventType();
-
-                eventType.setName(
-                        request.getParameter("name")
-                );
-
-                eventType.setColor(
-                        request.getParameter("color")
-                );
+                eventType.setName(request.getParameter("name"));
+                eventType.setColor(request.getParameter("color"));
 
                 eventTypeDAO.addEventType(eventType);
-
-                response.sendRedirect(
-                        request.getContextPath()
-                                + "/admin/event-types"
-                );
+                response.sendRedirect(request.getContextPath() + "/admin/event-types");
+                return;
             }
 
-            // =========================
-            // UPDATE EVENT TYPE
-            // =========================
-
-            else if ("update".equals(action)) {
-
+            if ("update".equals(action)) {
                 EventType eventType = new EventType();
-
-                eventType.setId(
-                        Integer.parseInt(
-                                request.getParameter("id")
-                        )
-                );
-
-                eventType.setName(
-                        request.getParameter("name")
-                );
-
-                eventType.setColor(
-                        request.getParameter("color")
-                );
+                eventType.setId(Integer.parseInt(request.getParameter("id")));
+                eventType.setName(request.getParameter("name"));
+                eventType.setColor(request.getParameter("color"));
 
                 eventTypeDAO.updateEventType(eventType);
-
-                response.sendRedirect(
-                        request.getContextPath()
-                                + "/admin/event-types"
-                );
+                response.sendRedirect(request.getContextPath() + "/admin/event-types");
+                return;
             }
 
-        } catch (Exception e) {
+            response.sendRedirect(request.getContextPath() + "/admin/event-types");
 
+        } catch (NumberFormatException e) {
             e.printStackTrace();
-
-            request.setAttribute(
-                    "errorMessage",
-                    "Something went wrong"
-            );
-
-            request.getRequestDispatcher(
-                    "/views/admin/event/admin-addmasterevent.jsp"
-            ).forward(request, response);
+            request.setAttribute("errorMessage", "Invalid Event Type ID");
+            try {
+                loadEventTypes(request);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            forwardMaster(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Something went wrong");
+            try {
+                loadEventTypes(request);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            forwardMaster(request, response);
         }
+    }
+
+    private void loadEventTypes(HttpServletRequest request) throws Exception {
+        List<EventType> eventTypes = eventTypeDAO.getAllEventTypes();
+        request.setAttribute("eventTypes", eventTypes);
+    }
+
+    private void forwardMaster(HttpServletRequest request,
+                               HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher(
+                "/views/admin/event/admin-addmasterevent.jsp"
+        ).forward(request, response);
     }
 }

@@ -9,13 +9,20 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.example.interfaces.ResignationDAO;
 import org.example.model.Resignation;
 import org.example.service.ResignationServiceImpl;
+import org.example.util.DBConnection;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/resignation")
 public class ResignationServlet extends HttpServlet {
@@ -140,6 +147,15 @@ public class ResignationServlet extends HttpServlet {
 
             request.setAttribute("resignations", resignations);
 
+            /*
+             * IMPORTANT:
+             * Load only active Employee-role users for the
+             * "Resigning Employee" dropdown.
+             *
+             * RoleId = 10 is Employee in this project.
+             */
+            loadAvailableEmployees(request);
+
             request.getRequestDispatcher(
                     "/views/admin/resignation/admin-resignation.jsp"
             ).forward(request, response);
@@ -155,6 +171,118 @@ public class ResignationServlet extends HttpServlet {
 
             response.sendRedirect(
                     request.getContextPath() + "/resignation"
+            );
+        }
+    }
+
+    /*
+     * ============================================================
+     * LOAD AVAILABLE EMPLOYEES
+     * ============================================================
+     *
+     * User table:
+     *   UserId
+     *   FirstName
+     *   LastName
+     *   RoleId
+     *   DepartmentId
+     *   Status
+     *
+     * Role table confirms RoleId 10 = Employee.
+     *
+     * Departments table:
+     *   DepartmentId
+     *   Name
+     *
+     * The JSP uses:
+     *   ${employees}
+     *
+     * and each employee option gets:
+     *   data-department-id
+     *
+     * so departmentId is automatically submitted.
+     */
+    private void loadAvailableEmployees(HttpServletRequest request) {
+
+        List<EmployeeOption> employees =
+                new ArrayList<>();
+
+        String sql =
+                "SELECT u.UserId, " +
+                        "       u.FirstName, " +
+                        "       u.LastName, " +
+                        "       u.DepartmentId, " +
+                        "       COALESCE(d.Name, '-') AS DepartmentName " +
+                        "FROM `User` u " +
+                        "LEFT JOIN `Departments` d " +
+                        "       ON u.DepartmentId = d.DepartmentId " +
+                        "WHERE u.RoleId = 10 " +
+                        "  AND (u.Status = 'Active' OR u.Status IS NULL) " +
+                        "ORDER BY u.FirstName, u.LastName";
+
+        try (Connection connection =
+                     DBConnection.getConnection();
+             PreparedStatement statement =
+                     connection.prepareStatement(sql);
+             ResultSet rs =
+                     statement.executeQuery()) {
+
+            while (rs.next()) {
+
+                EmployeeOption employee =
+                        new EmployeeOption();
+
+                employee.setUserId(
+                        rs.getInt("UserId")
+                );
+
+                employee.setFirstName(
+                        rs.getString("FirstName")
+                );
+
+                employee.setLastName(
+                        rs.getString("LastName")
+                );
+
+                int departmentId =
+                        rs.getInt("DepartmentId");
+
+                if (rs.wasNull()) {
+                    departmentId = 0;
+                }
+
+                employee.setDepartmentId(
+                        departmentId
+                );
+
+                employee.setDepartmentName(
+                        rs.getString("DepartmentName")
+                );
+
+                employees.add(employee);
+            }
+
+            request.setAttribute(
+                    "employees",
+                    employees
+            );
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            /*
+             * Keep the page usable and show an error
+             * instead of silently showing "Employee".
+             */
+            request.setAttribute(
+                    "employees",
+                    new ArrayList<EmployeeOption>()
+            );
+
+            request.setAttribute(
+                    "employeeLoadError",
+                    "Unable to load available employees."
             );
         }
     }
@@ -184,13 +312,20 @@ public class ResignationServlet extends HttpServlet {
         String reason =
                 request.getParameter("reason");
 
+        if (reason == null || reason.trim().isEmpty()) {
+
+            throw new IllegalArgumentException(
+                    "Reason is required"
+            );
+        }
+
         Resignation resignation =
                 Resignation.builder()
                         .userId(userId)
                         .departmentId(departmentId)
                         .noticeDate(noticeDate)
                         .resignDate(resignDate)
-                        .reason(reason)
+                        .reason(reason.trim())
                         .build();
 
         boolean result =
@@ -236,6 +371,13 @@ public class ResignationServlet extends HttpServlet {
         String reason =
                 request.getParameter("reason");
 
+        if (reason == null || reason.trim().isEmpty()) {
+
+            throw new IllegalArgumentException(
+                    "Reason is required"
+            );
+        }
+
         Resignation resignation =
                 Resignation.builder()
                         .resignationId(resignationId)
@@ -243,7 +385,7 @@ public class ResignationServlet extends HttpServlet {
                         .departmentId(departmentId)
                         .noticeDate(noticeDate)
                         .resignDate(resignDate)
-                        .reason(reason)
+                        .reason(reason.trim())
                         .build();
 
         boolean result =
@@ -335,6 +477,59 @@ public class ResignationServlet extends HttpServlet {
             throw new IllegalArgumentException(
                     "Invalid date. Please use dd/MM/yyyy format."
             );
+        }
+    }
+
+    /*
+     * Simple request DTO used only by this servlet.
+     * This avoids depending on a separate Employee model/DAO.
+     */
+    public static class EmployeeOption {
+
+        private int userId;
+        private String firstName;
+        private String lastName;
+        private int departmentId;
+        private String departmentName;
+
+        public int getUserId() {
+            return userId;
+        }
+
+        public void setUserId(int userId) {
+            this.userId = userId;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        public int getDepartmentId() {
+            return departmentId;
+        }
+
+        public void setDepartmentId(int departmentId) {
+            this.departmentId = departmentId;
+        }
+
+        public String getDepartmentName() {
+            return departmentName;
+        }
+
+        public void setDepartmentName(String departmentName) {
+            this.departmentName = departmentName;
         }
     }
 }
