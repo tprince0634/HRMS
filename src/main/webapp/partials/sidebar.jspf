@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Document Name</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sidebar.css">
+</head>
+
+<body>
+
+<jsp:include page="sidebar.jsp"/>
+
+<div class="main-content">
+
+    <div class="topbar">
+        <input type="text" class="topbar-search" placeholder="Search in Pulse360">
+    </div>
+
+    <div class="page-content">
+
+        <div class="page-header">
+            <div>
+                <h1>Add Employee Document Name</h1>
+                <div class="breadcrumb">
+                    Home / Admin / Add Employee Document Name
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+                Add Employee Document Name
+            </div>
+
+            <div class="card-body">
+
+                <form action="${pageContext.request.contextPath}/EmployeeDocNameServlet" method="post">
+
+                    <input type="hidden" name="action" value="create">
+
+                    <div class="form-group">
+                        <label>Document Name</label>
+
+                        <input type="text"
+                               name="docName"
+                               class="form-control"
+                               placeholder="Enter Document Name"
+                               required>
+                    </div>
+
+                    <button type="submit" class="btn-orange">
+                        Add
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

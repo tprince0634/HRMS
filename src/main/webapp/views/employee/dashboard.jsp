@@ -411,7 +411,7 @@
                         </li>
                         <li>
 
-                            <a href="${pageContext.request.contextPath}/uploadFile">
+                            <a href="${pageContext.request.contextPath}/EmployeeDocNames">
 
                                 <span>Upload Documents</span>
 

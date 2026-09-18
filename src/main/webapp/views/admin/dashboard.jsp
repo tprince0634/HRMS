@@ -739,13 +739,13 @@
                     <ul>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/AdminDocNames">
                                 <span>Master Document</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="javascript:void(0);">
+                            <a href="${pageContext.request.contextPath}/AdminDocNames">
                                 <span>Master Document List</span>
                             </a>
                         </li>

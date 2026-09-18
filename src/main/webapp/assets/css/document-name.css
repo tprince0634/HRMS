@@ -1,0 +1,153 @@
+.main-content {
+    margin-left: 240px;
+    min-height: 100vh;
+    background: #f7f7f7;
+}
+
+.topbar {
+    height: 70px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.topbar-search {
+    width: 280px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    font-size: 14px;
+}
+
+.page-content {
+    padding: 30px;
+}
+
+.page-header {
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #1f2937;
+}
+
+.breadcrumb {
+    margin-top: 8px;
+    color: #888;
+    font-size: 14px;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 17px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    width: 350px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #f36f21;
+}
+
+.btn-orange {
+    display: inline-block;
+    background: #f36f21;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.btn-orange:hover {
+    background: #df5f16;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    background: #f1f2f4;
+    padding: 14px;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+}
+
+.table td {
+    padding: 14px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 14px;
+    color: #555;
+}
+
+.table tr:hover {
+    background: #fafafa;
+}
+
+.btn-edit {
+    color: #333;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.btn-edit:hover {
+    color: #f36f21;
+}
+
+.btn-delete {
+    color: #dc3545;
+    text-decoration: none;
+}
+
+.btn-delete:hover {
+    color: #b02a37;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 25px !important;
+    color: #888 !important;
+}
